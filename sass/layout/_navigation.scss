@@ -49,6 +49,12 @@
   }
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -59,7 +65,7 @@
   border: none;
   cursor: pointer;
   z-index: $z-index-sticky + 1;
-  
+
   @include respond-below(md) {
     display: flex;
   }

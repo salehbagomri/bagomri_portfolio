@@ -699,6 +699,12 @@ textarea:focus-visible {
   transform: scale(1.05);
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
