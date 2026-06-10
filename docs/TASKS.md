@@ -1,6 +1,6 @@
 # سجل المهام
 
-> آخر تحديث: 2026-06-10
+> آخر تحديث: 2026-06-10 (تحديث ثاني)
 
 ---
 
@@ -8,7 +8,7 @@
 
 - [ ] إضافة محتوى المشاريع الحقيقي — `js/modules/portfolio.js`
 - [ ] إضافة صور المشاريع بالدقة المناسبة — `assets/images/projects/`
-- [ ] ربط حسابات التواصل الاجتماعي (GitHub / LinkedIn) — `js/config.js` → `siteConfig.contact.social`
+- [ ] ربط حساب LinkedIn — `js/config.js` → `siteConfig.contact.social.linkedin`
 
 ---
 
@@ -16,13 +16,11 @@
 
 ### الأولوية العالية
 - [ ] اختبار نموذج التواصل على الإنتاج (Firebase + EmailJS معاً)
-- [ ] SEO: إضافة `<meta>` tags كاملة + Open Graph في `index.html`
 - [ ] تحويل صور المشاريع إلى WebP لتحسين الأداء
 - [ ] اختبار التوافق مع المتصفحات (Safari, Firefox, Chrome, Edge)
 
 ### الأولوية المتوسطة
 - [ ] مراجعة Firestore analytics بعد شهر من الإطلاق الفعلي
-- [ ] إضافة `loading="lazy"` لجميع الصور في `index.html`
 - [ ] مراجعة Firestore security rules بعد أول 100 زيارة
 - [ ] إنشاء favicon مخصص بصيغ متعددة (ico, png, svg)
 
@@ -47,6 +45,10 @@
 - [x] Firestore indexes (comments: approved + timestamp)
 - [x] نشر على Firebase Hosting
 - [x] ملفات التوثيق (CLAUDE.md, ARCHITECTURE.md, TASKS.md, DECISIONS.md)
+- [x] إصلاح bug: رأس الصورة الشخصية كان يختفي (overflow + clip-path)
+- [x] SEO: إضافة meta tags كاملة + Open Graph + Twitter Card في `index.html`
+- [x] ربط حساب GitHub — `js/config.js` (salehbagomri)
+- [x] إضافة `loading="lazy"` لصورة الفوتر
 
 ---
 

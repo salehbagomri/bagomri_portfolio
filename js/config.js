@@ -55,7 +55,7 @@ const siteConfig = {
             en: 'Saudi Arabia'
         },
         social: {
-            github: 'https://github.com/yourusername',
+            github: 'https://github.com/salehbagomri',
             behance: 'https://www.behance.net/salehbbagomri',
             instagram: 'https://instagram.com/salehbagomri',
             linkedin: 'https://linkedin.com/in/yourusername',

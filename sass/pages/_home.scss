@@ -6,7 +6,7 @@
   min-height: 100vh;
   @include flex-center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   padding: $spacing-5xl 0;
   
   @include respond-below(md) {
@@ -245,7 +245,7 @@
     }
   }
   
-  // Base image - stays inside box (clipped)
+  // Base image - extends above card so head is visible
   .profile-image-base {
     width: 130%;
     height: auto;
@@ -259,7 +259,6 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
-    clip-path: inset(0 0 0 0 round $border-radius-2xl);
     
     @include respond-below(md) {
       width: 120%;

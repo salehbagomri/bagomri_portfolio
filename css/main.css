@@ -1875,7 +1875,7 @@ textarea:focus-visible {
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   padding: 8rem 0;
 }
 @media (max-width: 767px) {
@@ -2132,7 +2132,6 @@ textarea:focus-visible {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  clip-path: inset(0 0 0 0 round 1.5rem);
 }
 @media (max-width: 767px) {
   .image-wrapper .profile-image-base {
