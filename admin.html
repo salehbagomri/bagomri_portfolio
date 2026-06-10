@@ -567,6 +567,25 @@
           </div>
         </div>
 
+        <!-- لقطات الشاشة -->
+        <div class="form-section">
+          <div class="form-section-title">🖼️ لقطات الشاشة (Gallery)</div>
+          <div class="field">
+            <label>ارفع صور متعددة (اختياري)</label>
+            <div class="img-upload-area">
+              <input type="file" id="screenshotFiles" accept="image/*" multiple onchange="admin.previewScreenshotFiles(this)">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".4"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <p>انقر أو اسحب صور متعددة هنا</p>
+            </div>
+            <div id="screenshotFilesList" style="margin-top:6px;font-size:.8rem;color:var(--text2)"></div>
+          </div>
+          <div class="field">
+            <label>أو أدخل روابط لقطات موجودة (كل رابط في سطر)</label>
+            <textarea id="screenshotUrlsText" rows="3" dir="ltr" placeholder="https://res.cloudinary.com/...&#10;https://..."></textarea>
+          </div>
+          <div id="screenshotPreviewsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:8px"></div>
+        </div>
+
         <!-- المعلومات الأساسية -->
         <div class="form-section">
           <div class="form-section-title">📋 المعلومات الأساسية</div>

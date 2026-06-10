@@ -145,6 +145,9 @@ class AdminManager {
         document.getElementById('projectForm').reset();
         document.getElementById('projectId').value = '';
         document.getElementById('imgPreview').style.display = 'none';
+        document.getElementById('screenshotUrlsText').value = '';
+        document.getElementById('screenshotFilesList').textContent = '';
+        document.getElementById('screenshotPreviewsGrid').innerHTML = '';
         this.renderTags();
         document.getElementById('projectModal').classList.add('open');
     }
@@ -193,6 +196,15 @@ class AdminManager {
         document.getElementById('linkBehance').value  = p.links?.behance   || '';
         document.getElementById('linkDemo').value     = p.links?.demo      || '';
 
+        // Screenshots
+        const shots = p.screenshots || [];
+        const shotsArr = Array.isArray(shots) ? shots
+            : [...(shots.mobile || []), ...(shots.desktop || [])];
+        document.getElementById('screenshotUrlsText').value = shotsArr.join('\n');
+        document.getElementById('screenshotFiles').value = '';
+        document.getElementById('screenshotFilesList').textContent = '';
+        this.renderScreenshotPreviews(shotsArr);
+
         this.renderTags();
         document.getElementById('projectModal').classList.add('open');
     }
@@ -221,12 +233,28 @@ class AdminManager {
                 imageUrl = await this.uploadToCloudinary(imageFile);
             }
 
+            // رفع لقطات الشاشة إلى Cloudinary
+            const screenshotFiles = document.getElementById('screenshotFiles').files;
+            const screenshotUrlsText = document.getElementById('screenshotUrlsText').value.trim();
+            let screenshots = screenshotUrlsText
+                ? screenshotUrlsText.split('\n').map(u => u.trim()).filter(Boolean)
+                : [];
+
+            if (screenshotFiles.length > 0) {
+                this.toast(`جارٍ رفع ${screenshotFiles.length} لقطة...`, 'success');
+                for (const file of screenshotFiles) {
+                    const url = await this.uploadToCloudinary(file);
+                    screenshots.push(url);
+                }
+            }
+
             const data = {
                 title:           { ar: this.v('titleAr'), en: this.v('titleEn') },
                 description:     { ar: this.v('descAr'),  en: this.v('descEn')  },
                 fullDescription: { ar: this.v('fullDescAr'), en: this.v('fullDescEn') },
                 category:        this.v('category'),
                 image:           imageUrl,
+                screenshots:     screenshots,
                 tags:            [...this.currentTags],
                 featured:        document.getElementById('featured').checked,
                 date:            this.v('projectDate'),
@@ -334,6 +362,32 @@ class AdminManager {
     removeTag(tag) {
         this.currentTags = this.currentTags.filter(t => t !== tag);
         this.renderTags();
+    }
+
+    // ============================================
+    // SCREENSHOTS
+    // ============================================
+
+    previewScreenshotFiles(input) {
+        const list = document.getElementById('screenshotFilesList');
+        list.textContent = input.files.length > 0
+            ? `${input.files.length} صورة محددة`
+            : '';
+        const grid = document.getElementById('screenshotPreviewsGrid');
+        grid.innerHTML = '';
+        Array.from(input.files).forEach(file => {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.style.cssText = 'width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px';
+            grid.appendChild(img);
+        });
+    }
+
+    renderScreenshotPreviews(urls) {
+        const grid = document.getElementById('screenshotPreviewsGrid');
+        grid.innerHTML = urls.map(url =>
+            `<img src="${url}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px" loading="lazy">`
+        ).join('');
     }
 
     // ============================================
