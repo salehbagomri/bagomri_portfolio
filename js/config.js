@@ -49,7 +49,7 @@ const siteConfig = {
     
     // معلومات التواصل
     contact: {
-        whatsapp: '+967777616167',
+        whatsapp: '+967770727055',
         location: {
             ar: 'السعودية',
             en: 'Saudi Arabia'
