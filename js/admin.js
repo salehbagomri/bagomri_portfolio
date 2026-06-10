@@ -2,6 +2,10 @@
 // ADMIN MANAGER - لوحة التحكم
 // ============================================
 
+// Cloudinary unsigned upload — API Secret is never exposed in browser
+const CLOUDINARY_CLOUD_NAME  = 'dk5buckt1';
+const CLOUDINARY_UPLOAD_PRESET = 'pre-pro';
+
 class AdminManager {
     constructor() {
         this.projects = [];
@@ -209,15 +213,12 @@ class AdminManager {
         btn.disabled = true;
 
         try {
-            // رفع الصورة إذا تم اختيار ملف
+            // رفع الصورة إلى Cloudinary إذا تم اختيار ملف
             let imageUrl = document.getElementById('imageUrl').value.trim();
             const imageFile = document.getElementById('imageFile').files[0];
             if (imageFile) {
-                try {
-                    imageUrl = await firebaseService.uploadImage(imageFile, 'project-images');
-                } catch (uploadErr) {
-                    this.toast('تعذّر رفع الصورة — تحقق من تفعيل Firebase Storage', 'error');
-                }
+                this.toast('جارٍ رفع الصورة...', 'success');
+                imageUrl = await this.uploadToCloudinary(imageFile);
             }
 
             const data = {
@@ -333,6 +334,26 @@ class AdminManager {
     removeTag(tag) {
         this.currentTags = this.currentTags.filter(t => t !== tag);
         this.renderTags();
+    }
+
+    // ============================================
+    // CLOUDINARY UPLOAD
+    // ============================================
+
+    async uploadToCloudinary(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+        formData.append('folder', 'portfolio-projects');
+
+        const res = await fetch(
+            `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+            { method: 'POST', body: formData }
+        );
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error?.message || 'Cloudinary upload failed');
+        return data.secure_url;
     }
 
     // ============================================
