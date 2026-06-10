@@ -1,0 +1,608 @@
+// ============================================
+// HERO SECTION - قسم البطل
+// ============================================
+
+.hero-section {
+  min-height: 100vh;
+  @include flex-center;
+  position: relative;
+  overflow: hidden;
+  padding: $spacing-5xl 0;
+  
+  @include respond-below(md) {
+    padding: $spacing-4xl 0;
+  }
+}
+
+.hero-background {
+  @include absolute-fill;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  animation: float 6s ease-in-out infinite;
+  
+  &.orb-1 {
+    width: 500px;
+    height: 500px;
+    background: $gradient-primary;
+    top: -10%;
+    right: -10%;
+    animation-delay: 0s;
+    
+    [dir="rtl"] & {
+      right: auto;
+      left: -10%;
+    }
+  }
+  
+  &.orb-2 {
+    width: 400px;
+    height: 400px;
+    background: $gradient-secondary;
+    bottom: -10%;
+    left: -10%;
+    animation-delay: 2s;
+    
+    [dir="rtl"] & {
+      left: auto;
+      right: -10%;
+    }
+  }
+  
+  &.orb-3 {
+    width: 300px;
+    height: 300px;
+    background: $gradient-secondary;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: 4s;
+  }
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-4xl;
+  align-items: center;
+  
+  @include respond-below(lg) {
+    grid-template-columns: 1fr;
+    gap: $spacing-3xl;
+    text-align: center;
+  }
+}
+
+.hero-text {
+  z-index: 1;
+  overflow: visible;
+}
+
+.hero-title {
+  margin-bottom: $spacing-lg;
+  overflow: visible;
+  
+  .title-line {
+    display: block;
+    font-size: $font-size-2xl;
+    font-weight: $weight-medium;
+    color: var(--text-secondary);
+    margin-bottom: $spacing-sm;
+    
+    @include respond-below(md) {
+      font-size: $font-size-xl;
+    }
+  }
+  
+  .title-name {
+    display: block;
+    font-size: $font-size-6xl;
+    font-weight: $weight-black;
+    letter-spacing: $letter-spacing-tight;
+    line-height: 1.2;
+    margin-bottom: $spacing-sm;
+    overflow: visible;
+    
+    @include respond-below(md) {
+      font-size: $font-size-5xl;
+    }
+    
+    @include respond-below(sm) {
+      font-size: $font-size-4xl;
+    }
+  }
+}
+
+.hero-subtitle {
+  font-size: $font-size-3xl;
+  font-weight: $weight-semibold;
+  color: $color-primary;
+  margin-bottom: $spacing-xl;
+  min-height: 60px;
+  
+  @include respond-below(md) {
+    font-size: $font-size-2xl;
+    min-height: 45px;
+  }
+  
+  .typing-text {
+    display: inline-block;
+  }
+  
+  .cursor {
+    display: inline-block;
+    animation: blink 1s infinite;
+    margin-left: 4px;
+    
+    [dir="rtl"] & {
+      margin-left: 0;
+      margin-right: 4px;
+    }
+  }
+}
+
+.hero-description {
+  font-size: $font-size-lg;
+  line-height: $line-height-relaxed;
+  color: var(--text-secondary);
+  margin-bottom: $spacing-2xl;
+  max-width: 600px;
+  
+  @include respond-below(lg) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  @include respond-below(md) {
+    font-size: $font-size-base;
+  }
+}
+
+.hero-cta {
+  display: flex;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+  
+  @include respond-below(lg) {
+    justify-content: center;
+  }
+}
+
+.hero-image {
+  position: relative;
+  z-index: 1;
+  
+  @include respond-below(lg) {
+    max-width: 500px;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  @include respond-below(md) {
+    max-width: 400px;
+    margin-top: $spacing-2xl;
+  }
+  
+  @include respond-below(sm) {
+    max-width: 320px;
+    margin-top: $spacing-3xl;
+  }
+}
+
+.image-wrapper {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: $border-radius-2xl;
+  padding: 0;
+  overflow: visible;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 400px;
+  
+  @include respond-below(md) {
+    min-height: 350px;
+  }
+  
+  @include respond-below(sm) {
+    min-height: 300px;
+  }
+  
+  // Gradient background for profile
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: $gradient-primary;
+    border-radius: $border-radius-2xl;
+    opacity: 0.15;
+    z-index: 0;
+    overflow: hidden;
+  }
+  
+  // Bottom fade to hide cut - clips with the box
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, var(--bg-primary) 0%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
+    border-radius: 0 0 $border-radius-2xl $border-radius-2xl;
+    clip-path: inset(0 0 0 0 round $border-radius-2xl);
+    
+    @include respond-below(sm) {
+      height: 80px;
+    }
+  }
+  
+  // Base image - stays inside box (clipped)
+  .profile-image-base {
+    width: 130%;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    object-position: bottom center;
+    transition: all 0.5s $easing-smooth;
+    animation: fadeInScale 1s $easing-bounce;
+    position: absolute;
+    bottom: -5%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    clip-path: inset(0 0 0 0 round $border-radius-2xl);
+    
+    @include respond-below(md) {
+      width: 120%;
+    }
+    
+    @include respond-below(sm) {
+      width: 110%;
+    }
+  }
+  
+  // Head image - positioned above box (no clipping, with mask on bottom)
+  .profile-image-head {
+    width: 130%;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    object-position: bottom center;
+    position: absolute;
+    bottom: -5%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    filter: drop-shadow(0 20px 60px rgba($color-primary, 0.5));
+    transition: all 0.5s $easing-smooth;
+    animation: fadeInScale 1s $easing-bounce;
+    animation-delay: 0.2s;
+    pointer-events: none;
+    opacity: 1;
+    
+    // Mask to make bottom half transparent (so base image shows through)
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 70%);
+    mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 70%);
+    
+    @include respond-below(md) {
+      width: 120%;
+    }
+    
+    @include respond-below(sm) {
+      width: 110%;
+    }
+  }
+  
+  &:hover {
+    .profile-image-base {
+      transform: translateX(-50%) scale(1.02) translateY(-5px);
+    }
+    
+    .profile-image-head {
+      filter: drop-shadow(0 30px 80px rgba($color-primary, 0.7));
+      transform: translateX(-50%) scale(1.02) translateY(-10px);
+    }
+  }
+}
+
+// Floating Icons Around Profile
+.floating-icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.float-icon {
+  position: absolute;
+  width: clamp(60px, 7vw, 120px);
+  height: clamp(60px, 7vw, 120px);
+  border-radius: $border-radius-xl;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: clamp(8px, 0.8vw, 16px);
+  animation: floatAround 6s ease-in-out infinite;
+  transition: all 0.3s $easing-smooth;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  
+  img, svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  // تلوين الأيقونات غير الملونة بألوان الهوية
+  img.needs-color {
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(236deg) brightness(97%) contrast(97%);
+  }
+  
+  &:hover {
+    transform: scale(1.2) translateY(-5px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 40px rgba($color-primary, 0.3);
+  }
+  
+  &.flutter-icon {
+    top: 10%;
+    right: -10%;
+    animation-delay: 0s;
+    
+    [dir="rtl"] & {
+      right: auto;
+      left: -10%;
+    }
+  }
+  
+  &.ai-icon {
+    top: 75%;
+    left: -10%;
+    animation-delay: 3s;
+    
+    [dir="rtl"] & {
+      left: auto;
+      right: -10%;
+    }
+  }
+  
+  &.ps-icon {
+    top: 60%;
+    right: -10%;
+    animation-delay: 2s;
+    
+    [dir="rtl"] & {
+      right: auto;
+      left: -10%;
+    }
+  }
+  
+  &.figma-icon {
+    top: 20%;
+    left: -10%;
+    animation-delay: 1.5s;
+    
+    [dir="rtl"] & {
+      left: auto;
+      right: -10%;
+    }
+  }
+  
+  &.brush-icon {
+    top: 50%;
+    left: -12%;
+    animation-delay: 2.5s;
+    
+    [dir="rtl"] & {
+      left: auto;
+      right: -12%;
+    }
+  }
+  
+  &.code-icon {
+    top: 35%;
+    right: -12%;
+    animation-delay: 1s;
+    
+    [dir="rtl"] & {
+      right: auto;
+      left: -12%;
+    }
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes floatAround {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-20px) rotate(-5deg);
+  }
+}
+
+
+
+.visitor-counter {
+  position: absolute;
+  bottom: $spacing-2xl;
+  left: 50%;
+  transform: translateX(-50%);
+  @include flex-center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-xl;
+  border-radius: $border-radius-full;
+  font-size: $font-size-base;
+  font-weight: $weight-medium;
+  color: var(--text-primary);
+  
+  @include respond-below(md) {
+    position: static;
+    transform: none;
+    margin-top: $spacing-2xl;
+  }
+  
+  svg {
+    width: 24px;
+    height: 24px;
+    color: $color-primary;
+  }
+  
+  .counter-number {
+    font-size: $font-size-xl;
+    font-weight: $weight-bold;
+    color: $color-primary;
+  }
+}
+
+// ============================================
+// SECTION HEADER - عنوان القسم
+// ============================================
+
+.section-header {
+  text-align: center;
+  margin-bottom: $spacing-4xl;
+  
+  @include respond-below(md) {
+    margin-bottom: $spacing-3xl;
+  }
+}
+
+.section-title {
+  font-size: $font-size-4xl;
+  font-weight: $weight-black;
+  color: var(--text-primary);
+  margin-bottom: $spacing-md;
+  
+  @include respond-below(md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+.section-subtitle {
+  font-size: $font-size-lg;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  
+  @include respond-below(md) {
+    font-size: $font-size-base;
+  }
+}
+
+// ============================================
+// FEATURED PROJECTS - المشاريع المميزة
+// ============================================
+
+.featured-section {
+  background: var(--bg-secondary);
+  position: relative;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: $spacing-2xl;
+  
+  @include respond-below(md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.featured-card {
+  @include card-base;
+  position: relative;
+  overflow: hidden;
+  
+  &:hover {
+    .featured-image img {
+      transform: scale(1.1);
+    }
+    
+    .featured-overlay {
+      opacity: 1;
+    }
+  }
+}
+
+.featured-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  margin-bottom: $spacing-lg;
+  position: relative;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    @include smooth-transition;
+  }
+}
+
+.featured-overlay {
+  @include absolute-fill;
+  background: rgba(0, 0, 0, 0.7);
+  @include flex-center;
+  opacity: 0;
+  @include smooth-transition;
+  
+  .btn {
+    transform: translateY(20px);
+    @include smooth-transition;
+  }
+  
+  .featured-card:hover & .btn {
+    transform: translateY(0);
+  }
+}
+
+.featured-category {
+  display: inline-block;
+  padding: $spacing-xs $spacing-md;
+  background: rgba($color-primary, 0.1);
+  color: $color-primary;
+  border-radius: $border-radius-full;
+  font-size: $font-size-sm;
+  font-weight: $weight-semibold;
+  margin-bottom: $spacing-md;
+}
+
+.featured-title {
+  font-size: $font-size-xl;
+  font-weight: $weight-bold;
+  color: var(--text-primary);
+  margin-bottom: $spacing-sm;
+  @include text-clamp(2);
+}
+
+.featured-description {
+  font-size: $font-size-base;
+  color: var(--text-secondary);
+  line-height: $line-height-relaxed;
+  @include text-clamp(3);
+}

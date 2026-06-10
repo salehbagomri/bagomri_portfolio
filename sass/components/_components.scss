@@ -1,0 +1,445 @@
+// ============================================
+// BUTTONS - الأزرار
+// ============================================
+
+.btn {
+  @include button-base;
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    @include smooth-transition;
+  }
+  
+  &:hover svg {
+    transform: translateX(-4px);
+    
+    [dir="rtl"] & {
+      transform: translateX(4px);
+    }
+  }
+}
+
+// Primary Button
+.btn-primary {
+  background: $gradient-primary;
+  color: white;
+  box-shadow: $shadow-md;
+  
+  &:hover {
+    box-shadow: $shadow-xl;
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Secondary Button
+.btn-secondary {
+  @include glass-effect;
+  color: var(--text-primary);
+  
+  &:hover {
+    @include glow-effect($color-primary, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+// Icon Button
+.btn-icon {
+  @include flex-center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: $border-radius-full;
+  
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// Small Button
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: $font-size-sm;
+}
+
+// Large Button
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: $font-size-lg;
+}
+
+// ============================================
+// CARDS - البطاقات
+// ============================================
+
+.card {
+  @include card-base;
+  overflow: hidden;
+  
+  &:hover {
+    .card-image img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.card-image {
+  width: 100%;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  margin-bottom: $spacing-lg;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    @include smooth-transition;
+  }
+}
+
+.card-title {
+  font-size: $font-size-xl;
+  font-weight: $weight-bold;
+  color: var(--text-primary);
+  margin-bottom: $spacing-sm;
+}
+
+.card-description {
+  font-size: $font-size-base;
+  color: var(--text-secondary);
+  line-height: $line-height-relaxed;
+  margin-bottom: $spacing-lg;
+}
+
+.card-footer {
+  @include flex-between;
+  padding-top: $spacing-lg;
+  border-top: 1px solid var(--border-color);
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-md;
+  background: rgba($color-primary, 0.1);
+  color: $color-primary;
+  border-radius: $border-radius-full;
+  font-size: $font-size-sm;
+  font-weight: $weight-medium;
+  @include smooth-transition;
+  
+  &:hover {
+    background: rgba($color-primary, 0.2);
+    transform: scale(1.05);
+  }
+}
+
+// ============================================
+// FORMS - النماذج
+// ============================================
+
+.form-group {
+  margin-bottom: $spacing-lg;
+  position: relative;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: $spacing-md $spacing-lg;
+  @include glass-effect;
+  border-radius: $border-radius-lg;
+  font-size: $font-size-base;
+  color: var(--text-primary);
+  @include smooth-transition;
+  
+  &::placeholder {
+    color: var(--text-tertiary);
+  }
+  
+  &:focus {
+    @include glow-effect($color-primary, 0.3);
+    border-color: $color-primary;
+  }
+  
+  &.error {
+    border-color: $color-error;
+    @include glow-effect($color-error, 0.3);
+  }
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-error {
+  display: block;
+  margin-top: $spacing-sm;
+  font-size: $font-size-sm;
+  color: $color-error;
+  opacity: 0;
+  transform: translateY(-5px);
+  @include smooth-transition;
+  
+  &.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// TOAST NOTIFICATIONS - الإشعارات
+// ============================================
+
+.toast-container {
+  position: fixed;
+  top: $spacing-2xl;
+  right: $spacing-xl;
+  z-index: $z-index-toast;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  max-width: 400px;
+  
+  @include respond-below(md) {
+    right: $spacing-md;
+    left: $spacing-md;
+    max-width: none;
+  }
+  
+  [dir="rtl"] & {
+    right: auto;
+    left: $spacing-xl;
+    
+    @include respond-below(md) {
+      left: $spacing-md;
+    }
+  }
+}
+
+.toast {
+  @include glass-effect(0.95);
+  padding: $spacing-lg;
+  border-radius: $border-radius-lg;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  box-shadow: $shadow-xl;
+  animation: slideInRight $transition-base $easing-smooth;
+  position: relative;
+  overflow: hidden;
+  
+  [dir="rtl"] & {
+    animation: slideInLeft $transition-base $easing-smooth;
+  }
+  
+  &.toast-success {
+    border-left: 4px solid $color-success;
+    
+    [dir="rtl"] & {
+      border-left: none;
+      border-right: 4px solid $color-success;
+    }
+    
+    .toast-icon {
+      color: $color-success;
+    }
+  }
+  
+  &.toast-error {
+    border-left: 4px solid $color-error;
+    
+    [dir="rtl"] & {
+      border-left: none;
+      border-right: 4px solid $color-error;
+    }
+    
+    .toast-icon {
+      color: $color-error;
+    }
+  }
+  
+  &.toast-info {
+    border-left: 4px solid $color-info;
+    
+    [dir="rtl"] & {
+      border-left: none;
+      border-right: 4px solid $color-info;
+    }
+    
+    .toast-icon {
+      color: $color-info;
+    }
+  }
+  
+  &.toast-leaving {
+    animation: slideInRight $transition-base $easing-smooth reverse;
+    
+    [dir="rtl"] & {
+      animation: slideInLeft $transition-base $easing-smooth reverse;
+    }
+  }
+}
+
+.toast-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-title {
+  font-size: $font-size-base;
+  font-weight: $weight-semibold;
+  color: var(--text-primary);
+  margin-bottom: $spacing-xs;
+}
+
+.toast-message {
+  font-size: $font-size-sm;
+  color: var(--text-secondary);
+  line-height: $line-height-normal;
+}
+
+.toast-close {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  @include smooth-transition;
+  
+  &:hover {
+    color: var(--text-primary);
+  }
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: $color-primary;
+  animation: toastProgress 5s linear;
+  
+  [dir="rtl"] & {
+    left: auto;
+    right: 0;
+  }
+}
+
+@keyframes toastProgress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+// ============================================
+// MODAL - النوافذ المنبثقة
+// ============================================
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  @include flex-center;
+  z-index: $z-index-modal;
+  opacity: 0;
+  visibility: hidden;
+  @include smooth-transition;
+  
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.modal {
+  @include glass-effect(0.95);
+  border-radius: $border-radius-2xl;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.9);
+  @include smooth-transition;
+  @include custom-scrollbar;
+  
+  .modal-overlay.active & {
+    transform: scale(1);
+  }
+}
+
+.modal-header {
+  padding: $spacing-xl;
+  border-bottom: 1px solid var(--border-color);
+  @include flex-between;
+}
+
+.modal-title {
+  font-size: $font-size-2xl;
+  font-weight: $weight-bold;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  @include flex-center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: $border-radius-full;
+  @include glass-effect;
+  border: none;
+  cursor: pointer;
+  transition: all $transition-fast ease;
+  
+  &:hover {
+    @include hover-scale;
+  }
+  
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.modal-body {
+  padding: $spacing-xl;
+}
+
+.modal-footer {
+  padding: $spacing-xl;
+  border-top: 1px solid var(--border-color);
+  @include flex-between;
+  gap: $spacing-md;
+}

@@ -1,0 +1,25 @@
+// ============================================
+// MAIN SCSS FILE - الملف الرئيسي
+// ============================================
+
+// 1. Abstracts
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+
+// 2. Base
+@import 'base/fonts';
+@import 'base/base';
+@import 'base/animations';
+
+// 3. Layout
+@import 'layout/navigation';
+
+// 4. Components
+@import 'components/components';
+@import 'components/project-modal';
+
+// 5. Pages
+@import 'pages/home';
+@import 'pages/portfolio';
+@import 'pages/lab-services';
+@import 'pages/contact';

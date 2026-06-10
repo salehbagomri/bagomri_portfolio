@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="بورتفوليو احترافي لمطور Flutter ومصمم UI/UX وجرافيك ديزاينر">
+    <meta name="keywords" content="Flutter, UI/UX, Graphic Design, Portfolio">
+    <meta name="author" content="Bagomri">
+    
+    <title>Bagomri - Flutter Developer | UI/UX Designer | Graphic Designer</title>
+    
+    <!-- Preconnect to Firebase -->
+    <link rel="preconnect" href="https://firestore.googleapis.com">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Favicon Placeholder -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+<body class="theme-dark">
+    
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <img src="assets/images/logo.svg" alt="Logo" class="logo-animation">
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Language & Theme Toggle -->
+    <div class="top-controls">
+        <button class="theme-toggle glass-effect" id="themeToggle" aria-label="Toggle Theme">
+            <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </button>
+        
+        <button class="lang-toggle glass-effect" id="langToggle" aria-label="Toggle Language">
+            <span class="lang-ar">EN</span>
+            <span class="lang-en">ع</span>
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar glass-effect" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <img src="assets/images/logo.svg" alt="Bagomri Logo" class="logo">
+            </a>
+            
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#portfolio" class="nav-link" data-ar="المشاريع" data-en="Portfolio">المشاريع</a>
+                </li>
+                <!-- Temporarily disabled - Lab Section
+                <li class="nav-item">
+                    <a href="#lab" class="nav-link" data-ar="المختبر" data-en="Lab">المختبر</a>
+                </li>
+                -->
+                <li class="nav-item">
+                    <a href="#services" class="nav-link" data-ar="الخدمات" data-en="Services">الخدمات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link" data-ar="تواصل" data-en="Contact">تواصل</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="hero-background">
+                <div class="gradient-orb orb-1"></div>
+                <div class="gradient-orb orb-2"></div>
+                <div class="gradient-orb orb-3"></div>
+            </div>
+            
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text" data-aos="fade-up">
+                        <h1 class="hero-title">
+                            <span class="title-line" data-ar="مرحباً، أنا" data-en="Hello, I'm">مرحباً، أنا</span>
+                            <span class="title-name gradient-text">
+                                <span data-ar="صالح،" data-en="Saleh,">صالح،</span><br>
+                                <span data-ar="باقمري" data-en="Bagomri">باقمري</span>
+                            </span>
+                        </h1>
+                        <h2 class="hero-subtitle">
+                            <span class="typing-text"></span>
+                            <span class="cursor">|</span>
+                        </h2>
+                        <p class="hero-description" data-ar="أُحَوّل الأفكار إلى تطبيقات Flutter قوية، تجارب UI/UX ساحرة، وهويات بصرية لا تُنسى. متخصص في صناعة تجارب رقمية استثنائية." data-en="I transform ideas into powerful Flutter apps, enchanting UI/UX experiences, and unforgettable visual identities. Specialized in crafting exceptional digital experiences.">
+                            أُحَوّل الأفكار إلى تطبيقات Flutter قوية، تجارب UI/UX ساحرة، وهويات بصرية لا تُنسى. متخصص في صناعة تجارب رقمية استثنائية.
+                        </p>
+                        
+                        <div class="hero-cta">
+                            <a href="#contact" class="btn btn-primary glass-effect" data-ar="لنبدأ مشروعك" data-en="Start Your Project">
+                                <span>لنبدأ مشروعك</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                            <a href="#portfolio" class="btn btn-secondary glass-effect" data-ar="استكشف أعمالي" data-en="Explore My Work">
+                                <span>استكشف أعمالي</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-image" data-aos="fade-left">
+                        <div class="image-wrapper glass-effect">
+                            <!-- Your Profile Image -->
+                            <img src="assets/images/profile.png" alt="Saleh Bagomri" class="profile-image-base">
+                            
+                            <!-- Floating Icons Around Profile -->
+                            <div class="floating-icons">
+                                <!-- Flutter Icon -->
+                                <div class="float-icon flutter-icon">
+                                    <img src="assets/icons/flutter-svgrepo-com.svg" alt="Flutter">
+                                </div>
+                                
+                                <!-- Illustrator Icon -->
+                                <div class="float-icon ai-icon">
+                                    <img src="assets/icons/adobe-illustrator-svgrepo-com.svg" alt="Adobe Illustrator">
+                                </div>
+                                
+                                <!-- Photoshop Icon -->
+                                <div class="float-icon ps-icon">
+                                    <img src="assets/icons/adobe-photoshop-svgrepo-com.svg" alt="Adobe Photoshop">
+                                </div>
+                                
+                                <!-- Figma Icon -->
+                                <div class="float-icon figma-icon">
+                                    <img src="assets/icons/figma-svgrepo-com (1).svg" alt="Figma">
+                                </div>
+                                
+                                <!-- Paint Brush (فراشة تلوين) -->
+                                <div class="float-icon brush-icon">
+                                    <img src="assets/icons/palette-7-svgrepo-com.svg" alt="Design" class="needs-color">
+                                </div>
+                                
+                                <!-- Code Brackets -->
+                                <div class="float-icon code-icon">
+                                    <img src="assets/icons/code-2-svgrepo-com.svg" alt="Code" class="needs-color">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visitor Counter -->
+                <div class="visitor-counter glass-effect" data-aos="fade-up">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span data-ar="عدد الزوار:" data-en="Visitors:">عدد الزوار:</span>
+                    <span id="visitorCount" class="counter-number">...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Projects Section -->
+        <section id="featured" class="featured-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title" data-ar="مشاريع مميزة" data-en="Featured Projects">مشاريع مميزة</h2>
+                    <p class="section-subtitle" data-ar="أفضل أعمالي في Flutter، UI/UX، والجرافيك" data-en="My best work in Flutter, UI/UX, and Graphics">
+                        أفضل أعمالي في Flutter، UI/UX، والجرافيك
+                    </p>
+                </div>
+                
+                <div class="featured-grid" id="featuredProjects">
+                    <!-- Projects will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="portfolio-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title" data-ar="جميع المشاريع" data-en="All Projects">جميع المشاريع</h2>
+                    <p class="section-subtitle" data-ar="استكشف محفظة أعمالي الكاملة" data-en="Explore my complete portfolio">
+                        استكشف محفظة أعمالي الكاملة
+                    </p>
+                </div>
+                
+                <!-- Filter Buttons -->
+                <div class="filter-buttons" data-aos="fade-up" data-aos-delay="100">
+                    <button class="filter-btn active glass-effect" data-filter="all" data-ar="الكل" data-en="All">الكل</button>
+                    <button class="filter-btn glass-effect" data-filter="flutter" data-ar="تطبيقات Flutter" data-en="Flutter Apps">تطبيقات Flutter</button>
+                    <button class="filter-btn glass-effect" data-filter="uiux" data-ar="دراسات UI/UX" data-en="UI/UX Case Studies">دراسات UI/UX</button>
+                    <button class="filter-btn glass-effect" data-filter="graphics" data-ar="جرافيك ديزاين" data-en="Graphic Design">جرافيك ديزاين</button>
+                </div>
+                
+                <!-- Portfolio Grid -->
+                <div class="portfolio-grid" id="portfolioGrid">
+                    <!-- Projects will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Temporarily disabled - Lab Section
+        <section id="lab" class="lab-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title" data-ar="مختبر الأعمال" data-en="My Lab">مختبر الأعمال</h2>
+                    <p class="section-subtitle" data-ar="جرّب مشاريعي التفاعلية واستكشف الكود المصدري" data-en="Try my interactive projects and explore source code">
+                        جرّب مشاريعي التفاعلية واستكشف الكود المصدري
+                    </p>
+                </div>
+                
+                <div class="lab-grid" id="labProjects">
+                    <!-- Lab projects will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+        -->
+
+        <!-- Services Section -->
+        <section id="services" class="services-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title" data-ar="الخدمات" data-en="Services">الخدمات</h2>
+                    <p class="section-subtitle" data-ar="ما أقدمه من خدمات احترافية" data-en="Professional services I offer">
+                        ما أقدمه من خدمات احترافية
+                    </p>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card glass-effect" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title" data-ar="تطوير تطبيقات Flutter" data-en="Flutter App Development">تطوير تطبيقات Flutter</h3>
+                        <p class="service-description" data-ar="بناء تطبيقات متعددة المنصات عالية الأداء لـ iOS و Android باستخدام Flutter" data-en="Building high-performance cross-platform apps for iOS and Android using Flutter">
+                            بناء تطبيقات متعددة المنصات عالية الأداء لـ iOS و Android باستخدام Flutter
+                        </p>
+                        <ul class="service-features">
+                            <li data-ar="تطبيقات iOS و Android" data-en="iOS & Android Apps">✓ تطبيقات iOS و Android</li>
+                            <li data-ar="واجهات مستخدم مخصصة" data-en="Custom UI/UX">✓ واجهات مستخدم مخصصة</li>
+                            <li data-ar="تكامل API و Firebase" data-en="API & Firebase Integration">✓ تكامل API و Firebase</li>
+                            <li data-ar="أداء محسّن" data-en="Optimized Performance">✓ أداء محسّن</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card glass-effect" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                        <h3 class="service-title" data-ar="تصميم UI/UX" data-en="UI/UX Design">تصميم UI/UX</h3>
+                        <p class="service-description" data-ar="تصميم تجارب مستخدم ساحرة وواجهات بديهية تحقق أهداف المستخدم والعمل" data-en="Designing enchanting user experiences and intuitive interfaces that achieve user and business goals">
+                            تصميم تجارب مستخدم ساحرة وواجهات بديهية تحقق أهداف المستخدم والعمل
+                        </p>
+                        <ul class="service-features">
+                            <li data-ar="بحث وتحليل المستخدمين" data-en="User Research & Analysis">✓ بحث وتحليل المستخدمين</li>
+                            <li data-ar="تصميم Wireframes و Prototypes" data-en="Wireframes & Prototypes">✓ تصميم Wireframes و Prototypes</li>
+                            <li data-ar="تصميم واجهات تفاعلية" data-en="Interactive Interface Design">✓ تصميم واجهات تفاعلية</li>
+                            <li data-ar="اختبار قابلية الاستخدام" data-en="Usability Testing">✓ اختبار قابلية الاستخدام</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card glass-effect" data-aos="fade-up" data-aos-delay="300">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title" data-ar="تصميم الهويات البصرية" data-en="Visual Identity Design">تصميم الهويات البصرية</h3>
+                        <p class="service-description" data-ar="بناء هويات بصرية قوية ومتكاملة تعكس شخصية علامتك التجارية" data-en="Building strong and integrated visual identities that reflect your brand personality">
+                            بناء هويات بصرية قوية ومتكاملة تعكس شخصية علامتك التجارية
+                        </p>
+                        <ul class="service-features">
+                            <li data-ar="تصميم الشعارات" data-en="Logo Design">✓ تصميم الشعارات</li>
+                            <li data-ar="دليل الهوية البصرية" data-en="Brand Guidelines">✓ دليل الهوية البصرية</li>
+                            <li data-ar="تصميم المواد التسويقية" data-en="Marketing Materials">✓ تصميم المواد التسويقية</li>
+                            <li data-ar="تصميم السوشال ميديا" data-en="Social Media Design">✓ تصميم السوشال ميديا</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guestbook Section -->
+        <section id="guestbook" class="guestbook-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title" data-ar="دفتر الزوار" data-en="Guestbook">دفتر الزوار</h2>
+                    <p class="section-subtitle" data-ar="اترك بصمتك وشارك رأيك" data-en="Leave your mark and share your thoughts">
+                        اترك بصمتك وشارك رأيك
+                    </p>
+                </div>
+                
+                <div class="guestbook-container">
+                    <!-- Add Comment Form -->
+                    <div class="comment-form-wrapper glass-effect" data-aos="fade-up">
+                        <form id="commentForm" class="comment-form">
+                            <input 
+                                type="text" 
+                                id="commentName" 
+                                class="form-input glass-effect" 
+                                placeholder="اسمك" 
+                                data-ar-placeholder="اسمك"
+                                data-en-placeholder="Your Name"
+                                required
+                            >
+                            <textarea 
+                                id="commentText" 
+                                class="form-textarea glass-effect" 
+                                placeholder="تعليقك..."
+                                data-ar-placeholder="تعليقك..."
+                                data-en-placeholder="Your comment..."
+                                rows="4"
+                                required
+                            ></textarea>
+                            <button type="submit" class="btn btn-primary glass-effect">
+                                <span data-ar="إرسال التعليق" data-en="Submit Comment">إرسال التعليق</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Comments Display -->
+                    <div class="comments-list" id="commentsList">
+                        <!-- Comments will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title" data-ar="تواصل معي" data-en="Get In Touch">تواصل معي</h2>
+                    <p class="section-subtitle" data-ar="لنبدأ مشروعك التالي معاً" data-en="Let's start your next project together">
+                        لنبدأ مشروعك التالي معاً
+                    </p>
+                </div>
+                
+                <div class="contact-wrapper">
+                    <div class="contact-form-wrapper glass-effect" data-aos="fade-up">
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <input 
+                                    type="text" 
+                                    id="contactName" 
+                                    class="form-input glass-effect" 
+                                    placeholder="الاسم الكامل"
+                                    data-ar-placeholder="الاسم الكامل"
+                                    data-en-placeholder="Full Name"
+                                    required
+                                >
+                                <span class="form-error"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input 
+                                    type="email" 
+                                    id="contactEmail" 
+                                    class="form-input glass-effect" 
+                                    placeholder="البريد الإلكتروني"
+                                    data-ar-placeholder="البريد الإلكتروني"
+                                    data-en-placeholder="Email Address"
+                                    required
+                                >
+                                <span class="form-error"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input 
+                                    type="text" 
+                                    id="contactSubject" 
+                                    class="form-input glass-effect" 
+                                    placeholder="الموضوع"
+                                    data-ar-placeholder="الموضوع"
+                                    data-en-placeholder="Subject"
+                                    required
+                                >
+                                <span class="form-error"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea 
+                                    id="contactMessage" 
+                                    class="form-textarea glass-effect" 
+                                    placeholder="رسالتك..."
+                                    data-ar-placeholder="رسالتك..."
+                                    data-en-placeholder="Your message..."
+                                    rows="6"
+                                    required
+                                ></textarea>
+                                <span class="form-error"></span>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary glass-effect btn-submit">
+                                <span data-ar="إرسال الرسالة" data-en="Send Message">إرسال الرسالة</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="contact-info" data-aos="fade-up" data-aos-delay="100">
+                        <div class="info-card glass-effect">
+                            <div class="info-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <h3 data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</h3>
+                            <p>s.bagomri@gmail.com</p>
+                        </div>
+                        
+                        <div class="info-card glass-effect">
+                            <div class="info-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <h3 data-ar="الموقع" data-en="Location">الموقع</h3>
+                            <p data-ar="اليمن" data-en="Yemen">اليمن</p>
+                        </div>
+                        
+                        <!-- Social Links -->
+                        <div class="social-links">
+                            <a href="https://wa.me/967777616167" target="_blank" rel="noopener noreferrer" class="social-link glass-effect" aria-label="WhatsApp">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.behance.net/salehbbagomri" target="_blank" rel="noopener noreferrer" class="social-link glass-effect" aria-label="Behance">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M6.938 4.503c.702 0 1.34.06 1.92.188.577.13 1.07.33 1.485.61.41.28.733.65.96 1.12.225.47.34 1.05.34 1.73 0 .74-.17 1.36-.507 1.86-.338.5-.837.9-1.502 1.22.906.26 1.576.72 2.022 1.37.448.66.665 1.45.665 2.36 0 .75-.13 1.39-.41 1.93-.28.55-.67 1-1.16 1.35-.48.348-1.05.6-1.67.767-.61.165-1.252.254-1.91.254H0V4.51h6.938v-.007zM16.94 16.665c.44.428 1.073.643 1.894.643.59 0 1.1-.148 1.53-.447.424-.29.68-.61.78-.94h2.588c-.403 1.28-1.048 2.2-1.9 2.75-.85.56-1.884.83-3.08.83-.837 0-1.584-.13-2.272-.4-.673-.27-1.24-.65-1.693-1.15-.447-.52-.785-1.13-1.006-1.83-.216-.7-.32-1.48-.32-2.37 0-.86.11-1.63.336-2.35.22-.72.55-1.33 1.002-1.83.45-.5 1.01-.89 1.67-1.16.66-.27 1.416-.4 2.27-.4.93 0 1.73.17 2.41.52.67.35 1.22.82 1.64 1.42.41.6.71 1.29.87 2.07.17.78.23 1.61.2 2.5h-7.69c0 .84.28 1.632.71 2.065l-.08.03zm-10.24.05c.317 0 .62-.03.906-.093.29-.06.548-.165.763-.3.21-.135.39-.328.52-.583.13-.24.19-.57.19-.96 0-.75-.22-1.29-.64-1.62-.43-.32-.99-.48-1.69-.48H3.24v4.05H6.7v-.03zm13.607-5.65c-.352-.385-.94-.592-1.657-.592-.468 0-.855.074-1.166.238-.302.15-.55.35-.74.59-.19.24-.317.48-.392.75-.075.26-.12.5-.135.71h4.762c-.07-.75-.32-1.39-.68-1.79v.09zM6.52 10.45c.574 0 1.05-.134 1.425-.412.374-.27.554-.72.554-1.338 0-.344-.07-.625-.18-.846-.13-.22-.3-.39-.5-.512-.21-.124-.45-.21-.72-.257-.27-.053-.56-.074-.84-.074H3.23v3.45h3.29v-.01zm9.098-4.958h5.968v1.454h-5.968V5.48v.01z"/>
+                                </svg>
+                            </a>
+                            <a href="https://instagram.com/salehbagomri" target="_blank" rel="noopener noreferrer" class="social-link glass-effect" aria-label="Instagram">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/images/logo.svg" alt="Bagomri Logo">
+                </div>
+                <p class="footer-text" data-ar="© 2025 Bagomri. جميع الحقوق محفوظة." data-en="© 2025 Bagomri. All rights reserved.">
+                    © 2025 Bagomri. جميع الحقوق محفوظة.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <!-- Main JavaScript -->
+    <script src="js/config.js"></script>
+    <script src="js/modules/firebase.js"></script>
+    <script src="js/modules/theme.js"></script>
+    <script src="js/modules/language.js"></script>
+    <script src="js/modules/navigation.js"></script>
+    <script src="js/modules/animations.js"></script>
+    <script src="js/modules/portfolio.js"></script>
+    <script src="js/modules/lab.js"></script>
+    <script src="js/modules/guestbook.js"></script>
+    <script src="js/modules/contact.js"></script>
+    <script src="js/modules/notifications.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

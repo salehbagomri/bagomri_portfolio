@@ -1,0 +1,334 @@
+// ============================================
+// MIXINS - المخاليط القابلة لإعادة الاستخدام
+// ============================================
+
+// ============================================
+// GLASSMORPHISM EFFECT - التأثير الزجاجي
+// ============================================
+
+@mixin glass-effect($opacity: 0.1, $blur: $glass-blur) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: $glass-shadow-light;
+  
+  .theme-dark & {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: $glass-shadow-dark;
+  }
+}
+
+// ============================================
+// RESPONSIVE BREAKPOINTS - نقاط التوقف
+// ============================================
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (min-width: $breakpoint-xs) { @content; }
+  }
+  @else if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  }
+  @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  }
+  @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  }
+  @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  }
+  @else if $breakpoint == 2xl {
+    @media (min-width: $breakpoint-2xl) { @content; }
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: $breakpoint-xs - 1) { @content; }
+  }
+  @else if $breakpoint == sm {
+    @media (max-width: $breakpoint-sm - 1) { @content; }
+  }
+  @else if $breakpoint == md {
+    @media (max-width: $breakpoint-md - 1) { @content; }
+  }
+  @else if $breakpoint == lg {
+    @media (max-width: $breakpoint-lg - 1) { @content; }
+  }
+  @else if $breakpoint == xl {
+    @media (max-width: $breakpoint-xl - 1) { @content; }
+  }
+}
+
+// ============================================
+// FLEXBOX UTILITIES
+// ============================================
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// ============================================
+// POSITIONING
+// ============================================
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin absolute-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// ============================================
+// TRANSITIONS - الحركات الانتقالية
+// ============================================
+
+@mixin transition($properties: all, $duration: $transition-base, $easing: $easing-smooth) {
+  transition: $properties $duration $easing;
+}
+
+@mixin smooth-transition {
+  transition: all $transition-base $easing-smooth;
+}
+
+// ============================================
+// ANIMATIONS - الرسوم المتحركة
+// ============================================
+
+@mixin hover-lift {
+  transition: transform $transition-base $easing-smooth, 
+              box-shadow $transition-base $easing-smooth;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+  }
+}
+
+@mixin hover-scale($scale: 1.05) {
+  transition: transform $transition-base $easing-smooth;
+  
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+@mixin pulse-animation {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+// ============================================
+// TEXT UTILITIES
+// ============================================
+
+@mixin text-gradient($gradient: $gradient-primary) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding-bottom: 0.25em;
+  display: inline-block;
+}
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ============================================
+// SHADOWS
+// ============================================
+
+@mixin glow-effect($color: $color-primary, $intensity: 0.5) {
+  box-shadow: 0 0 20px rgba($color, $intensity);
+}
+
+@mixin text-shadow($color: rgba(0, 0, 0, 0.3)) {
+  text-shadow: 2px 2px 4px $color;
+}
+
+// ============================================
+// BUTTONS
+// ============================================
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: $border-radius-lg;
+  font-weight: $weight-semibold;
+  font-size: $font-size-base;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  @include smooth-transition;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ============================================
+// CARDS
+// ============================================
+
+@mixin card-base {
+  @include glass-effect;
+  border-radius: $border-radius-xl;
+  padding: $spacing-xl;
+  @include hover-lift;
+}
+
+// ============================================
+// SCROLLBAR - شريط التمرير المخصص
+// ============================================
+
+@mixin custom-scrollbar($width: 8px, $track-color: transparent, $thumb-color: rgba(155, 155, 155, 0.5)) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $border-radius-full;
+    
+    &:hover {
+      background: rgba(155, 155, 155, 0.7);
+    }
+  }
+  
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-color $track-color;
+}
+
+// ============================================
+// RTL SUPPORT - دعم العربية
+// ============================================
+
+@mixin rtl {
+  [dir="rtl"] & {
+    @content;
+  }
+}
+
+@mixin ltr {
+  [dir="ltr"] & {
+    @content;
+  }
+}
+
+@mixin logical-property($property, $value) {
+  @if $property == margin-left {
+    margin-inline-start: $value;
+  }
+  @else if $property == margin-right {
+    margin-inline-end: $value;
+  }
+  @else if $property == padding-left {
+    padding-inline-start: $value;
+  }
+  @else if $property == padding-right {
+    padding-inline-end: $value;
+  }
+  @else if $property == left {
+    inset-inline-start: $value;
+  }
+  @else if $property == right {
+    inset-inline-end: $value;
+  }
+  @else {
+    #{$property}: $value;
+  }
+}
+
+// ============================================
+// ASPECT RATIO
+// ============================================
+
+@mixin aspect-ratio($width, $height) {
+  aspect-ratio: #{$width} / #{$height};
+  
+  @supports not (aspect-ratio: 1 / 1) {
+    &::before {
+      content: '';
+      display: block;
+      padding-top: calc(#{$height} / #{$width} * 100%);
+    }
+  }
+}
+
+// ============================================
+// GRID UTILITIES
+// ============================================
+
+@mixin grid-auto-fit($min-width: 250px, $gap: $spacing-lg) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+@mixin grid-auto-fill($min-width: 250px, $gap: $spacing-lg) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// ============================================
+// FOCUS STYLES
+// ============================================
+
+@mixin focus-ring($color: $color-primary, $width: 3px) {
+  outline: none;
+  box-shadow: 0 0 0 $width rgba($color, 0.5);
+}
+
+@mixin focus-visible {
+  &:focus-visible {
+    @include focus-ring;
+  }
+}

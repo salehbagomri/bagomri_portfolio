@@ -1,0 +1,251 @@
+// ============================================
+// NAVIGATION - شريط التنقل
+// ============================================
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-index-sticky;
+  padding: $spacing-md 0;
+  @include glass-effect(0.7, 15px);
+  @include smooth-transition;
+  
+  &.scrolled {
+    padding: $spacing-sm 0;
+    box-shadow: $shadow-lg;
+  }
+}
+
+.nav-container {
+  @include flex-between;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+  
+  @include respond-below(md) {
+    padding: 0 $spacing-lg;
+  }
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  z-index: $z-index-sticky + 1;
+  
+  img {
+    height: 45px;
+    width: auto;
+    @include smooth-transition;
+    
+    .navbar.scrolled & {
+      height: 35px;
+    }
+  }
+  
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: $z-index-sticky + 1;
+  
+  @include respond-below(md) {
+    display: flex;
+  }
+  
+  span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-primary);
+    border-radius: $border-radius-full;
+    @include smooth-transition;
+  }
+  
+  &.active {
+    span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xl;
+  
+  @include respond-below(md) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    justify-content: center;
+    @include glass-effect(0.98, 20px);
+    transform: translateY(-100%);
+    opacity: 0;
+    @include smooth-transition;
+    
+    &.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: block;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-base;
+  font-weight: $weight-medium;
+  color: var(--text-primary);
+  position: relative;
+  @include smooth-transition;
+  
+  @include respond-below(md) {
+    font-size: $font-size-xl;
+    padding: $spacing-md;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: $gradient-primary;
+    transform: translateX(-50%);
+    @include smooth-transition;
+  }
+  
+  &:hover,
+  &.active {
+    color: $color-primary;
+    
+    &::before {
+      width: 80%;
+    }
+  }
+}
+
+// ============================================
+// TOP CONTROLS - زر الثيم واللغة
+// ============================================
+
+.top-controls {
+  position: fixed;
+  top: $spacing-lg;
+  right: $spacing-lg;
+  display: flex;
+  gap: $spacing-md;
+  z-index: $z-index-sticky + 2;
+  
+  @include respond-below(md) {
+    top: $spacing-md;
+    right: $spacing-md;
+  }
+  
+  [dir="rtl"] & {
+    right: auto;
+    left: $spacing-lg;
+    
+    @include respond-below(md) {
+      left: $spacing-md;
+    }
+  }
+}
+
+.theme-toggle,
+.lang-toggle {
+  @include flex-center;
+  width: 48px;
+  height: 48px;
+  border-radius: $border-radius-full;
+  @include glass-effect;
+  cursor: pointer;
+  @include smooth-transition;
+  
+  &:hover {
+    transform: scale(1.1);
+    @include glow-effect($color-primary, 0.3);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-primary);
+  }
+}
+
+.theme-toggle {
+  .sun-icon {
+    display: none;
+  }
+  
+  .moon-icon {
+    display: block;
+  }
+  
+  .theme-dark & {
+    .sun-icon {
+      display: block;
+    }
+    
+    .moon-icon {
+      display: none;
+    }
+  }
+}
+
+.lang-toggle {
+  font-weight: $weight-bold;
+  font-size: $font-size-md;
+  color: var(--text-primary);
+  
+  .lang-ar {
+    display: block;
+  }
+  
+  .lang-en {
+    display: none;
+  }
+  
+  [dir="rtl"] & {
+    .lang-ar {
+      display: none;
+    }
+    
+    .lang-en {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "bagomri-portfolio",
+  "version": "1.0.0",
+  "description": "بورتفوليو احترافي ثلاثي التخصص (Flutter, UI/UX, Graphics) مع تجربة مستخدم غامرة",
+  "main": "index.html",
+  "scripts": {
+    "sass": "sass sass/main.scss css/main.css",
+    "sass:watch": "sass --watch sass/main.scss:css/main.css",
+    "firebase:serve": "firebase serve",
+    "firebase:deploy": "firebase deploy",
+    "firebase:deploy:hosting": "firebase deploy --only hosting",
+    "firebase:deploy:rules": "firebase deploy --only firestore:rules",
+    "deploy": "npm run sass && firebase deploy --only hosting",
+    "start": "npm run sass:watch"
+  },
+  "keywords": [
+    "portfolio",
+    "flutter",
+    "ui-ux",
+    "graphic-design",
+    "firebase",
+    "glassmorphism",
+    "arabic",
+    "rtl"
+  ],
+  "author": "Bagomri",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.69.5"
+  },
+  "dependencies": {
+    "firebase-tools": "^13.0.0"
+  }
+}

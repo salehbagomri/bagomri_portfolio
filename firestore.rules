@@ -1,0 +1,87 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ============================================
+    // VISITORS COLLECTION - مجموعة الزوار
+    // ============================================
+    match /visitors/{visitorId} {
+      // السماح للجميع بالقراءة
+      allow read: if true;
+      
+      // السماح بالكتابة فقط للزائر نفسه
+      allow create: if request.auth == null && 
+                      request.resource.data.keys().hasAll(['firstVisit', 'lastVisit', 'visitCount']);
+      
+      allow update: if request.auth == null &&
+                      request.resource.data.keys().hasAll(['lastVisit', 'visitCount']);
+    }
+    
+    // ============================================
+    // COMMENTS COLLECTION - مجموعة التعليقات
+    // ============================================
+    match /comments/{commentId} {
+      // السماح للجميع بالقراءة للتعليقات المعتمدة فقط
+      allow read: if resource.data.approved == true;
+      
+      // السماح للجميع بإضافة تعليقات
+      allow create: if request.auth == null && 
+                      request.resource.data.keys().hasAll(['name', 'text', 'timestamp', 'approved', 'reactions', 'reactedBy']) &&
+                      request.resource.data.name is string &&
+                      request.resource.data.name.size() >= 2 &&
+                      request.resource.data.name.size() <= 50 &&
+                      request.resource.data.text is string &&
+                      request.resource.data.text.size() >= 3 &&
+                      request.resource.data.text.size() <= 500;
+      
+      // السماح بتحديث reactions فقط
+      allow update: if request.auth == null &&
+                       request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reactions', 'reactedBy']) &&
+                       request.resource.data.reactions is map &&
+                       request.resource.data.reactedBy is list;
+      
+      // منع الحذف من الزوار
+      allow delete: if false;
+    }
+    
+    // ============================================
+    // CONTACTS COLLECTION - مجموعة الرسائل
+    // ============================================
+    match /contacts/{contactId} {
+      // منع القراءة للجميع (يمكن قراءتها فقط من Firebase Console أو المشرفين)
+      allow read: if false;
+      
+      // السماح للجميع بإرسال رسائل
+      allow create: if request.auth == null && 
+                      request.resource.data.keys().hasAll(['name', 'email', 'subject', 'message', 'timestamp', 'read']) &&
+                      request.resource.data.name is string &&
+                      request.resource.data.name.size() >= 2 &&
+                      request.resource.data.name.size() <= 100 &&
+                      request.resource.data.email is string &&
+                      request.resource.data.email.matches('^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$') &&
+                      request.resource.data.subject is string &&
+                      request.resource.data.subject.size() >= 3 &&
+                      request.resource.data.subject.size() <= 200 &&
+                      request.resource.data.message is string &&
+                      request.resource.data.message.size() >= 10 &&
+                      request.resource.data.message.size() <= 2000;
+      
+      // منع التحديث والحذف
+      allow update, delete: if false;
+    }
+    
+    // ============================================
+    // ANALYTICS COLLECTION - مجموعة التحليلات
+    // ============================================
+    match /analytics/{analyticsId} {
+      allow read: if false;
+      allow create: if request.auth == null;
+      allow update, delete: if false;
+    }
+    
+    // رفض كل ما لم يُحدد
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
