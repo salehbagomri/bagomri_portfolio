@@ -64,7 +64,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: $z-index-sticky + 1;
+  z-index: $z-index-sticky + 20;
 
   @include respond-below(md) {
     display: flex;
@@ -98,22 +98,40 @@
   display: flex;
   align-items: center;
   gap: $spacing-xl;
-  
+
   @include respond-below(md) {
     position: fixed;
     top: 0;
-    left: 0;
     right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100dvh;
     flex-direction: column;
-    justify-content: center;
-    @include glass-effect(0.98, 20px);
-    transform: translateY(-100%);
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-top: 90px;
+    padding-bottom: $spacing-2xl;
+    padding-inline: $spacing-xl;
+    gap: $spacing-xs;
+    background: rgba(8, 8, 20, 0.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-inline-start: 1px solid rgba(255, 255, 255, 0.07);
+    transform: translateX(100%);
     opacity: 0;
+    z-index: $z-index-sticky + 5;
     @include smooth-transition;
-    
+    overflow-y: auto;
+
+    [dir="rtl"] & {
+      right: auto;
+      left: 0;
+      transform: translateX(-100%);
+      border-inline-start: none;
+      border-inline-end: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
     &.active {
-      transform: translateY(0);
+      transform: translateX(0);
       opacity: 1;
     }
   }
@@ -131,10 +149,16 @@
   color: var(--text-primary);
   position: relative;
   @include smooth-transition;
-  
+
   @include respond-below(md) {
-    font-size: $font-size-xl;
-    padding: $spacing-md;
+    font-size: $font-size-lg;
+    padding: $spacing-lg $spacing-xl;
+    border-radius: $border-radius-lg;
+    text-align: center;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
   }
   
   &::before {
