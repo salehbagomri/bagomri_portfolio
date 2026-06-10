@@ -192,24 +192,18 @@
 .gallery-main {
   position: relative;
   width: 100%;
-  min-height: 400px;
-  max-height: 700px;
-  margin: 0 auto $spacing-xl;
-  border-radius: $border-radius-xl;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  @include respond-below(md) {
-    min-height: 300px;
-    max-height: 500px;
-  }
-  
+  margin: 0 auto $spacing-xl;
+  border-radius: $border-radius-xl;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.15);
+
   img {
+    display: block;
     max-width: 100%;
-    max-height: 100%;
+    max-height: 75vh;
     width: auto;
     height: auto;
     object-fit: contain;

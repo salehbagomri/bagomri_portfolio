@@ -318,11 +318,16 @@ class PortfolioManager {
         
         // Detect device type
         const isMobile = window.innerWidth <= 768;
-        const screenshots = project.screenshots 
+        let screenshots = project.screenshots
             ? (typeof project.screenshots === 'object' && project.screenshots.mobile && project.screenshots.desktop
                 ? (isMobile ? project.screenshots.mobile : project.screenshots.desktop)
                 : (Array.isArray(project.screenshots) ? project.screenshots : []))
             : [];
+
+        // إذا لا توجد لقطات، استخدم الصورة الرئيسية
+        if (screenshots.length === 0 && project.image) {
+            screenshots = [project.image];
+        }
         
         // إنشاء modal
         const modal = document.createElement('div');
