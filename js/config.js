@@ -49,6 +49,7 @@ const siteConfig = {
     
     // معلومات التواصل
     contact: {
+        email: 's.bagomri@gmail.com',
         whatsapp: '+967770727055',
         location: {
             ar: 'السعودية',
