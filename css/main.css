@@ -808,7 +808,7 @@ textarea:focus-visible {
 
 .top-controls {
   position: fixed;
-  top: 1.5rem;
+  top: calc(45px + 2rem + 1rem);
   right: 1.5rem;
   display: flex;
   gap: 1rem;
@@ -816,7 +816,7 @@ textarea:focus-visible {
 }
 @media (max-width: 767px) {
   .top-controls {
-    top: 1rem;
+    top: calc(45px + 2rem + 0.5rem);
     right: 1rem;
   }
 }

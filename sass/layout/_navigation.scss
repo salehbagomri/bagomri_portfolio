@@ -159,21 +159,21 @@
 
 .top-controls {
   position: fixed;
-  top: $spacing-lg;
+  top: calc(45px + #{$spacing-md * 2} + #{$spacing-md});
   right: $spacing-lg;
   display: flex;
   gap: $spacing-md;
   z-index: $z-index-sticky + 2;
-  
+
   @include respond-below(md) {
-    top: $spacing-md;
+    top: calc(45px + #{$spacing-md * 2} + #{$spacing-sm});
     right: $spacing-md;
   }
-  
+
   [dir="rtl"] & {
     right: auto;
     left: $spacing-lg;
-    
+
     @include respond-below(md) {
       left: $spacing-md;
     }
