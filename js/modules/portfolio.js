@@ -25,9 +25,19 @@ class PortfolioManager {
     // PROJECT DATA - بيانات المشاريع
     // ============================================
 
-    loadProjects() {
-        // هنا يمكنك تحميل المشاريع من API أو JSON file
-        // المشاريع التجريبية:
+    async loadProjects() {
+        try {
+            const firestoreProjects = await firebaseService.getProjects();
+            if (firestoreProjects && firestoreProjects.length > 0) {
+                this.projects = firestoreProjects;
+                this.renderFeaturedProjects();
+                this.renderAllProjects();
+                this.setupFilters();
+                return;
+            }
+        } catch (e) {}
+
+        // fallback: المشاريع الافتراضية
         this.projects = [
             {
                 id: 1,
@@ -164,6 +174,7 @@ class PortfolioManager {
 
         this.renderFeaturedProjects();
         this.renderAllProjects();
+        this.setupFilters();
     }
 
     // ============================================
@@ -296,7 +307,7 @@ class PortfolioManager {
     // ============================================
 
     openProject(projectId) {
-        const project = this.projects.find(p => p.id === projectId);
+        const project = this.projects.find(p => String(p.id) === String(projectId));
         if (!project) return;
 
         this.showProjectModal(project);

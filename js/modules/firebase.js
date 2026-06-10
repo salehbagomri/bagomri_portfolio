@@ -5,10 +5,13 @@
 class FirebaseService {
     constructor() {
         this.db = null;
+        this.auth = null;
+        this.storage = null;
         this.collections = {
             visitors: 'visitors',
             comments: 'comments',
-            contacts: 'contacts'
+            contacts: 'contacts',
+            projects: 'projects'
         };
     }
 
@@ -17,11 +20,83 @@ class FirebaseService {
         try {
             firebase.initializeApp(firebaseConfig);
             this.db = firebase.firestore();
+            if (typeof firebase.auth === 'function') this.auth = firebase.auth();
+            if (typeof firebase.storage === 'function') this.storage = firebase.storage();
             return true;
         } catch (error) {
             console.error('❌ Firebase initialization error:', error);
             return false;
         }
+    }
+
+    // ============================================
+    // AUTH - المصادقة
+    // ============================================
+
+    async loginAdmin(email, password) {
+        return await this.auth.signInWithEmailAndPassword(email, password);
+    }
+
+    async logoutAdmin() {
+        return await this.auth.signOut();
+    }
+
+    onAuthStateChanged(callback) {
+        if (!this.auth) return;
+        return this.auth.onAuthStateChanged(callback);
+    }
+
+    getCurrentUser() {
+        return this.auth ? this.auth.currentUser : null;
+    }
+
+    // ============================================
+    // PROJECTS CRUD - إدارة المشاريع
+    // ============================================
+
+    async getProjects() {
+        try {
+            const snapshot = await this.db.collection(this.collections.projects)
+                .orderBy('order', 'asc')
+                .get();
+            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (error) {
+            console.error('Error getting projects:', error);
+            return [];
+        }
+    }
+
+    async addProject(data) {
+        const doc = {
+            ...data,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+        const ref = await this.db.collection(this.collections.projects).add(doc);
+        return ref.id;
+    }
+
+    async updateProject(id, data) {
+        await this.db.collection(this.collections.projects).doc(id).update({
+            ...data,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    }
+
+    async deleteProject(id) {
+        await this.db.collection(this.collections.projects).doc(id).delete();
+    }
+
+    // ============================================
+    // STORAGE - رفع الصور
+    // ============================================
+
+    async uploadImage(file, folder = 'project-images') {
+        if (!this.storage) throw new Error('Firebase Storage not initialized');
+        const name = `${folder}/${Date.now()}_${file.name}`;
+        const ref = this.storage.ref(name);
+        await ref.put(file);
+        return await ref.getDownloadURL();
     }
 
     // ============================================
