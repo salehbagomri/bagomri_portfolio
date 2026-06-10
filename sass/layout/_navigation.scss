@@ -157,28 +157,7 @@
 // TOP CONTROLS - زر الثيم واللغة
 // ============================================
 
-.top-controls {
-  position: fixed;
-  top: calc(45px + #{$spacing-md * 2} + #{$spacing-md});
-  right: $spacing-lg;
-  display: flex;
-  gap: $spacing-md;
-  z-index: $z-index-sticky + 2;
-
-  @include respond-below(md) {
-    top: calc(45px + #{$spacing-md * 2} + #{$spacing-sm});
-    right: $spacing-md;
-  }
-
-  [dir="rtl"] & {
-    right: auto;
-    left: $spacing-lg;
-
-    @include respond-below(md) {
-      left: $spacing-md;
-    }
-  }
-}
+// lang-toggle داخل الـ navbar الآن — لا حاجة لـ top-controls
 
 .theme-toggle,
 .lang-toggle {

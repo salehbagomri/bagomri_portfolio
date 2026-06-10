@@ -806,30 +806,6 @@ textarea:focus-visible {
   width: 80%;
 }
 
-.top-controls {
-  position: fixed;
-  top: calc(45px + 2rem + 1rem);
-  right: 1.5rem;
-  display: flex;
-  gap: 1rem;
-  z-index: 1022;
-}
-@media (max-width: 767px) {
-  .top-controls {
-    top: calc(45px + 2rem + 0.5rem);
-    right: 1rem;
-  }
-}
-[dir=rtl] .top-controls {
-  right: auto;
-  left: 1.5rem;
-}
-@media (max-width: 767px) {
-  [dir=rtl] .top-controls {
-    left: 1rem;
-  }
-}
-
 .theme-toggle,
 .lang-toggle {
   display: flex;
