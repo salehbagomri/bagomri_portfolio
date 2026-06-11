@@ -2035,6 +2035,7 @@ textarea:focus-visible {
 .hero-image {
   position: relative;
   z-index: 1;
+  margin-top: 6rem;
 }
 @media (max-width: 1023px) {
   .hero-image {
@@ -2279,12 +2280,7 @@ textarea:focus-visible {
   }
 }
 .visitor-counter {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
   align-items: center;
   gap: 1rem;
   padding: 1rem 2rem;
@@ -2292,12 +2288,14 @@ textarea:focus-visible {
   font-size: 1rem;
   font-weight: 500;
   color: var(--text-primary);
+  margin-top: 2rem;
 }
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .visitor-counter {
-    position: static;
-    transform: none;
-    margin-top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
   }
 }
 .visitor-counter svg {

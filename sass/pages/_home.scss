@@ -177,7 +177,8 @@
 .hero-image {
   position: relative;
   z-index: 1;
-  
+  margin-top: $spacing-4xl;
+
   @include respond-below(lg) {
     max-width: 500px;
     margin: 0 auto;
@@ -446,30 +447,29 @@
 
 
 .visitor-counter {
-  position: absolute;
-  bottom: $spacing-2xl;
-  left: 50%;
-  transform: translateX(-50%);
-  @include flex-center;
+  display: inline-flex;
+  align-items: center;
   gap: $spacing-md;
   padding: $spacing-md $spacing-xl;
   border-radius: $border-radius-full;
   font-size: $font-size-base;
   font-weight: $weight-medium;
   color: var(--text-primary);
-  
-  @include respond-below(md) {
-    position: static;
-    transform: none;
-    margin-top: $spacing-2xl;
+  margin-top: $spacing-xl;
+
+  @include respond-below(lg) {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
   }
-  
+
   svg {
     width: 24px;
     height: 24px;
     color: $color-primary;
   }
-  
+
   .counter-number {
     font-size: $font-size-xl;
     font-weight: $weight-bold;
