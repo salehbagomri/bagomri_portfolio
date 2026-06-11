@@ -59,8 +59,7 @@ const siteConfig = {
             github: 'https://github.com/salehbagomri',
             behance: 'https://www.behance.net/salehbbagomri',
             instagram: 'https://instagram.com/salehbagomri',
-            linkedin: 'https://www.linkedin.com/in/salehbagomri',
-            dribbble: 'https://dribbble.com/yourusername'
+            linkedin: 'https://www.linkedin.com/in/salehbagomri'
         }
     },
     
