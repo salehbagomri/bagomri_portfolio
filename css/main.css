@@ -2035,12 +2035,13 @@ textarea:focus-visible {
 .hero-image {
   position: relative;
   z-index: 1;
-  margin-top: 6rem;
+  padding-top: 6rem;
 }
 @media (max-width: 1023px) {
   .hero-image {
     max-width: 500px;
     margin: 0 auto;
+    padding-top: 0;
     display: block;
   }
 }

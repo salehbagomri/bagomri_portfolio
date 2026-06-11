@@ -177,19 +177,20 @@
 .hero-image {
   position: relative;
   z-index: 1;
-  margin-top: $spacing-4xl;
+  padding-top: $spacing-4xl;
 
   @include respond-below(lg) {
     max-width: 500px;
     margin: 0 auto;
+    padding-top: 0;
     display: block;
   }
-  
+
   @include respond-below(md) {
     max-width: 400px;
     margin-top: $spacing-2xl;
   }
-  
+
   @include respond-below(sm) {
     max-width: 320px;
     margin-top: $spacing-3xl;
