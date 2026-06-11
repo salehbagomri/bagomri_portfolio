@@ -3790,8 +3790,6 @@ textarea:focus-visible {
 .footer {
   background: var(--bg-primary);
   padding: 4rem 0;
-  margin-top: 8rem;
-  border-top: 1px solid var(--border-color);
 }
 
 .footer-content {
