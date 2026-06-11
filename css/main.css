@@ -3200,7 +3200,7 @@ textarea:focus-visible {
 }
 
 .guestbook-section {
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
 }
 
 .guestbook-container {
@@ -3620,7 +3620,7 @@ textarea:focus-visible {
   }
 }
 .contact-section {
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   position: relative;
 }
 
@@ -3788,7 +3788,7 @@ textarea:focus-visible {
 }
 
 .footer {
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   padding: 4rem 0;
   margin-top: 8rem;
   border-top: 1px solid var(--border-color);
