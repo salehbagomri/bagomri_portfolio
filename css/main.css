@@ -3100,7 +3100,7 @@ textarea:focus-visible {
 }
 
 .services-section {
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
 }
 
 .services-grid {
@@ -3192,7 +3192,7 @@ textarea:focus-visible {
 }
 
 .guestbook-section {
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
 }
 
 .guestbook-container {
@@ -3612,7 +3612,7 @@ textarea:focus-visible {
   }
 }
 .contact-section {
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   position: relative;
 }
 .contact-section::before {
@@ -3622,7 +3622,7 @@ textarea:focus-visible {
   left: 0;
   right: 0;
   height: 300px;
-  background: linear-gradient(180deg, var(--bg-secondary) 0%, transparent 100%);
+  background: linear-gradient(180deg, var(--bg-primary) 0%, transparent 100%);
   pointer-events: none;
 }
 
