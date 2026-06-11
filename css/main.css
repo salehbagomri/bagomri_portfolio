@@ -3810,10 +3810,22 @@ textarea:focus-visible {
   transform: scale(1.05);
 }
 
-.footer-text {
-  font-size: 1rem;
+.footer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
   color: var(--text-tertiary);
-  margin: 0;
+}
+
+.footer-brand {
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.footer-rights {
+  color: var(--text-tertiary);
 }
 
 /*# sourceMappingURL=main.css.map */
