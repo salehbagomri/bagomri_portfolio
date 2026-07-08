@@ -177,10 +177,33 @@
     }
   }
 }
-
 .footer-text {
   font-size: $font-size-sm;
   color: var(--text-tertiary);
   margin: 0;
   text-align: center;
+}
+
+.footer-links {
+  margin-top: $spacing-md;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-md;
+  
+  .footer-link {
+    color: var(--text-secondary);
+    font-size: $font-size-sm;
+    text-decoration: none;
+    @include smooth-transition;
+    
+    &:hover {
+      color: $color-primary;
+    }
+  }
+  
+  .separator {
+    color: var(--text-tertiary);
+    font-size: $font-size-sm;
+  }
 }
