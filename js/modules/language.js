@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Language Module - Arabic (RTL) / English (LTR) toggle
  */
 const LANG_KEY = 'bagomri_lang';
@@ -39,6 +39,9 @@ function applyLanguage(lang) {
   document.querySelectorAll('.blog-read-more [data-lucide]').forEach((icon) => {
     icon.setAttribute('data-lucide', isAr ? 'arrow-left' : 'arrow-right');
   });
+
+  // Dispatch custom event for dynamic modules (blog, articles, portfolio)
+  window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang, isAr } }));
 
   // Refresh Lucide icons after direction change
   if (typeof lucide !== 'undefined') lucide.createIcons();

@@ -6,6 +6,7 @@
 class BlogManager {
     constructor() {
         this.articles = [];
+        this.currentArticle = null;
         this.currentFilter = 'all';
         this.currentLang = 'ar';
     }
@@ -96,14 +97,17 @@ class BlogManager {
 
     // ── Render article card HTML ───────────────────────────
     renderCard(article, lang = 'ar') {
-        const title   = lang === 'ar' ? (article.titleAr   || article.title?.ar   || '') : (article.titleEn   || article.title?.en   || '');
-        const excerpt = lang === 'ar' ? (article.excerptAr || article.excerpt?.ar || '') : (article.excerptEn || article.excerpt?.en || '');
-        const label   = lang === 'ar' ? (article.categoryLabelAr || article.category) : (article.categoryLabelEn || article.category);
+        const isAr    = lang === 'ar';
+        const title   = isAr ? (article.titleAr || article.titleEn || '') : (article.titleEn || article.titleAr || '');
+        const excerpt = isAr ? (article.excerptAr || article.excerptEn || '') : (article.excerptEn || article.excerptAr || '');
+        const label   = isAr 
+            ? (article.categoryLabelAr || article.category) 
+            : (article.categoryLabelEn || article.category);
         const date    = this.formatDate(article.publishedAt, lang);
         const color   = this.getCategoryColor(article.category);
         const icon    = this.getCategoryIcon(article.category);
-        const readMore = lang === 'ar' ? 'اقرأ المزيد' : 'Read More';
-        const readTimeLabel = lang === 'ar'
+        const readMore = isAr ? 'اقرأ المزيد' : 'Read More';
+        const readTimeLabel = isAr
             ? `${article.readTime || 3} دقائق قراءة`
             : `${article.readTime || 3} min read`;
 
@@ -139,7 +143,8 @@ class BlogManager {
         if (!container) return;
 
         if (!articles || articles.length === 0) {
-            const msg = lang === 'ar'
+            const isAr = lang === 'ar';
+            const msg = isAr
                 ? '<div class="blog-empty"><p>لا توجد مقالات حتى الآن. تابعنا قريباً!</p></div>'
                 : '<div class="blog-empty"><p>No articles yet. Stay tuned!</p></div>';
             container.innerHTML = msg;
@@ -179,6 +184,13 @@ class BlogManager {
 
         // Setup filter buttons
         this._setupFilters();
+
+        // Listen for language toggle changes
+        window.addEventListener('languageChanged', (e) => {
+            this.currentLang = e.detail.lang;
+            const filtered = this.filterArticles(this.currentFilter);
+            this.renderGrid(filtered, 'blogGrid', e.detail.lang);
+        });
     }
 
     // ── Init single article page ───────────────────────────
@@ -195,28 +207,41 @@ class BlogManager {
         const article = await this.fetchBySlug(slug);
 
         if (!article) {
+            const isAr = (document.documentElement.lang || 'ar') === 'ar';
             document.getElementById('articleContent').innerHTML =
-                '<div class="article-not-found"><h2>المقال غير موجود</h2><a href="blog.html">العودة للمقالات</a></div>';
+                `<div class="article-not-found"><h2>${isAr ? 'المقال غير موجود' : 'Article Not Found'}</h2><a href="blog.html">${isAr ? 'العودة للمقالات' : 'Back to Articles'}</a></div>`;
             return;
         }
 
-        this._renderArticle(article);
+        this.currentArticle = article;
+        const currentLang = document.documentElement.lang || 'ar';
+        this._renderArticle(article, currentLang);
+
+        // Listen for language toggle changes
+        window.addEventListener('languageChanged', (e) => {
+            if (this.currentArticle) {
+                this._renderArticle(this.currentArticle, e.detail.lang);
+            }
+        });
     }
 
     // ── Render full article ────────────────────────────────
-    _renderArticle(article) {
-        const lang    = document.documentElement.lang || 'ar';
-        const title   = lang === 'ar' ? (article.titleAr   || '') : (article.titleEn   || '');
-        const content = lang === 'ar' ? (article.contentAr || '') : (article.contentEn || '');
+    _renderArticle(article, lang = null) {
+        lang = lang || document.documentElement.lang || 'ar';
+        const isAr    = lang === 'ar';
+        const title   = isAr ? (article.titleAr   || article.titleEn   || '') : (article.titleEn   || article.titleAr   || '');
+        const content = isAr ? (article.contentAr || article.contentEn || '') : (article.contentEn || article.contentAr || '');
+        const excerpt = isAr ? (article.excerptAr || article.excerptEn || '') : (article.excerptEn || article.excerptAr || '');
         const date    = this.formatDate(article.publishedAt, lang);
         const color   = this.getCategoryColor(article.category);
-        const label   = lang === 'ar' ? (article.categoryLabelAr || article.category) : (article.categoryLabelEn || article.category);
+        const label   = isAr 
+            ? (article.categoryLabelAr || article.category) 
+            : (article.categoryLabelEn || article.category);
 
         // Update page title + meta
         document.title = `${title} - Saleh Bagomri`;
         const metaDesc = document.querySelector('meta[name="description"]');
         if (metaDesc) {
-            const excerpt = lang === 'ar' ? (article.excerptAr || '') : (article.excerptEn || '');
             metaDesc.setAttribute('content', excerpt);
         }
 
@@ -239,7 +264,7 @@ class BlogManager {
               </span>
               <span class="article-read-time">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                ${lang === 'ar' ? `${article.readTime || 3} دقائق` : `${article.readTime || 3} min`}
+                ${isAr ? `${article.readTime || 3} دقائق` : `${article.readTime || 3} min read`}
               </span>
             </div>`;
         }
@@ -252,12 +277,12 @@ class BlogManager {
     // ── Filter button setup ────────────────────────────────
     _setupFilters() {
         const btns = document.querySelectorAll('.blog-filter-bar .filter-btn');
-        const lang = document.documentElement.lang || 'ar';
 
         btns.forEach(btn => {
             btn.addEventListener('click', () => {
                 btns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
+                const lang = document.documentElement.lang || 'ar';
                 const filtered = this.filterArticles(btn.dataset.filter);
                 this.renderGrid(filtered, 'blogGrid', lang);
             });
