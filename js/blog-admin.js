@@ -64,11 +64,14 @@ class BlogAdminManager {
                 : `<span style="color:#F59E0B;font-weight:600">◎ مسودة</span>`;
             const link  = `<a href="article.html?slug=${a.slug}" target="_blank"
                 style="color:var(--primary);font-size:.8rem">↗</a>`;
+            const thumb = a.coverImage
+                ? `<img src="${a.coverImage}" style="width:36px;height:36px;object-fit:cover;border-radius:4px;vertical-align:middle;margin-left:8px">`
+                : `<span style="display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:var(--bg3);border-radius:4px;font-size:.8rem;margin-left:8px">📄</span>`;
 
             return `<tr style="border-bottom:1px solid var(--glass-border);transition:background .15s"
                 onmouseover="this.style.background='var(--glass)'"
                 onmouseout="this.style.background=''">
-                <td style="padding:12px;font-weight:500">${title} ${link}</td>
+                <td style="padding:12px;font-weight:500">${thumb}${title} ${link}</td>
                 <td style="padding:12px;color:var(--text2);font-size:.85rem">${cat}</td>
                 <td style="padding:12px;color:var(--text2);font-size:.85rem">${date}</td>
                 <td style="padding:12px">${pub}</td>
@@ -93,6 +96,11 @@ class BlogAdminManager {
         document.getElementById('articleForm').reset();
         document.getElementById('articleId').value = '';
         document.getElementById('artPublished').checked = true;
+
+        // Reset image preview
+        const prev = document.getElementById('artCoverPreview');
+        if (prev) { prev.src = ''; prev.style.display = 'none'; }
+
         document.getElementById('articleModal').style.display = 'flex';
     }
 
@@ -117,12 +125,61 @@ class BlogAdminManager {
         document.getElementById('artContentAr').value     = article.contentAr || '';
         document.getElementById('artContentEn').value     = article.contentEn || '';
 
+        // Cover image
+        const coverUrl = article.coverImage || '';
+        document.getElementById('artCoverUrl').value = coverUrl;
+        const prev = document.getElementById('artCoverPreview');
+        if (coverUrl) {
+            prev.src = coverUrl;
+            prev.style.display = 'block';
+        } else {
+            prev.src = '';
+            prev.style.display = 'none';
+        }
+
         document.getElementById('articleModal').style.display = 'flex';
     }
 
     // ── Close modal ────────────────────────────────────────
     closeModal() {
         document.getElementById('articleModal').style.display = 'none';
+    }
+
+    // ── Image Preview ──────────────────────────────────────
+    previewCover(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const prev = document.getElementById('artCoverPreview');
+        prev.src = URL.createObjectURL(file);
+        prev.style.display = 'block';
+    }
+
+    previewFromUrl(url) {
+        const prev = document.getElementById('artCoverPreview');
+        if (url && url.trim()) {
+            prev.src = url.trim();
+            prev.style.display = 'block';
+        } else {
+            prev.style.display = 'none';
+        }
+    }
+
+    // ── Upload to Cloudinary ───────────────────────────────
+    async uploadToCloudinary(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', typeof CLOUDINARY_UPLOAD_PRESET !== 'undefined' ? CLOUDINARY_UPLOAD_PRESET : 'pre-pro');
+        formData.append('folder', 'portfolio-articles');
+
+        const cloudName = typeof CLOUDINARY_CLOUD_NAME !== 'undefined' ? CLOUDINARY_CLOUD_NAME : 'dk5buckt1';
+        const res = await fetch(
+            `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+            { method: 'POST', body: formData }
+        );
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error?.message || 'فشل رفع الصورة إلى Cloudinary');
+        return data.secure_url;
     }
 
     // ── Submit (add or update) ─────────────────────────────
@@ -139,27 +196,36 @@ class BlogAdminManager {
             return;
         }
 
-        const data = {
-            titleAr,
-            titleEn,
-            slug,
-            category:         document.getElementById('artCategory').value,
-            categoryLabelAr:  document.getElementById('artCategoryLabelAr').value.trim(),
-            categoryLabelEn:  document.getElementById('artCategoryLabelEn').value.trim(),
-            readTime:         parseInt(document.getElementById('artReadTime').value) || 5,
-            published:        document.getElementById('artPublished').checked,
-            excerptAr:        document.getElementById('artExcerptAr').value.trim(),
-            excerptEn:        document.getElementById('artExcerptEn').value.trim(),
-            contentAr:        document.getElementById('artContentAr').value,
-            contentEn:        document.getElementById('artContentEn').value,
-            updatedAt:        firebase.firestore.FieldValue.serverTimestamp(),
-        };
-
         const submitBtn = document.querySelector('#articleModal .btn-primary');
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="spinner"></span>';
 
         try {
+            // Handle image upload or URL
+            let coverImage = document.getElementById('artCoverUrl').value.trim();
+            const coverFile = document.getElementById('artCoverFile').files[0];
+            if (coverFile) {
+                this._toast('جارٍ رفع الصورة المصغرة...', 'success');
+                coverImage = await this.uploadToCloudinary(coverFile);
+            }
+
+            const data = {
+                titleAr,
+                titleEn,
+                slug,
+                coverImage:       coverImage || '',
+                category:         document.getElementById('artCategory').value,
+                categoryLabelAr:  document.getElementById('artCategoryLabelAr').value.trim(),
+                categoryLabelEn:  document.getElementById('artCategoryLabelEn').value.trim(),
+                readTime:         parseInt(document.getElementById('artReadTime').value) || 5,
+                published:        document.getElementById('artPublished').checked,
+                excerptAr:        document.getElementById('artExcerptAr').value.trim(),
+                excerptEn:        document.getElementById('artExcerptEn').value.trim(),
+                contentAr:        document.getElementById('artContentAr').value,
+                contentEn:        document.getElementById('artContentEn').value,
+                updatedAt:        firebase.firestore.FieldValue.serverTimestamp(),
+            };
+
             const col = firebaseService.db.collection('articles');
 
             if (this.editingId) {

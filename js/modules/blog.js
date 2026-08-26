@@ -72,12 +72,12 @@ class BlogManager {
     // ── Get icon SVG for category ──────────────────────────
     getCategoryIcon(category) {
         const icons = {
-            kotlin:   '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 3 9 9-9 9h18L12 12 21 3Z"/></svg>',
-            android:  '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 16a7 7 0 0 1 14 0"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><line x1="8" y1="7" x2="6" y2="4"/><line x1="16" y1="7" x2="18" y2="4"/></svg>',
-            compose:  '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><path d="M17 13v8M13 17h8"/></svg>',
-            tips:     '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
-            personal: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m13 2-3 14-3-5H2l5-3-1-6Z"/></svg>',
-            default:  '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+            kotlin:   '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 3 9 9-9 9h18L12 12 21 3Z"/></svg>',
+            android:  '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 16a7 7 0 0 1 14 0"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><line x1="8" y1="7" x2="6" y2="4"/><line x1="16" y1="7" x2="18" y2="4"/></svg>',
+            compose:  '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><path d="M17 13v8M13 17h8"/></svg>',
+            tips:     '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
+            personal: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m13 2-3 14-3-5H2l5-3-1-6Z"/></svg>',
+            default:  '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
         };
         return icons[category] || icons.default;
     }
@@ -111,11 +111,20 @@ class BlogManager {
             ? `${article.readTime || 3} دقائق قراءة`
             : `${article.readTime || 3} min read`;
 
+        const imageHtml = article.coverImage
+            ? `<div class="blog-card-img"><img src="${article.coverImage}" class="blog-cover-img" alt="${title}" loading="lazy"></div>`
+            : `<div class="blog-card-img" style="background:${color.bg};">
+                 <div class="blog-fallback-banner">
+                   <div class="blog-fallback-icon-wrap" style="color:${color.text};">
+                     ${icon}
+                   </div>
+                   <span class="blog-fallback-badge" style="color:${color.text};">${label || article.category}</span>
+                 </div>
+               </div>`;
+
         return `
         <article class="blog-card" data-category="${article.category || 'default'}" data-id="${article.id}">
-          <div class="blog-card-img" style="background:${color.bg}; height:140px; color:${color.text}">
-            ${icon}
-          </div>
+          ${imageHtml}
           <div class="blog-card-body">
             <div class="blog-card-meta">
               <span class="blog-tag" style="color:${color.text};background:${color.bg}">${label || article.category}</span>
@@ -249,6 +258,10 @@ class BlogManager {
         const ogTitle = document.querySelector('meta[property="og:title"]');
         if (ogTitle) ogTitle.setAttribute('content', title);
 
+        const coverHtml = article.coverImage
+            ? `<div class="article-hero-cover"><img src="${article.coverImage}" alt="${title}"></div>`
+            : '';
+
         // Render article header
         const headerEl = document.getElementById('articleHeader');
         if (headerEl) {
@@ -266,7 +279,8 @@ class BlogManager {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 ${isAr ? `${article.readTime || 3} دقائق` : `${article.readTime || 3} min read`}
               </span>
-            </div>`;
+            </div>
+            ${coverHtml}`;
         }
 
         // Render article content
