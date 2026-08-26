@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="مقالات ونصائح تقنية من صالح باقمري - مطور Kotlin وAndroid. تعلم، تجارب، وأخبار من عالم تطوير التطبيقات.">
-  <meta name="keywords" content="Kotlin, Android, مقالات تقنية, تطوير تطبيقات, Jetpack Compose, برمجة">
+  <meta name="description" content="">
   <meta name="author" content="Saleh Bagomri">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#221461">
-  <title>المقالات - Saleh Bagomri | Kotlin & Android Developer</title>
+  <title>مقال - Saleh Bagomri</title>
 
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://bagomri-portfolio.web.app/blog.html">
-  <meta property="og:title" content="المقالات - Saleh Bagomri">
-  <meta property="og:description" content="مقالات ونصائح تقنية من عالم Kotlin وAndroid.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://bagomri-portfolio.web.app/article.html">
+  <meta property="og:title" content="">
   <meta property="og:site_name" content="Saleh Bagomri">
-  <link rel="canonical" href="https://bagomri-portfolio.web.app/blog.html">
+  <link rel="canonical" href="https://bagomri-portfolio.web.app/article.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,8 +21,8 @@
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/blog.css">
+  <link rel="stylesheet" href="css/article.css">
   <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
-  <link rel="apple-touch-icon" href="assets/images/logo.svg">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5604419232354544" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -37,11 +35,11 @@
         <span class="logo-wordmark">Bagomri</span>
       </a>
       <ul class="nav-menu">
-        <li><a href="index.html"            class="nav-link" data-ar="الرئيسية"  data-en="Home">الرئيسية</a></li>
-        <li><a href="index.html#about"      class="nav-link" data-ar="عني"       data-en="About">عني</a></li>
-        <li><a href="index.html#portfolio"  class="nav-link" data-ar="المشاريع"  data-en="Portfolio">المشاريع</a></li>
-        <li><a href="blog.html"             class="nav-link active" data-ar="المقالات" data-en="Blog">المقالات</a></li>
-        <li><a href="index.html#contact"    class="nav-link" data-ar="تواصل"     data-en="Contact">تواصل</a></li>
+        <li><a href="index.html"           class="nav-link" data-ar="الرئيسية"  data-en="Home">الرئيسية</a></li>
+        <li><a href="index.html#about"     class="nav-link" data-ar="عني"       data-en="About">عني</a></li>
+        <li><a href="index.html#portfolio" class="nav-link" data-ar="المشاريع"  data-en="Portfolio">المشاريع</a></li>
+        <li><a href="blog.html"            class="nav-link active" data-ar="المقالات" data-en="Blog">المقالات</a></li>
+        <li><a href="index.html#contact"   class="nav-link" data-ar="تواصل"     data-en="Contact">تواصل</a></li>
       </ul>
       <div class="nav-actions">
         <button class="lang-btn" id="langToggle" aria-label="Toggle Language">
@@ -64,77 +62,72 @@
     </div>
   </nav>
 
-  <!-- Page Header -->
-  <header class="blog-page-header">
-    <div class="container">
-      <div class="blog-header-inner" data-aos="fade-up">
-        <span class="section-label" data-ar="المحتوى" data-en="Content">المحتوى</span>
-        <h1 class="blog-page-title" data-ar="المقالات والنصائح" data-en="Articles & Tips">المقالات والنصائح</h1>
-        <p class="blog-page-desc" data-ar="أشارككم خبراتي وتجاربي في عالم Kotlin وAndroid - نصائح عملية، دروس مستفادة، وأخبار تقنية." data-en="I share my experience in the Kotlin and Android world - practical tips, lessons learned, and tech news.">
-          أشارككم خبراتي وتجاربي في عالم Kotlin وAndroid - نصائح عملية، دروس مستفادة، وأخبار تقنية.
-        </p>
+  <main class="article-main">
+    <div class="container article-container">
 
-        <!-- Category Filter -->
-        <div class="blog-filter-bar">
-          <button class="filter-btn active" data-filter="all" data-ar="الكل" data-en="All">الكل</button>
-          <button class="filter-btn" data-filter="kotlin" data-ar="Kotlin" data-en="Kotlin">Kotlin</button>
-          <button class="filter-btn" data-filter="android" data-ar="Android" data-en="Android">Android</button>
-          <button class="filter-btn" data-filter="tips" data-ar="نصائح" data-en="Tips">نصائح</button>
-          <button class="filter-btn" data-filter="experience" data-ar="تجارب" data-en="Experience">تجارب</button>
+      <!-- Back link -->
+      <a href="blog.html" class="article-back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        <span data-ar="العودة للمقالات" data-en="Back to Articles">العودة للمقالات</span>
+      </a>
+
+      <!-- Article Header (filled by JS) -->
+      <header id="articleHeader" class="article-header"></header>
+
+      <!-- AdSense - Above article -->
+      <div class="adsense-slot adsense-top">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-5604419232354544"
+             data-ad-slot="AUTO"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
+      <!-- Article Content (filled by JS) -->
+      <div id="articleContent" class="article-body">
+        <!-- Skeleton while loading -->
+        <div class="article-skeleton">
+          <div class="skeleton-line full"></div>
+          <div class="skeleton-line full"></div>
+          <div class="skeleton-line medium"></div>
+          <br>
+          <div class="skeleton-line full"></div>
+          <div class="skeleton-line full"></div>
+          <div class="skeleton-line short"></div>
         </div>
       </div>
-    </div>
-  </header>
 
-  <!-- AdSense Banner (Top) -->
-  <div class="container" style="padding-block: 16px;">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-5604419232354544"
-         data-ad-slot="auto"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </div>
-
-  <!-- Blog Posts Grid -->
-  <main class="blog-main">
-    <div class="container">
-
-      <!-- AdSense Banner (Top) -->
-      <div class="adsense-slot" style="margin-bottom:32px">
+      <!-- AdSense - Mid article -->
+      <div class="adsense-slot adsense-mid">
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-5604419232354544"
-             data-ad-slot="auto"
+             data-ad-slot="AUTO"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
 
-      <!-- Dynamic grid - filled by blog.js -->
-      <div class="blog-posts-grid" id="blogGrid">
-        <!-- Skeleton cards while loading -->
+      <!-- Author bio -->
+      <div class="article-author-card">
+        <img src="assets/images/profile.png" alt="Saleh Bagomri" class="author-avatar">
+        <div class="author-info">
+          <strong class="author-name">Saleh Bagomri</strong>
+          <p class="author-bio" data-ar="مطور Kotlin وAndroid. أشارككم خبراتي وتجاربي في عالم تطوير التطبيقات." data-en="Kotlin & Android Developer. Sharing my experience in mobile app development.">مطور Kotlin وAndroid. أشارككم خبراتي وتجاربي في عالم تطوير التطبيقات.</p>
+          <a href="index.html#contact" class="btn btn-brand" style="font-size:0.82rem;padding:8px 18px" data-ar="تواصل معي" data-en="Get in Touch">تواصل معي</a>
+        </div>
       </div>
 
-      <!-- AdSense Banner (Bottom) -->
-      <div class="adsense-slot" style="margin-top:40px">
+      <!-- AdSense - Bottom -->
+      <div class="adsense-slot adsense-bottom">
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-5604419232354544"
-             data-ad-slot="auto"
+             data-ad-slot="AUTO"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-
-    </div>
-  </main>
-
-
-             data-ad-layout="in-article"
-             data-ad-format="fluid"
-             data-ad-slot="auto"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
 
@@ -149,16 +142,17 @@
           <img src="assets/images/logo.svg" alt="Bagomri" width="30" height="30">
           <span>Bagomri</span>
         </div>
-        <p class="footer-copy" data-ar="جميع الحقوق محفوظة © Bagomri 2026" data-en="All rights reserved © Bagomri 2026">جميع الحقوق محفوظة © Bagomri 2026</p>
+        <p class="footer-copy" data-ar="جميع الحقوق محفوظة © Bagomri 2026" data-en="All rights reserved © Bagomri 2026">
+          جميع الحقوق محفوظة © Bagomri 2026
+        </p>
         <div class="footer-links">
           <a href="privacy.html" data-ar="الخصوصية" data-en="Privacy">الخصوصية</a>
           <a href="terms.html"   data-ar="الشروط"    data-en="Terms">الشروط</a>
-          <a href="index.html"   data-ar="الرئيسية"  data-en="Home">الرئيسية</a>
+          <a href="blog.html"    data-ar="المقالات"  data-en="Blog">المقالات</a>
         </div>
       </div>
     </div>
   </footer>
-
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -179,9 +173,9 @@
       if (typeof initAnimations === 'function') initAnimations();
       lucide.createIcons();
 
-      // Init Firebase then load articles dynamically
+      // Init Firebase then load article
       firebaseService.init();
-      blogManager.initBlogPage();
+      blogManager.initArticlePage();
 
       // Navbar scroll
       window.addEventListener('scroll', () => {

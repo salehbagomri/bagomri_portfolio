@@ -1,4 +1,4 @@
-﻿// ============================================
+// ============================================
 // FIREBASE MODULE
 // ============================================
 
@@ -11,7 +11,8 @@ class FirebaseService {
             visitors: 'visitors',
             comments: 'comments',
             contacts: 'contacts',
-            projects: 'projects'
+            projects: 'projects',
+            articles: 'articles'
         };
     }
 
