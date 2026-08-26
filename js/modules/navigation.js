@@ -1,146 +1,85 @@
-// ============================================
-// NAVIGATION MODULE - وحدة التنقل
-// ============================================
+/**
+ * Navigation Module — Navbar scroll effect, mobile menu, active links
+ */
+function initNavigation() {
+  const navbar    = document.getElementById('navbar');
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const allNavLinks = document.querySelectorAll('.nav-link');
 
-class NavigationManager {
-    constructor() {
-        this.navbar = null;
-        this.navToggle = null;
-        this.navMenu = null;
-        this.navLinks = [];
-        this.isMenuOpen = false;
-        this.lastScrollTop = 0;
+  // ── Navbar scroll shadow ──────────────────────────────────
+  function onScroll() {
+    if (window.scrollY > 10) {
+      navbar?.classList.add('scrolled');
+    } else {
+      navbar?.classList.remove('scrolled');
     }
+    updateActiveLink();
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
 
-    init() {
-        this.navbar = document.getElementById('navbar');
-        this.navToggle = document.getElementById('navToggle');
-        this.navMenu = document.getElementById('navMenu');
-        this.navLinks = document.querySelectorAll('.nav-link');
+  // ── Mobile menu toggle ────────────────────────────────────
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      // Swap icon
+      navToggle.innerHTML = isOpen
+        ? '<i data-lucide="x"></i>'
+        : '<i data-lucide="menu"></i>';
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  }
 
-        // إضافة مستمعات الأحداث
-        this.setupEventListeners();
-        
-        // معالجة التمرير
-        this.handleScroll();
+  // Close mobile menu when a link is clicked
+  allNavLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.remove('open');
+      if (navToggle) {
+        navToggle.innerHTML = '<i data-lucide="menu"></i>';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    });
+  });
 
-        console.log('✅ Navigation Manager initialized');
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (
+      mobileMenu?.classList.contains('open') &&
+      !mobileMenu.contains(e.target) &&
+      !navToggle?.contains(e.target)
+    ) {
+      mobileMenu.classList.remove('open');
+      if (navToggle) {
+        navToggle.innerHTML = '<i data-lucide="menu"></i>';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
     }
+  });
 
-    setupEventListeners() {
-        // زر القائمة على الموبايل
-        if (this.navToggle) {
-            this.navToggle.addEventListener('click', () => this.toggleMobileMenu());
-        }
+  // ── Active link on scroll ─────────────────────────────────
+  const sections = document.querySelectorAll('section[id]');
 
-        // روابط التنقل
-        this.navLinks.forEach(link => {
-            link.addEventListener('click', (e) => this.handleNavLinkClick(e, link));
-        });
+  function updateActiveLink() {
+    const scrollY = window.scrollY + 80;
+    let currentId = '';
 
-        // التمرير
-        window.addEventListener('scroll', () => this.handleScroll());
+    sections.forEach((section) => {
+      if (scrollY >= section.offsetTop) {
+        currentId = section.id;
+      }
+    });
 
-        // إغلاق القائمة عند النقر خارجها
-        document.addEventListener('click', (e) => this.handleClickOutside(e));
-    }
+    allNavLinks.forEach((link) => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href');
+      if (href === `#${currentId}`) {
+        link.classList.add('active');
+      }
+    });
+  }
 
-    toggleMobileMenu() {
-        this.isMenuOpen = !this.isMenuOpen;
-        
-        if (this.isMenuOpen) {
-            this.navMenu.classList.add('active');
-            this.navToggle.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        } else {
-            this.navMenu.classList.remove('active');
-            this.navToggle.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-
-    closeMobileMenu() {
-        if (this.isMenuOpen) {
-            this.toggleMobileMenu();
-        }
-    }
-
-    handleNavLinkClick(e, link) {
-        e.preventDefault();
-        
-        const targetId = link.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-        
-        if (targetSection) {
-            // إزالة active من جميع الروابط
-            this.navLinks.forEach(l => l.classList.remove('active'));
-            
-            // إضافة active للرابط المنقور
-            link.classList.add('active');
-            
-            // التمرير إلى القسم
-            const offset = 80; // ارتفاع navbar
-            const targetPosition = targetSection.offsetTop - offset;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-            
-            // إغلاق القائمة على الموبايل
-            this.closeMobileMenu();
-        }
-    }
-
-    handleScroll() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // إضافة/إزالة كلاس scrolled
-        if (scrollTop > 50) {
-            this.navbar?.classList.add('scrolled');
-        } else {
-            this.navbar?.classList.remove('scrolled');
-        }
-
-        // تحديث الرابط النشط بناءً على الموضع
-        this.updateActiveLink();
-
-        this.lastScrollTop = scrollTop;
-    }
-
-    updateActiveLink() {
-        const sections = document.querySelectorAll('section[id]');
-        const scrollPos = window.scrollY + 100;
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-
-            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                this.navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }
-
-    handleClickOutside(e) {
-        if (this.isMenuOpen && 
-            !this.navMenu.contains(e.target) && 
-            !this.navToggle.contains(e.target)) {
-            this.closeMobileMenu();
-        }
-    }
+  updateActiveLink();
 }
 
-// إنشاء نسخة واحدة
-const navigationManager = new NavigationManager();
-
-// تصدير
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = navigationManager;
-}
+// Expose globally
+window.initNavigation = initNavigation;

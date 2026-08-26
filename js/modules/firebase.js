@@ -366,3 +366,49 @@ const firebaseService = new FirebaseService();
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = firebaseService;
 }
+
+// Main init function called by main.js
+function initFirebase() {
+  const ok = firebaseService.init();
+  if (!ok) return;
+
+  // Increment & display visitor count
+  const visitorCountEl = document.getElementById('visitorCount');
+  if (visitorCountEl) {
+    const visitorId = localStorage.getItem('bagomri_visitor_id') ||
+      (() => {
+        const id = 'v_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        localStorage.setItem('bagomri_visitor_id', id);
+        return id;
+      })();
+
+    const db = firebaseService.db;
+    if (db) {
+      const docRef = db.collection('visitors').doc('counter');
+      docRef.get().then(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          const visitors = data.visitors || [];
+          const isNew = !visitors.includes(visitorId);
+          if (isNew) {
+            docRef.update({
+              visitors: firebase.firestore.FieldValue.arrayUnion(visitorId),
+              count: firebase.firestore.FieldValue.increment(1)
+            });
+          }
+          const count = isNew ? (data.count || 0) + 1 : (data.count || 0);
+          visitorCountEl.textContent = count.toLocaleString();
+        } else {
+          docRef.set({ visitors: [visitorId], count: 1 });
+          visitorCountEl.textContent = '1';
+        }
+      }).catch(() => {
+        visitorCountEl.textContent = '—';
+      });
+    }
+  }
+}
+
+// Expose globally
+window.initFirebase = initFirebase;
+window.firebaseService = firebaseService;

@@ -230,3 +230,9 @@ const contactManager = new ContactManager();
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = contactManager;
 }
+
+// Expose globally
+window.initContact = function () {
+  contactManager.init();
+};
+window.contactManager = contactManager;

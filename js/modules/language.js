@@ -1,115 +1,55 @@
-// ============================================
-// LANGUAGE MODULE - وحدة اللغات
-// ============================================
+/**
+ * Language Module — Arabic (RTL) / English (LTR) toggle
+ */
+const LANG_KEY = 'bagomri_lang';
 
-class LanguageManager {
-    constructor() {
-        this.currentLang = 'ar';
-        this.langToggleBtn = null;
-        this.translations = {
-            ar: {},
-            en: {}
-        };
-    }
+function initLanguage() {
+  const saved = localStorage.getItem(LANG_KEY) || 'ar';
+  applyLanguage(saved);
 
-    init() {
-        this.langToggleBtn = document.getElementById('langToggle');
-        
-        // تحميل اللغة المحفوظة
-        this.loadSavedLanguage();
-        
-        // إضافة مستمع للنقر
-        if (this.langToggleBtn) {
-            this.langToggleBtn.addEventListener('click', () => this.toggleLanguage());
-        }
-
-        console.log('✅ Language Manager initialized');
-    }
-
-    loadSavedLanguage() {
-        const savedLang = localStorage.getItem('language') || siteConfig.settings.defaultLanguage;
-        this.setLanguage(savedLang, false);
-    }
-
-    toggleLanguage() {
-        const newLang = this.currentLang === 'ar' ? 'en' : 'ar';
-        this.setLanguage(newLang, true);
-    }
-
-    setLanguage(lang, animate = true) {
-        this.currentLang = lang;
-        
-        // تحديث HTML attributes
-        document.documentElement.lang = lang;
-        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-        
-        // تحديث جميع العناصر القابلة للترجمة
-        this.updateAllTranslatableElements();
-
-        // إضافة تأثير انتقالي
-        if (animate) {
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 150);
-        }
-
-        // حفظ التفضيل
-        localStorage.setItem('language', lang);
-
-        // إطلاق حدث مخصص
-        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
-    }
-
-    updateAllTranslatableElements() {
-        // تحديث العناصر باستخدام data attributes
-        const elements = document.querySelectorAll('[data-ar], [data-en]');
-        
-        elements.forEach(element => {
-            const arText = element.getAttribute('data-ar');
-            const enText = element.getAttribute('data-en');
-            
-            if (this.currentLang === 'ar' && arText) {
-                element.textContent = arText;
-            } else if (this.currentLang === 'en' && enText) {
-                element.textContent = enText;
-            }
-        });
-
-        // تحديث placeholders
-        const placeholderElements = document.querySelectorAll('[data-ar-placeholder], [data-en-placeholder]');
-        
-        placeholderElements.forEach(element => {
-            const arPlaceholder = element.getAttribute('data-ar-placeholder');
-            const enPlaceholder = element.getAttribute('data-en-placeholder');
-            
-            if (this.currentLang === 'ar' && arPlaceholder) {
-                element.placeholder = arPlaceholder;
-            } else if (this.currentLang === 'en' && enPlaceholder) {
-                element.placeholder = enPlaceholder;
-            }
-        });
-    }
-
-    getCurrentLanguage() {
-        return this.currentLang;
-    }
-
-    translate(key) {
-        // يمكن توسيع هذا لاحقاً لنظام ترجمة أكثر تعقيداً
-        return this.translations[this.currentLang][key] || key;
-    }
-
-    // دالة مساعدة للحصول على النص حسب اللغة الحالية
-    getText(arText, enText) {
-        return this.currentLang === 'ar' ? arText : enText;
-    }
+  const btn = document.getElementById('langToggle');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.lang || 'ar';
+      const next = current === 'ar' ? 'en' : 'ar';
+      applyLanguage(next);
+      localStorage.setItem(LANG_KEY, next);
+    });
+  }
 }
 
-// إنشاء نسخة واحدة
-const languageManager = new LanguageManager();
+function applyLanguage(lang) {
+  const isAr = lang === 'ar';
+  document.documentElement.lang = lang;
+  document.documentElement.dir = isAr ? 'rtl' : 'ltr';
 
-// تصدير
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = languageManager;
+  // Translate all elements with data-ar / data-en
+  document.querySelectorAll('[data-ar], [data-en]').forEach((el) => {
+    const text = isAr ? el.dataset.ar : el.dataset.en;
+    if (text !== undefined) el.textContent = text;
+  });
+
+  // Translate placeholders
+  document.querySelectorAll('[data-ar-placeholder], [data-en-placeholder]').forEach((el) => {
+    const ph = isAr ? el.dataset.arPlaceholder : el.dataset.enPlaceholder;
+    if (ph !== undefined) el.placeholder = ph;
+  });
+
+  // Update blog read-more arrows direction
+  document.querySelectorAll('.blog-read-more [data-lucide]').forEach((icon) => {
+    icon.setAttribute('data-lucide', isAr ? 'arrow-left' : 'arrow-right');
+  });
+
+  // Refresh Lucide icons after direction change
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
+
+// Compatibility shim — exposes getCurrentLanguage() for legacy modules
+const languageManager = {
+  getCurrentLanguage: () => document.documentElement.lang || 'ar',
+};
+
+// Expose initLanguage globally
+window.initLanguage = initLanguage;
+window.applyLanguage = applyLanguage;
+window.languageManager = languageManager;

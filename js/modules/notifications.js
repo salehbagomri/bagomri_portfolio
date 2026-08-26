@@ -201,3 +201,9 @@ const notificationManager = new NotificationManager();
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = notificationManager;
 }
+
+// Expose globally
+window.initNotifications = function () {
+  notificationManager.init();
+};
+window.notificationManager = notificationManager;

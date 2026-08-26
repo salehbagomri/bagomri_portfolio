@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="مقالات ونصائح تقنية من صالح باقمري — مطور Kotlin وAndroid. تعلم، تجارب، وأخبار من عالم تطوير التطبيقات.">
+  <meta name="keywords" content="Kotlin, Android, مقالات تقنية, تطوير تطبيقات, Jetpack Compose, برمجة">
+  <meta name="author" content="Saleh Bagomri">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#221461">
+  <title>المقالات — Saleh Bagomri | Kotlin & Android Developer</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bagomri-portfolio.web.app/blog.html">
+  <meta property="og:title" content="المقالات — Saleh Bagomri">
+  <meta property="og:description" content="مقالات ونصائح تقنية من عالم Kotlin وAndroid.">
+  <meta property="og:site_name" content="Saleh Bagomri">
+  <link rel="canonical" href="https://bagomri-portfolio.web.app/blog.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/blog.css">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+  <link rel="apple-touch-icon" href="assets/images/logo.svg">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5604419232354544" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/logo.svg" alt="Bagomri" width="34" height="34">
+        <span class="logo-wordmark">Bagomri</span>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html"            class="nav-link" data-ar="الرئيسية"  data-en="Home">الرئيسية</a></li>
+        <li><a href="index.html#about"      class="nav-link" data-ar="عني"       data-en="About">عني</a></li>
+        <li><a href="index.html#portfolio"  class="nav-link" data-ar="المشاريع"  data-en="Portfolio">المشاريع</a></li>
+        <li><a href="blog.html"             class="nav-link active" data-ar="المقالات" data-en="Blog">المقالات</a></li>
+        <li><a href="index.html#contact"    class="nav-link" data-ar="تواصل"     data-en="Contact">تواصل</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="lang-btn" id="langToggle" aria-label="Toggle Language">
+          <span class="lang-ar">EN</span>
+          <span class="lang-en">ع</span>
+        </button>
+        <a href="index.html#contact" class="btn btn-brand nav-cta" data-ar="تعاون معي" data-en="Hire Me">تعاون معي</a>
+        <button class="hamburger" id="navToggle" aria-label="Toggle menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="index.html"           class="nav-link" data-ar="الرئيسية"  data-en="Home">الرئيسية</a></li>
+        <li><a href="index.html#about"     class="nav-link" data-ar="عني"       data-en="About">عني</a></li>
+        <li><a href="index.html#portfolio" class="nav-link" data-ar="المشاريع"  data-en="Portfolio">المشاريع</a></li>
+        <li><a href="blog.html"            class="nav-link active" data-ar="المقالات" data-en="Blog">المقالات</a></li>
+        <li><a href="index.html#contact"   class="nav-link" data-ar="تواصل"     data-en="Contact">تواصل</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="blog-page-header">
+    <div class="container">
+      <div class="blog-header-inner" data-aos="fade-up">
+        <span class="section-label" data-ar="المحتوى" data-en="Content">المحتوى</span>
+        <h1 class="blog-page-title" data-ar="المقالات والنصائح" data-en="Articles & Tips">المقالات والنصائح</h1>
+        <p class="blog-page-desc" data-ar="أشارككم خبراتي وتجاربي في عالم Kotlin وAndroid — نصائح عملية، دروس مستفادة، وأخبار تقنية." data-en="I share my experience in the Kotlin and Android world — practical tips, lessons learned, and tech news.">
+          أشارككم خبراتي وتجاربي في عالم Kotlin وAndroid — نصائح عملية، دروس مستفادة، وأخبار تقنية.
+        </p>
+
+        <!-- Category Filter -->
+        <div class="blog-filter-bar">
+          <button class="filter-btn active" data-filter="all" data-ar="الكل" data-en="All">الكل</button>
+          <button class="filter-btn" data-filter="kotlin" data-ar="Kotlin" data-en="Kotlin">Kotlin</button>
+          <button class="filter-btn" data-filter="android" data-ar="Android" data-en="Android">Android</button>
+          <button class="filter-btn" data-filter="tips" data-ar="نصائح" data-en="Tips">نصائح</button>
+          <button class="filter-btn" data-filter="experience" data-ar="تجارب" data-en="Experience">تجارب</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- AdSense Banner (Top) -->
+  <div class="container" style="padding-block: 16px;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-5604419232354544"
+         data-ad-slot="auto"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Blog Posts Grid -->
+  <main class="blog-main">
+    <div class="container">
+      <div class="blog-posts-grid" id="blogGrid">
+
+        <!-- Article 1 -->
+        <article class="blog-card blog-card-lg" data-category="kotlin experience" data-aos="fade-up">
+          <div class="blog-card-img" style="background:#EEF0FF; height:180px;">
+            <i data-lucide="code-2" style="width:48px;height:48px;color:#221461;"></i>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-tag">Kotlin</span>
+              <span class="blog-date"><i data-lucide="calendar"></i> أغسطس 2026</span>
+            </div>
+            <h2 class="blog-card-title" data-ar="لماذا Kotlin هي مستقبل تطوير Android؟" data-en="Why Kotlin is the Future of Android Development?">لماذا Kotlin هي مستقبل تطوير Android؟</h2>
+            <p class="blog-card-excerpt" data-ar="نظرة معمقة على مزايا Kotlin وكيف تجعل تطوير Android أسرع وأكثر أماناً من Java. وما الذي يجعلها اختيار Google الرسمي؟" data-en="An in-depth look at Kotlin advantages and how it makes Android development faster and safer than Java. Why is it Google's official choice?">
+              نظرة معمقة على مزايا Kotlin وكيف تجعل تطوير Android أسرع وأكثر أماناً من Java. وما الذي يجعلها اختيار Google الرسمي؟
+            </p>
+            <a href="#" class="blog-read-more" data-ar="اقرأ المقال كاملاً" data-en="Read Full Article">
+              اقرأ المقال كاملاً <i data-lucide="arrow-left"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="blog-card" data-category="android tips" data-aos="fade-up" data-aos-delay="100">
+          <div class="blog-card-img" style="background:#FFF7ED; height:140px;">
+            <i data-lucide="layers" style="width:40px;height:40px;color:#EA580C;"></i>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-tag">Jetpack Compose</span>
+              <span class="blog-date"><i data-lucide="calendar"></i> أغسطس 2026</span>
+            </div>
+            <h2 class="blog-card-title" data-ar="Jetpack Compose: دليل البداية السريعة" data-en="Jetpack Compose: Quick Start Guide">Jetpack Compose: دليل البداية السريعة</h2>
+            <p class="blog-card-excerpt" data-ar="كيف تبدأ مع Jetpack Compose وتبني واجهات جميلة بكود أقل. مقارنة مع XML وأفضل الممارسات." data-en="How to get started with Jetpack Compose and build beautiful UIs with less code. Comparison with XML and best practices.">
+              كيف تبدأ مع Jetpack Compose وتبني واجهات جميلة بكود أقل. مقارنة مع XML وأفضل الممارسات.
+            </p>
+            <a href="#" class="blog-read-more" data-ar="اقرأ المزيد" data-en="Read More">اقرأ المزيد <i data-lucide="arrow-left"></i></a>
+          </div>
+        </article>
+
+        <!-- Article 3 -->
+        <article class="blog-card" data-category="experience tips" data-aos="fade-up" data-aos-delay="150">
+          <div class="blog-card-img" style="background:#F0FDF4; height:140px;">
+            <i data-lucide="git-branch" style="width:40px;height:40px;color:#16A34A;"></i>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-tag" data-ar="تجربة شخصية" data-en="Experience">تجربة شخصية</span>
+              <span class="blog-date"><i data-lucide="calendar"></i> أغسطس 2026</span>
+            </div>
+            <h2 class="blog-card-title" data-ar="رحلتي من Flutter إلى Kotlin" data-en="My Journey from Flutter to Kotlin">رحلتي من Flutter إلى Kotlin</h2>
+            <p class="blog-card-excerpt" data-ar="قصة قراري بالتحول من Flutter إلى Kotlin وAndroid النيتف. الدوافع، التحديات، والدروس التي تعلمتها." data-en="The story of my decision to switch from Flutter to native Kotlin Android. Motivations, challenges, and lessons learned.">
+              قصة قراري بالتحول من Flutter إلى Kotlin وAndroid النيتف. الدوافع، التحديات، والدروس التي تعلمتها.
+            </p>
+            <a href="#" class="blog-read-more" data-ar="اقرأ المزيد" data-en="Read More">اقرأ المزيد <i data-lucide="arrow-left"></i></a>
+          </div>
+        </article>
+
+        <!-- Article 4 -->
+        <article class="blog-card" data-category="kotlin tips" data-aos="fade-up">
+          <div class="blog-card-img" style="background:#FDF4FF; height:140px;">
+            <i data-lucide="zap" style="width:40px;height:40px;color:#9333EA;"></i>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-tag">Kotlin</span>
+              <span class="blog-date"><i data-lucide="calendar"></i> أغسطس 2026</span>
+            </div>
+            <h2 class="blog-card-title" data-ar="Coroutines وFlow: البرمجة غير المتزامنة في Kotlin" data-en="Coroutines & Flow: Async Programming in Kotlin">Coroutines وFlow: البرمجة غير المتزامنة في Kotlin</h2>
+            <p class="blog-card-excerpt" data-ar="فهم Coroutines وFlow بطريقة عملية. كيف تجعل كودك أسرع وأكثر كفاءة في معالجة العمليات الطويلة." data-en="Understanding Coroutines and Flow practically. How to make your code faster and more efficient in handling long operations.">
+              فهم Coroutines وFlow بطريقة عملية. كيف تجعل كودك أسرع وأكثر كفاءة في معالجة العمليات الطويلة.
+            </p>
+            <a href="#" class="blog-read-more" data-ar="اقرأ المزيد" data-en="Read More">اقرأ المزيد <i data-lucide="arrow-left"></i></a>
+          </div>
+        </article>
+
+        <!-- Article 5 -->
+        <article class="blog-card" data-category="android tips" data-aos="fade-up" data-aos-delay="100">
+          <div class="blog-card-img" style="background:#FFF1F2; height:140px;">
+            <i data-lucide="database" style="width:40px;height:40px;color:#E11D48;"></i>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-tag">Room DB</span>
+              <span class="blog-date"><i data-lucide="calendar"></i> أغسطس 2026</span>
+            </div>
+            <h2 class="blog-card-title" data-ar="Room Database: تخزين البيانات محلياً في Android" data-en="Room Database: Local Storage in Android">Room Database: تخزين البيانات محلياً في Android</h2>
+            <p class="blog-card-excerpt" data-ar="دليل عملي لاستخدام Room Database مع Kotlin. كيف تبني طبقة بيانات قوية وآمنة في تطبيقك." data-en="A practical guide to using Room Database with Kotlin. How to build a robust and safe data layer in your app.">
+              دليل عملي لاستخدام Room Database مع Kotlin. كيف تبني طبقة بيانات قوية وآمنة في تطبيقك.
+            </p>
+            <a href="#" class="blog-read-more" data-ar="اقرأ المزيد" data-en="Read More">اقرأ المزيد <i data-lucide="arrow-left"></i></a>
+          </div>
+        </article>
+
+        <!-- Article 6 -->
+        <article class="blog-card" data-category="tips experience" data-aos="fade-up" data-aos-delay="150">
+          <div class="blog-card-img" style="background:#ECFDF5; height:140px;">
+            <i data-lucide="lightbulb" style="width:40px;height:40px;color:#059669;"></i>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-tag" data-ar="نصائح" data-en="Tips">نصائح</span>
+              <span class="blog-date"><i data-lucide="calendar"></i> أغسطس 2026</span>
+            </div>
+            <h2 class="blog-card-title" data-ar="5 نصائح لكل مطور Android مبتدئ" data-en="5 Tips for Every Beginner Android Developer">5 نصائح لكل مطور Android مبتدئ</h2>
+            <p class="blog-card-excerpt" data-ar="أهم الدروس التي تعلمتها في بداية مسيرتي. نصائح ستوفر عليك أشهراً من التعلم بالطريقة الصعبة." data-en="The most important lessons I learned at the start of my career. Tips that will save you months of learning the hard way.">
+              أهم الدروس التي تعلمتها في بداية مسيرتي. نصائح ستوفر عليك أشهراً من التعلم بالطريقة الصعبة.
+            </p>
+            <a href="#" class="blog-read-more" data-ar="اقرأ المزيد" data-en="Read More">اقرأ المزيد <i data-lucide="arrow-left"></i></a>
+          </div>
+        </article>
+
+      </div><!-- /blog-posts-grid -->
+
+      <!-- AdSense Mid -->
+      <div style="padding-block: 32px;">
+        <ins class="adsbygoogle"
+             style="display:block;text-align:center;"
+             data-ad-client="ca-pub-5604419232354544"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-slot="auto"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="assets/images/logo.svg" alt="Bagomri" width="30" height="30">
+          <span>Bagomri</span>
+        </div>
+        <p class="footer-copy" data-ar="جميع الحقوق محفوظة © Bagomri 2026" data-en="All rights reserved © Bagomri 2026">جميع الحقوق محفوظة © Bagomri 2026</p>
+        <div class="footer-links">
+          <a href="privacy.html" data-ar="الخصوصية" data-en="Privacy">الخصوصية</a>
+          <a href="terms.html"   data-ar="الشروط"    data-en="Terms">الشروط</a>
+          <a href="index.html"   data-ar="الرئيسية"  data-en="Home">الرئيسية</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/modules/language.js"></script>
+  <script src="js/modules/navigation.js"></script>
+  <script src="js/modules/animations.js"></script>
+  <script src="js/modules/notifications.js"></script>
+
+  <script>
+    // Init blog page
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof initLanguage   === 'function') initLanguage();
+      if (typeof initNavigation === 'function') initNavigation();
+      if (typeof initAnimations === 'function') initAnimations();
+      lucide.createIcons();
+
+      // Blog category filter
+      const filterBtns = document.querySelectorAll('.blog-filter-bar .filter-btn');
+      const articles   = document.querySelectorAll('#blogGrid article');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+          articles.forEach(article => {
+            const cats = article.dataset.category || '';
+            const show = filter === 'all' || cats.includes(filter);
+            article.style.display = show ? '' : 'none';
+          });
+        });
+      });
+
+      // Navbar scroll
+      window.addEventListener('scroll', () => {
+        document.getElementById('navbar')?.classList.toggle('scrolled', window.scrollY > 10);
+      }, { passive: true });
+    });
+  </script>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
