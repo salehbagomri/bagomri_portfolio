@@ -1,4 +1,4 @@
-# سجل القرارات التقنية (ADR)
+﻿# سجل القرارات التقنية (ADR)
 
 > هذا الملف يحفظ *لماذا* اتُخذ كل قرار،
 > لمنع الوكيل من "تحسينه" بشكل خاطئ لاحقاً.
@@ -14,7 +14,7 @@
 المشروع بورتفوليو شخصي ثابت (static portfolio)، يعرض معلومات ومشاريع دون حاجة لـ state management معقد أو تحديثات متكررة للواجهة.
 
 **القرار:**
-Vanilla JavaScript مع نمط OOP (class-based modules) — كل module هو class instance منفصل.
+Vanilla JavaScript مع نمط OOP (class-based modules) - كل module هو class instance منفصل.
 
 **السبب:**
 لا توجد تبعيات ثقيلة (zero build step لـ JS)، bundle size أصغر، تحميل أسرع، وسهولة صيانة لموقع بسيط نسبياً.
@@ -74,7 +74,7 @@ SASS/SCSS مع بنية منظمة: abstracts → base → components → layout
 عند إنشاء Firestore database يجب اختيار المنطقة الجغرافية للخادم، وهذا القرار دائم لا يمكن تغييره بعد الإنشاء.
 
 **القرار:**
-`eur3` — Europe (multi-region).
+`eur3` - Europe (multi-region).
 
 **السبب:**
 الجمهور المستهدف في المنطقة العربية (الشرق الأوسط وشمال أفريقيا) يجد Europe أقرب latency من us-central، كما أن eur3 هو multi-region مما يوفر availability أعلى.

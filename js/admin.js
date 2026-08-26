@@ -1,8 +1,8 @@
-// ============================================
+﻿// ============================================
 // ADMIN MANAGER - لوحة التحكم
 // ============================================
 
-// Cloudinary unsigned upload — API Secret is never exposed in browser
+// Cloudinary unsigned upload - API Secret is never exposed in browser
 const CLOUDINARY_CLOUD_NAME  = 'dk5buckt1';
 const CLOUDINARY_UPLOAD_PRESET = 'pre-pro';
 

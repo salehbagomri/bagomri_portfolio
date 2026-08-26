@@ -1,4 +1,4 @@
-# CLAUDE.md — تعليمات الوكيل الثابتة
+﻿# CLAUDE.md - تعليمات الوكيل الثابتة
 
 ## هوية المشروع
 - **الاسم:** Bagomri Portfolio
@@ -12,14 +12,14 @@
 
 ### Git
 - بعد كل تعديل ناجح: `git add . && git commit -m "[وصف موجز]" && git push`
-- صيغة رسالة الـ commit: `[نوع]: [وصف] — [سبب موجز إن لزم]`
+- صيغة رسالة الـ commit: `[نوع]: [وصف] - [سبب موجز إن لزم]`
 - أنواع: `feat` / `fix` / `refactor` / `docs` / `chore`
 - لا ترفع كود مكسور أو يحتوي أخطاء
 
 ### قبل أي تعديل
 1. اقرأ الملف المعني كاملاً أولاً
 2. تحقق من `docs/ARCHITECTURE.md` إن كان التعديل يمس البنية
-3. لا تعيد اختراع العجلة — ابحث في الكود الموجود أولاً
+3. لا تعيد اختراع العجلة - ابحث في الكود الموجود أولاً
 
 ### بعد كل تعديل
 1. تحقق من عدم وجود أخطاء في المتصفح (console)
@@ -32,7 +32,7 @@
 ```
 - HTML5 (RTL/LTR support via data-ar/data-en attributes)
 - SASS/SCSS → يُترجم إلى css/main.css (لا تعدّله مباشرة)
-- Vanilla JavaScript — OOP class-based modules
+- Vanilla JavaScript - OOP class-based modules
 - Firebase Hosting + Firestore (eur3/Europe)
 - EmailJS (إشعارات البريد عند استلام رسائل التواصل)
 - AOS (Animate On Scroll library)
@@ -58,7 +58,7 @@ sass/
   pages/          ← _home.scss, _portfolio.scss, _lab-services.scss, _contact.scss
 
 css/
-  main.css        ← ناتج التحويل — لا تعدّله يدوياً أبداً
+  main.css        ← ناتج التحويل - لا تعدّله يدوياً أبداً
 
 assets/
   fonts/          ← Graphik Arabic (12 ملف woff/woff2)
@@ -82,7 +82,7 @@ docs/             ← ARCHITECTURE.md, TASKS.md, DECISIONS.md
 ---
 
 ## ما يجب تجنبه
-- لا تعدل `css/main.css` مباشرة — يُولَّد من SASS تلقائياً
+- لا تعدل `css/main.css` مباشرة - يُولَّد من SASS تلقائياً
 - لا تضف npm dependencies بدون موافقة
 - لا تنشر API keys أو secrets في console.log
 - لا تعيد كتابة ملفات كاملة إذا كان التعديل جزئياً

@@ -1,5 +1,5 @@
-/**
- * Animations Module — IntersectionObserver based AOS
+﻿/**
+ * Animations Module - IntersectionObserver based AOS
  */
 function initAnimations() {
   const observer = new IntersectionObserver(

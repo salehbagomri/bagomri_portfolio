@@ -1,4 +1,4 @@
-// ============================================
+﻿// ============================================
 // FIREBASE MODULE
 // ============================================
 
@@ -403,7 +403,7 @@ function initFirebase() {
           visitorCountEl.textContent = '1';
         }
       }).catch(() => {
-        visitorCountEl.textContent = '—';
+        visitorCountEl.textContent = '-';
       });
     }
   }

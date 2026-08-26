@@ -1,5 +1,5 @@
-/**
- * Language Module — Arabic (RTL) / English (LTR) toggle
+﻿/**
+ * Language Module - Arabic (RTL) / English (LTR) toggle
  */
 const LANG_KEY = 'bagomri_lang';
 
@@ -44,7 +44,7 @@ function applyLanguage(lang) {
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-// Compatibility shim — exposes getCurrentLanguage() for legacy modules
+// Compatibility shim - exposes getCurrentLanguage() for legacy modules
 const languageManager = {
   getCurrentLanguage: () => document.documentElement.lang || 'ar',
 };

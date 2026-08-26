@@ -1,4 +1,4 @@
-# بنية المشروع التقنية
+﻿# بنية المشروع التقنية
 
 ## نظرة عامة
 بورتفوليو ويب SPA (Single Page Application) ثنائي اللغة (عربي/إنجليزي) ثنائي الثيم (داكن/فاتح)، مبني بـ Vanilla JavaScript مع Firebase كـ backend لإدارة الزوار والتعليقات ونماذج التواصل.
@@ -7,13 +7,13 @@
 
 ## البنية المعمارية
 ```
-index.html  (UI Layer — هيكل الصفحة الوحيدة)
+index.html  (UI Layer - هيكل الصفحة الوحيدة)
     ↓
-js/main.js — App class (Orchestrator)
+js/main.js - App class (Orchestrator)
     ↓ يُهيّئ بالترتيب
-js/modules/*.js — 10 Feature Managers
+js/modules/*.js - 10 Feature Managers
     ↓ عمليات قاعدة البيانات
-js/modules/firebase.js — Firebase Service Layer
+js/modules/firebase.js - Firebase Service Layer
     ↓
 Firestore Database (eur3/Europe) + Firebase Hosting
 ```
@@ -31,7 +31,7 @@ Firestore Database (eur3/Europe) + Firebase Hosting
 | Navigation | `js/modules/navigation.js` | Navbar، تحديد القسم النشط، scroll behavior |
 | Animations | `js/modules/animations.js` | AOS (Animate On Scroll) + micro-interactions |
 | Portfolio | `js/modules/portfolio.js` | Grid المشاريع، فلترة (Flutter/UI-UX/Graphic)، modal تفصيلي |
-| Lab | `js/modules/lab.js` | قسم المختبر — روابط تفاعلية (GitHub, Figma, App Store) |
+| Lab | `js/modules/lab.js` | قسم المختبر - روابط تفاعلية (GitHub, Figma, App Store) |
 | Guestbook | `js/modules/guestbook.js` | نظام التعليقات مع ردود الفعل (emoji reactions) |
 | Contact | `js/modules/contact.js` | نموذج التواصل + تحقق + Firestore + EmailJS |
 | Notifications | `js/modules/notifications.js` | نظام Toast notifications |
@@ -48,7 +48,7 @@ Firestore Database (eur3/Europe) + Firebase Hosting
 | layout | `sass/layout/` | شريط التنقل (Navbar) |
 | pages | `sass/pages/` | أنماط مخصصة لكل قسم (home, portfolio, lab, services, contact) |
 
-الناتج النهائي: `css/main.css` — لا تعدّله مباشرة، شغّل `npm run sass` بعد أي تعديل SASS.
+الناتج النهائي: `css/main.css` - لا تعدّله مباشرة، شغّل `npm run sass` بعد أي تعديل SASS.
 
 ---
 
@@ -68,7 +68,7 @@ Firestore index: `comments` مرتب بـ `approved ASC` + `timestamp DESC`
 ## الثوابت والإعدادات المهمة
 
 ```javascript
-// جميعها في js/config.js — لا تكتب هنا القيم الحساسة
+// جميعها في js/config.js - لا تكتب هنا القيم الحساسة
 
 Firebase project ID : 'bagomri-portfolio'   // js/config.js
 Firestore region   : 'eur3' (Europe)        // firebase.json
@@ -81,7 +81,7 @@ EmailJS service    : 'service_bagomri'      // emailConfig
 
 ---
 
-## تدفق البيانات — مثال (نموذج التواصل)
+## تدفق البيانات - مثال (نموذج التواصل)
 1. المستخدم يملأ النموذج في `index.html` (قسم Contact)
 2. `contactManager` يتحقق من صحة البيانات
 3. `firebaseService.saveContact()` يحفظ في Firestore → `contacts/`

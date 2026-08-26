@@ -1,5 +1,5 @@
-/**
- * Main Entry Point — Bagomri Portfolio
+﻿/**
+ * Main Entry Point - Bagomri Portfolio
  * Initializes all modules in correct order.
  */
 
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 8. Firebase (visitor counter + data)
   if (typeof initFirebase === 'function') initFirebase();
 
-  // 9. Lucide Icons — render after all dynamic content
+  // 9. Lucide Icons - render after all dynamic content
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();
   }

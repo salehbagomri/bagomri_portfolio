@@ -1,5 +1,5 @@
-/**
- * Portfolio Module — Bagomri Portfolio
+﻿/**
+ * Portfolio Module - Bagomri Portfolio
  */
 
 // ── Project Data ─────────────────────────────────────────────

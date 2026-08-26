@@ -1,4 +1,4 @@
-# سجل المهام
+﻿# سجل المهام
 
 > آخر تحديث: 2026-06-10 (تحديث ثاني)
 
@@ -6,9 +6,9 @@
 
 ## 🔄 قيد التنفيذ (الآن)
 
-- [ ] إضافة محتوى المشاريع الحقيقي — `js/modules/portfolio.js`
-- [ ] إضافة صور المشاريع بالدقة المناسبة — `assets/images/projects/`
-- [ ] ربط حساب LinkedIn — `js/config.js` → `siteConfig.contact.social.linkedin`
+- [ ] إضافة محتوى المشاريع الحقيقي - `js/modules/portfolio.js`
+- [ ] إضافة صور المشاريع بالدقة المناسبة - `assets/images/projects/`
+- [ ] ربط حساب LinkedIn - `js/config.js` → `siteConfig.contact.social.linkedin`
 
 ---
 
@@ -28,7 +28,7 @@
 
 ## ✅ المكتملة
 
-### Phase 1 — البنية الكاملة للموقع
+### Phase 1 - البنية الكاملة للموقع
 - [x] هيكل HTML5 الأساسي مع دعم RTL/LTR عبر `data-ar` / `data-en`
 - [x] نظام الثيمات Dark/Light مع حفظ التفضيل في localStorage
 - [x] دعم ثنائية اللغة (العربية/الإنجليزية) مع قلب اتجاه الصفحة
@@ -47,7 +47,7 @@
 - [x] ملفات التوثيق (CLAUDE.md, ARCHITECTURE.md, TASKS.md, DECISIONS.md)
 - [x] إصلاح bug: رأس الصورة الشخصية كان يختفي (overflow + clip-path)
 - [x] SEO: إضافة meta tags كاملة + Open Graph + Twitter Card في `index.html`
-- [x] ربط حساب GitHub — `js/config.js` (salehbagomri)
+- [x] ربط حساب GitHub - `js/config.js` (salehbagomri)
 - [x] إضافة `loading="lazy"` لصورة الفوتر
 
 ---
@@ -56,12 +56,12 @@
 
 | الخطأ | الملف | الأولوية | الحالة |
 |-------|-------|---------|--------|
-| لا توجد أخطاء مسجّلة حتى الآن | — | — | — |
+| لا توجد أخطاء مسجّلة حتى الآن | - | - | - |
 
 ---
 
 ## 📝 ملاحظات للوكيل
 - المرحلة الحالية تركيزها على: **إضافة المحتوى الحقيقي** (مشاريع، صور، روابط)
-- لا تلمس: `css/main.css` مباشرة — يُولَّد من SASS
+- لا تلمس: `css/main.css` مباشرة - يُولَّد من SASS
 - انتبه لـ: بعد أي تعديل SASS شغّل `npm run sass` أولاً قبل الاختبار
 - انتبه لـ: Firestore rules تتطلب re-deploy عند التعديل (`npm run firebase:deploy:rules`)

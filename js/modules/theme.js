@@ -1,5 +1,5 @@
-/**
- * Theme Module — Light theme only (no dark mode)
+﻿/**
+ * Theme Module - Light theme only (no dark mode)
  * Kept for compatibility, does nothing except ensure clean state.
  */
 function initTheme() {

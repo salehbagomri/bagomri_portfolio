@@ -1,5 +1,5 @@
-/**
- * Navigation Module — Navbar scroll effect, mobile menu, active links
+﻿/**
+ * Navigation Module - Navbar scroll effect, mobile menu, active links
  */
 function initNavigation() {
   const navbar    = document.getElementById('navbar');
