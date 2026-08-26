@@ -4,14 +4,16 @@
       "collectionGroup": "comments",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "approved",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "timestamp",
-          "order": "DESCENDING"
-        }
+        { "fieldPath": "approved",  "order": "ASCENDING"  },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "articles",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "published",   "order": "ASCENDING"  },
+        { "fieldPath": "publishedAt", "order": "DESCENDING" }
       ]
     }
   ],
