@@ -1,4 +1,4 @@
-﻿/* ==========================================================
+/* ==========================================================
    BAGOMRI PORTFOLIO - MAIN STYLESHEET
    Design: Clean Light Professional | Brand: #221461
    ========================================================== */
@@ -579,72 +579,37 @@ p { color: var(--text-muted); line-height: 1.8; }
   grid-column: 1 / -1;
 }
 
-/* ==================== 10. SKILLS SECTION ==================== */
-.skills-section {
-  padding-block: var(--section-py);
-  background: var(--bg);
-}
 
-.skills-group {
-  margin-bottom: 48px;
-}
-.skills-group:last-child { margin-bottom: 0; }
-
-.skills-group-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
-
-.skills-grid {
+/* About chips - inline tech tags */
+.about-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 4px;
 }
 
-.skill-chip {
+.about-chip {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 8px 18px;
-  border-radius: var(--radius);
-  font-size: 0.88rem;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
   font-weight: 500;
-  border: 1.5px solid transparent;
+  color: var(--brand);
+  background: var(--brand-light);
+  border: 1px solid var(--brand-mid);
+  border-radius: var(--radius-full);
   transition: all var(--transition);
   cursor: default;
 }
-.skill-chip [data-lucide] { width: 15px; height: 15px; }
-
-.skill-current {
-  background: var(--brand-light);
-  border-color: var(--brand-mid);
-  color: var(--brand);
-}
-.skill-current:hover {
+.about-chip:hover {
   background: var(--brand);
   color: #fff;
   border-color: var(--brand);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
+  transform: translateY(-1px);
 }
+.about-chip [data-lucide] { width: 13px; height: 13px; }
 
-.skill-prev {
-  background: var(--surface);
-  border-color: var(--border);
-  color: var(--text-muted);
-}
-.skill-prev:hover {
-  border-color: var(--text-muted);
-  color: var(--text);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-xs);
-}
 
 /* ==================== 11. PORTFOLIO SECTION ==================== */
 .portfolio-section {

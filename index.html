@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -48,7 +48,6 @@
       <ul class="nav-menu" id="navMenu">
         <li><a href="#home"      class="nav-link active" data-ar="الرئيسية"  data-en="Home">الرئيسية</a></li>
         <li><a href="#about"     class="nav-link"        data-ar="عني"       data-en="About">عني</a></li>
-        <li><a href="#skills"    class="nav-link"        data-ar="المهارات"  data-en="Skills">المهارات</a></li>
         <li><a href="#portfolio" class="nav-link"        data-ar="المشاريع"  data-en="Portfolio">المشاريع</a></li>
         <li><a href="blog.html"  class="nav-link"        data-ar="المقالات"  data-en="Blog">المقالات</a></li>
         <li><a href="#contact"   class="nav-link"        data-ar="تواصل"     data-en="Contact">تواصل</a></li>
@@ -68,7 +67,6 @@
       <ul>
         <li><a href="#home"      class="nav-link" data-ar="الرئيسية"  data-en="Home">الرئيسية</a></li>
         <li><a href="#about"     class="nav-link" data-ar="عني"       data-en="About">عني</a></li>
-        <li><a href="#skills"    class="nav-link" data-ar="المهارات"  data-en="Skills">المهارات</a></li>
         <li><a href="#portfolio" class="nav-link" data-ar="المشاريع"  data-en="Portfolio">المشاريع</a></li>
         <li><a href="blog.html"  class="nav-link" data-ar="المقالات"  data-en="Blog">المقالات</a></li>
         <li><a href="#contact"   class="nav-link" data-ar="تواصل"     data-en="Contact">تواصل</a></li>
@@ -142,6 +140,18 @@
             <p data-ar="بدأت مسيرتي في تطوير تطبيقات Flutter متعددة المنصات، واليوم أُركّز تخصصي بالكامل على Android باستخدام Kotlin وJetpack Compose - أحدث تقنيات Android الرسمية." data-en="I started my journey building cross-platform Flutter apps, and today I focus entirely on Android development using Kotlin and Jetpack Compose - the latest official Android technologies.">
               بدأت مسيرتي في تطوير تطبيقات Flutter متعددة المنصات، واليوم أُركّز تخصصي بالكامل على Android باستخدام Kotlin وJetpack Compose - أحدث تقنيات Android الرسمية.
             </p>
+            <!-- Tech chips - inline skills -->
+            <div class="about-chips">
+              <span class="about-chip"><i data-lucide="code-2"></i> Kotlin</span>
+              <span class="about-chip"><i data-lucide="layout"></i> Jetpack Compose</span>
+              <span class="about-chip"><i data-lucide="smartphone"></i> Android SDK</span>
+              <span class="about-chip"><i data-lucide="flame"></i> Firebase</span>
+              <span class="about-chip"><i data-lucide="database"></i> Room</span>
+              <span class="about-chip"><i data-lucide="globe"></i> Retrofit</span>
+              <span class="about-chip"><i data-lucide="layers"></i> MVVM</span>
+              <span class="about-chip"><i data-lucide="zap"></i> Coroutines</span>
+              <span class="about-chip"><i data-lucide="git-branch"></i> Git</span>
+            </div>
           </div>
           <div class="about-stats" data-aos="fade-up" data-aos-delay="100">
             <div class="stat-card">
@@ -161,44 +171,6 @@
       </div>
     </section>
 
-    <!-- 5. Skills Section -->
-    <section id="skills" class="skills-section">
-      <div class="container">
-        <div class="section-header" data-aos="fade-up">
-          <span class="section-label" data-ar="الكفاءات" data-en="Expertise">الكفاءات</span>
-          <h2 class="section-title" data-ar="المهارات التقنية" data-en="Technical Skills">المهارات التقنية</h2>
-        </div>
-
-        <!-- Current Skills -->
-        <div class="skills-group" data-aos="fade-up">
-          <h3 class="skills-group-title" data-ar="الحالي - Android & Kotlin" data-en="Current - Android & Kotlin">الحالي - Android & Kotlin</h3>
-          <div class="skills-grid">
-            <div class="skill-chip skill-current"><i data-lucide="code-2"></i> Kotlin</div>
-            <div class="skill-chip skill-current"><i data-lucide="layout"></i> Jetpack Compose</div>
-            <div class="skill-chip skill-current"><i data-lucide="smartphone"></i> Android SDK</div>
-            <div class="skill-chip skill-current"><i data-lucide="flame"></i> Firebase</div>
-            <div class="skill-chip skill-current"><i data-lucide="database"></i> Room Database</div>
-            <div class="skill-chip skill-current"><i data-lucide="globe"></i> REST APIs / Retrofit</div>
-            <div class="skill-chip skill-current"><i data-lucide="git-branch"></i> Git & GitHub</div>
-            <div class="skill-chip skill-current"><i data-lucide="layers"></i> MVVM Architecture</div>
-            <div class="skill-chip skill-current"><i data-lucide="zap"></i> Coroutines & Flow</div>
-            <div class="skill-chip skill-current"><i data-lucide="box"></i> Dependency Injection (Hilt)</div>
-          </div>
-        </div>
-
-        <!-- Previous Skills -->
-        <div class="skills-group" data-aos="fade-up" data-aos-delay="100">
-          <h3 class="skills-group-title" data-ar="السابق - Flutter & تصميم" data-en="Previous - Flutter & Design">السابق - Flutter & تصميم</h3>
-          <div class="skills-grid">
-            <div class="skill-chip skill-prev"><i data-lucide="wind"></i> Flutter</div>
-            <div class="skill-chip skill-prev"><i data-lucide="pen-tool"></i> Dart</div>
-            <div class="skill-chip skill-prev"><i data-lucide="figma"></i> Figma</div>
-            <div class="skill-chip skill-prev"><i data-lucide="image"></i> Adobe Illustrator</div>
-            <div class="skill-chip skill-prev"><i data-lucide="aperture"></i> Adobe Photoshop</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- 6. Portfolio Section -->
     <section id="portfolio" class="portfolio-section">
