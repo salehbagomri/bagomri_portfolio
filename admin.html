@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -538,6 +538,35 @@
         <p>جارٍ التحميل...</p>
       </div>
     </div>
+
+    <!-- ════ Articles Section ════ -->
+    <div class="sec-header" style="margin-top:56px">
+      <h2>📝 المقالات</h2>
+      <button class="btn btn-primary" onclick="blogAdmin.openAddModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        إضافة مقال
+      </button>
+    </div>
+
+    <div id="articlesTable" style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:.9rem">
+        <thead>
+          <tr style="border-bottom:1px solid var(--glass-border);color:var(--text2)">
+            <th style="padding:10px;text-align:right">العنوان</th>
+            <th style="padding:10px;text-align:right">التصنيف</th>
+            <th style="padding:10px;text-align:right">التاريخ</th>
+            <th style="padding:10px;text-align:right">حالة النشر</th>
+            <th style="padding:10px;text-align:right">إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="articlesBody">
+          <tr><td colspan="5" style="text-align:center;padding:32px;color:var(--text2)">
+            <div class="spinner" style="margin:0 auto"></div>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </main>
 </div>
 
@@ -742,6 +771,119 @@
   </div>
 </div>
 
+<!-- ── Article Add/Edit Modal ────────────────────── -->
+<div id="articleModal" class="modal-backdrop" style="display:none">
+  <div class="modal-box" style="max-width:760px">
+    <div class="modal-head">
+      <h3 id="articleModalTitle">إضافة مقال</h3>
+      <button class="modal-close-btn" onclick="blogAdmin.closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <form id="articleForm" onsubmit="blogAdmin.handleSubmit(event)">
+        <input type="hidden" id="articleId">
+
+        <div class="form-section">
+          <div class="form-section-title">📋 المعلومات الأساسية</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>العنوان بالعربي *</label>
+              <input type="text" id="artTitleAr" required placeholder="عنوان المقال">
+            </div>
+            <div class="field">
+              <label>العنوان بالإنجليزي *</label>
+              <input type="text" id="artTitleEn" required placeholder="Article Title" dir="ltr">
+            </div>
+            <div class="field">
+              <label>Slug (URL المقال) *</label>
+              <input type="text" id="artSlug" required placeholder="article-url-slug" dir="ltr" style="direction:ltr">
+              <small style="color:var(--text2)">يُستخدم في رابط المقال. أحرف صغيرة وشرطات فقط.</small>
+            </div>
+            <div class="field">
+              <label>التصنيف *</label>
+              <select id="artCategory" required>
+                <option value="">اختر...</option>
+                <option value="kotlin">Kotlin</option>
+                <option value="android">Android</option>
+                <option value="compose">Jetpack Compose</option>
+                <option value="tips">نصائح</option>
+                <option value="personal">تجربة شخصية</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>تسمية التصنيف (عربي)</label>
+              <input type="text" id="artCategoryLabelAr" placeholder="مثال: Kotlin">
+            </div>
+            <div class="field">
+              <label>تسمية التصنيف (إنجليزي)</label>
+              <input type="text" id="artCategoryLabelEn" placeholder="e.g. Kotlin" dir="ltr">
+            </div>
+            <div class="field">
+              <label>وقت القراءة (دقائق)</label>
+              <input type="number" id="artReadTime" value="5" min="1" max="60" dir="ltr">
+            </div>
+            <div class="field" style="display:flex;align-items:center;gap:12px;padding-top:24px">
+              <label class="toggle-label">نشر المقال؟</label>
+              <label class="toggle">
+                <input type="checkbox" id="artPublished" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">📝 المقتطف (يظهر في البطاقة)</div>
+          <div class="field">
+            <label>المقتطف بالعربي *</label>
+            <textarea id="artExcerptAr" rows="3" required placeholder="وصف مختصر للمقال..."></textarea>
+          </div>
+          <div class="field">
+            <label>المقتطف بالإنجليزي *</label>
+            <textarea id="artExcerptEn" rows="3" required placeholder="Short article description..." dir="ltr"></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">📄 محتوى المقال (HTML)</div>
+          <div class="field">
+            <label>المحتوى بالعربي</label>
+            <textarea id="artContentAr" rows="12" placeholder="&lt;h2&gt;عنوان&lt;/h2&gt;&lt;p&gt;نص المقال...&lt;/p&gt;"
+              style="font-family:monospace;font-size:.85rem"></textarea>
+          </div>
+          <div class="field">
+            <label>المحتوى بالإنجليزي</label>
+            <textarea id="artContentEn" rows="12" placeholder="&lt;h2&gt;Heading&lt;/h2&gt;&lt;p&gt;Article content...&lt;/p&gt;"
+              dir="ltr" style="font-family:monospace;font-size:.85rem;direction:ltr"></textarea>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="blogAdmin.closeModal()">إلغاء</button>
+      <button class="btn btn-primary" onclick="blogAdmin.handleSubmit(event)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        حفظ المقال
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Article Delete Confirm ──────────────────── -->
+<div id="articleDeleteModal" class="modal-backdrop" style="display:none">
+  <div class="modal-box confirm-box">
+    <div class="modal-body">
+      <div class="confirm-icon">🗑️</div>
+      <h3>حذف المقال؟</h3>
+      <p>هذا الإجراء لا يمكن التراجع عنه. سيُحذف المقال نهائياً.</p>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="blogAdmin.closeDeleteModal()">إلغاء</button>
+        <button class="btn btn-danger" id="confirmArticleDeleteBtn">حذف</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ── Toast ──────────────────────────────────── -->
 <div id="adminToast"></div>
 
@@ -754,5 +896,6 @@
 <script src="js/config.js"></script>
 <script src="js/modules/firebase.js"></script>
 <script src="js/admin.js"></script>
+<script src="js/blog-admin.js"></script>
 </body>
 </html>
