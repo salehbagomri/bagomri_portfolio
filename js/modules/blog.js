@@ -202,6 +202,27 @@ class BlogManager {
         });
     }
 
+    // ── Init homepage preview blog ─────────────────────────
+    async initHomepageBlog() {
+        const gridEl = document.getElementById('homepageBlogGrid');
+        if (!gridEl) return;
+
+        const lang = document.documentElement.lang || 'ar';
+        gridEl.innerHTML = this._skeleton(3);
+
+        if (!firebaseService.db) firebaseService.init();
+
+        const latest = await this.fetchLatest(3);
+        this.renderGrid(latest, 'homepageBlogGrid', lang);
+
+        window.addEventListener('languageChanged', (e) => {
+            if (this.articles && this.articles.length > 0) {
+                const updatedLatest = this.articles.slice(0, 3);
+                this.renderGrid(updatedLatest, 'homepageBlogGrid', e.detail.lang);
+            }
+        });
+    }
+
     // ── Init single article page ───────────────────────────
     async initArticlePage() {
         const params = new URLSearchParams(window.location.search);

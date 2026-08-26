@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Main Entry Point - Bagomri Portfolio
  * Initializes all modules in correct order.
  */
@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 5. Portfolio (renders project cards)
   if (typeof initPortfolio === 'function') initPortfolio();
+
+  // 5.1 Blog preview (renders latest articles from Firestore)
+  if (typeof blogManager !== 'undefined') blogManager.initHomepageBlog();
 
   // 6. Contact form
   if (typeof initContact === 'function') initContact();

@@ -49,7 +49,7 @@
         <li><a href="#home"      class="nav-link active" data-ar="الرئيسية"  data-en="Home">الرئيسية</a></li>
         <li><a href="#about"     class="nav-link"        data-ar="عني"       data-en="About">عني</a></li>
         <li><a href="#portfolio" class="nav-link"        data-ar="المشاريع"  data-en="Portfolio">المشاريع</a></li>
-        <li><a href="blog.html"  class="nav-link"        data-ar="المقالات"  data-en="Blog">المقالات</a></li>
+        <li><a href="#blog"      class="nav-link"        data-ar="المقالات"  data-en="Blog">المقالات</a></li>
         <li><a href="#contact"   class="nav-link"        data-ar="تواصل"     data-en="Contact">تواصل</a></li>
       </ul>
       <div class="nav-actions">
@@ -67,7 +67,7 @@
         <li><a href="#home"      class="nav-link" data-ar="الرئيسية"  data-en="Home">الرئيسية</a></li>
         <li><a href="#about"     class="nav-link" data-ar="عني"       data-en="About">عني</a></li>
         <li><a href="#portfolio" class="nav-link" data-ar="المشاريع"  data-en="Portfolio">المشاريع</a></li>
-        <li><a href="blog.html"  class="nav-link" data-ar="المقالات"  data-en="Blog">المقالات</a></li>
+        <li><a href="#blog"      class="nav-link" data-ar="المقالات"  data-en="Blog">المقالات</a></li>
         <li><a href="#contact"   class="nav-link" data-ar="تواصل"     data-en="Contact">تواصل</a></li>
       </ul>
     </div>
@@ -207,62 +207,9 @@
           </p>
         </div>
 
-        <div class="blog-grid" data-aos="fade-up" data-aos-delay="100">
-
-          <!-- Article Card 1 -->
-          <article class="blog-card">
-            <div class="blog-card-img" style="background: #EEF0FF;">
-              <i data-lucide="book-open" style="width:40px;height:40px;color:#221461;"></i>
-            </div>
-            <div class="blog-card-body">
-              <span class="blog-tag" data-ar="Kotlin" data-en="Kotlin">Kotlin</span>
-              <h3 class="blog-card-title" data-ar="لماذا Kotlin هي مستقبل تطوير Android؟" data-en="Why Kotlin is the Future of Android Development?">لماذا Kotlin هي مستقبل تطوير Android؟</h3>
-              <p class="blog-card-excerpt" data-ar="نظرة متعمقة على مزايا Kotlin وكيف تجعل تطوير Android أسرع وأكثر أماناً." data-en="An in-depth look at Kotlin's advantages and how it makes Android development faster and safer.">
-                نظرة متعمقة على مزايا Kotlin وكيف تجعل تطوير Android أسرع وأكثر أماناً.
-              </p>
-              <div class="blog-card-footer">
-                <span class="blog-date"><i data-lucide="calendar"></i> Aug 2026</span>
-                <a href="blog.html" class="blog-read-more" data-ar="اقرأ المزيد" data-en="Read More">اقرأ المزيد <i data-lucide="arrow-left"></i></a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Article Card 2 -->
-          <article class="blog-card">
-            <div class="blog-card-img" style="background: #FFF7ED;">
-              <i data-lucide="layers" style="width:40px;height:40px;color:#EA580C;"></i>
-            </div>
-            <div class="blog-card-body">
-              <span class="blog-tag" data-ar="Jetpack Compose" data-en="Jetpack Compose">Jetpack Compose</span>
-              <h3 class="blog-card-title" data-ar="Jetpack Compose: دليل البداية السريعة" data-en="Jetpack Compose: Quick Start Guide">Jetpack Compose: دليل البداية السريعة</h3>
-              <p class="blog-card-excerpt" data-ar="كيف تبدأ مع Jetpack Compose وتبني واجهات مستخدم جميلة بكود أقل." data-en="How to get started with Jetpack Compose and build beautiful UIs with less code.">
-                كيف تبدأ مع Jetpack Compose وتبني واجهات مستخدم جميلة بكود أقل.
-              </p>
-              <div class="blog-card-footer">
-                <span class="blog-date"><i data-lucide="calendar"></i> Aug 2026</span>
-                <a href="blog.html" class="blog-read-more" data-ar="اقرأ المزيد" data-en="Read More">اقرأ المزيد <i data-lucide="arrow-left"></i></a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Article Card 3 -->
-          <article class="blog-card">
-            <div class="blog-card-img" style="background: #F0FDF4;">
-              <i data-lucide="zap" style="width:40px;height:40px;color:#16A34A;"></i>
-            </div>
-            <div class="blog-card-body">
-              <span class="blog-tag" data-ar="تجربة شخصية" data-en="Personal Experience">تجربة شخصية</span>
-              <h3 class="blog-card-title" data-ar="رحلتي من Flutter إلى Kotlin" data-en="My Journey from Flutter to Kotlin">رحلتي من Flutter إلى Kotlin</h3>
-              <p class="blog-card-excerpt" data-ar="قصة قراري بالتحول من Flutter إلى Kotlin، والدروس التي تعلمتها في الطريق." data-en="The story of my decision to switch from Flutter to Kotlin, and the lessons I learned along the way.">
-                قصة قراري بالتحول من Flutter إلى Kotlin، والدروس التي تعلمتها في الطريق.
-              </p>
-              <div class="blog-card-footer">
-                <span class="blog-date"><i data-lucide="calendar"></i> Aug 2026</span>
-                <a href="blog.html" class="blog-read-more" data-ar="اقرأ المزيد" data-en="Read More">اقرأ المزيد <i data-lucide="arrow-left"></i></a>
-              </div>
-            </div>
-          </article>
-
+        <!-- Dynamic Latest Articles Grid from Firestore -->
+        <div class="blog-posts-grid blog-grid" id="homepageBlogGrid" data-aos="fade-up" data-aos-delay="100">
+          <!-- Dynamically populated by blogManager.initHomepageBlog() -->
         </div>
 
         <!-- View All Button -->
@@ -400,6 +347,7 @@
   <script src="js/modules/navigation.js"></script>
   <script src="js/modules/animations.js"></script>
   <script src="js/modules/portfolio.js"></script>
+  <script src="js/modules/blog.js"></script>
   <script src="js/modules/contact.js"></script>
   <script src="js/modules/notifications.js"></script>
   <script src="js/main.js"></script>
