@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Navigation Module - Navbar scroll effect, mobile menu, active links
  */
 function initNavigation() {
@@ -56,10 +56,27 @@ function initNavigation() {
     }
   });
 
-  // ── Active link on scroll ─────────────────────────────────
+  // ── Active link on scroll / page match ────────────────────
   const sections = document.querySelectorAll('section[id]');
+  const isSinglePage = sections.length > 0;
+  const currentPath = (window.location.pathname || '').toLowerCase();
 
   function updateActiveLink() {
+    // If on a dedicated sub-page like blog.html or article.html
+    if (currentPath.includes('blog') || currentPath.includes('article')) {
+      allNavLinks.forEach((link) => {
+        const href = (link.getAttribute('href') || '').toLowerCase();
+        if (href.includes('blog')) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+      return;
+    }
+
+    if (!isSinglePage) return;
+
     const scrollY = window.scrollY + 80;
     let currentId = '';
 
