@@ -8,6 +8,7 @@ class BlogAdminManager {
         this.articles      = [];
         this.deletingId    = null;
         this.editingId     = null;
+        this._activeFilter = 'all';
     }
 
     // ── Init (called after auth succeeds) ─────────────────
@@ -15,6 +16,16 @@ class BlogAdminManager {
         this.loadArticles();
         document.getElementById('confirmArticleDeleteBtn')
             .addEventListener('click', () => this.confirmDelete());
+    }
+
+    // ── Filter & Search ────────────────────────────────────
+    filterArticles() { this.renderTable(); }
+
+    setFilter(filter, btn) {
+        this._activeFilter = filter;
+        document.querySelectorAll('#page-articles .filter-chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        this.renderTable();
     }
 
     // ── Load articles from Firestore ───────────────────────
@@ -46,47 +57,79 @@ class BlogAdminManager {
         const tbody = document.getElementById('articlesBody');
         if (!tbody) return;
 
-        if (this.articles.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text2)">
-                لا توجد مقالات بعد. اضغط "إضافة مقال" للبدء.</td></tr>`;
+        // Update nav badge
+        const badge = document.getElementById('navBadgeArticles');
+        if (badge) badge.textContent = this.articles.length;
+
+        // Apply filter
+        const search = (document.getElementById('articleSearch')?.value || '').toLowerCase();
+        let list = this.articles;
+
+        if (this._activeFilter === 'published') list = list.filter(a => a.published);
+        else if (this._activeFilter === 'draft') list = list.filter(a => !a.published);
+
+        if (search) {
+            list = list.filter(a =>
+                (a.titleAr || '').toLowerCase().includes(search) ||
+                (a.titleEn || '').toLowerCase().includes(search) ||
+                (a.slug || '').toLowerCase().includes(search)
+            );
+        }
+
+        if (list.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:48px;color:var(--text-secondary)">
+                <div style="font-size:2.5rem;margin-bottom:12px;opacity:.4">📝</div>
+                ${this.articles.length === 0 ? 'لا توجد مقالات بعد. اضغط "إضافة مقال" للبدء.' : 'لا توجد نتائج تطابق البحث.'}
+            </td></tr>`;
             return;
         }
 
-        tbody.innerHTML = this.articles.map(a => {
-            const title = a.titleAr || '';
-            const cat   = a.category || '-';
-            const date  = a.publishedAt
+        tbody.innerHTML = list.map(a => {
+            const date = a.publishedAt
                 ? (a.publishedAt.toDate ? a.publishedAt.toDate() : new Date(a.publishedAt))
-                    .toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' })
+                    .toLocaleDateString('ar-SA', { year:'numeric', month:'short', day:'numeric' })
                 : '-';
-            const pub   = a.published
-                ? `<span style="color:#10B981;font-weight:600">✓ منشور</span>`
-                : `<span style="color:#F59E0B;font-weight:600">◎ مسودة</span>`;
-            const link  = `<a href="article.html?slug=${a.slug}" target="_blank"
-                style="color:var(--primary);font-size:.8rem">↗</a>`;
-            const thumb = a.coverImage
-                ? `<img src="${a.coverImage}" style="width:36px;height:36px;object-fit:cover;border-radius:4px;vertical-align:middle;margin-left:8px">`
-                : `<span style="display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:var(--bg3);border-radius:4px;font-size:.8rem;margin-left:8px">📄</span>`;
 
-            return `<tr style="border-bottom:1px solid var(--glass-border);transition:background .15s"
-                onmouseover="this.style.background='var(--glass)'"
-                onmouseout="this.style.background=''">
-                <td style="padding:12px;font-weight:500">${thumb}${title} ${link}</td>
-                <td style="padding:12px;color:var(--text2);font-size:.85rem">${cat}</td>
-                <td style="padding:12px;color:var(--text2);font-size:.85rem">${date}</td>
-                <td style="padding:12px">${pub}</td>
-                <td style="padding:12px">
-                    <div style="display:flex;gap:8px;flex-wrap:wrap">
-                        <button class="btn btn-ghost btn-sm" onclick="blogAdmin.openEditModal('${a.id}')">✏️ تعديل</button>
-                        <button class="btn btn-sm" style="background:#991B1B;color:#fff"
-                            onclick="blogAdmin.openDeleteModal('${a.id}')">🗑️</button>
+            const thumb = a.coverImage
+                ? `<img class="art-thumb" src="${a.coverImage}" loading="lazy">`
+                : `<div class="art-thumb-ph">📄</div>`;
+
+            const statusPill = a.published
+                ? `<span class="status-pill status-published"><span class="status-dot"></span> منشور</span>`
+                : `<span class="status-pill status-draft"><span class="status-dot"></span> مسودة</span>`;
+
+            const catLabel = a.categoryLabelAr || a.category || '-';
+
+            return `<tr>
+                <td>
+                    <div class="art-title-cell">
+                        ${thumb}
+                        <div>
+                            <div class="art-title-text">${a.titleAr || ''}
+                                <a href="article.html?slug=${a.slug}" target="_blank" style="color:var(--accent-light);font-size:.75rem;margin-right:6px">↗</a>
+                            </div>
+                            <span class="art-slug">${a.slug || ''}</span>
+                        </div>
+                    </div>
+                </td>
+                <td style="color:var(--text-secondary);font-size:.82rem">${catLabel}</td>
+                <td style="color:var(--text-secondary);font-size:.82rem">${a.readTime || '-'} د</td>
+                <td style="color:var(--text-secondary);font-size:.82rem">${date}</td>
+                <td>${statusPill}</td>
+                <td>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                        <button class="btn btn-ghost btn-sm" onclick="blogAdmin.openEditModal('${a.id}')">✏️</button>
                         <button class="btn btn-ghost btn-sm" onclick="blogAdmin.togglePublish('${a.id}',${!a.published})">
-                            ${a.published ? '⏸ إخفاء' : '▶ نشر'}
+                            ${a.published ? '⏸' : '▶'}
                         </button>
+                        <button class="btn btn-sm" style="background:var(--danger);color:#fff" onclick="blogAdmin.openDeleteModal('${a.id}')">🗑️</button>
                     </div>
                 </td>
             </tr>`;
         }).join('');
+
+        // Sync overview stats
+        if (typeof admin !== 'undefined') admin.updateOverview();
     }
 
     // ── Open add modal ─────────────────────────────────────
@@ -96,12 +139,8 @@ class BlogAdminManager {
         document.getElementById('articleForm').reset();
         document.getElementById('articleId').value = '';
         document.getElementById('artPublished').checked = true;
-
-        // Reset image preview
-        const prev = document.getElementById('artCoverPreview');
-        if (prev) { prev.src = ''; prev.style.display = 'none'; }
-
-        document.getElementById('articleModal').style.display = 'flex';
+        this.clearCover();
+        document.getElementById('articleModal').classList.add('open');
     }
 
     // ── Open edit modal ────────────────────────────────────
@@ -111,57 +150,62 @@ class BlogAdminManager {
 
         this.editingId = id;
         document.getElementById('articleModalTitle').textContent = 'تعديل المقال';
-        document.getElementById('articleId').value        = id;
-        document.getElementById('artTitleAr').value       = article.titleAr   || '';
-        document.getElementById('artTitleEn').value       = article.titleEn   || '';
-        document.getElementById('artSlug').value          = article.slug      || '';
-        document.getElementById('artCategory').value      = article.category  || '';
+        document.getElementById('articleId').value          = id;
+        document.getElementById('artTitleAr').value         = article.titleAr   || '';
+        document.getElementById('artTitleEn').value         = article.titleEn   || '';
+        document.getElementById('artSlug').value            = article.slug      || '';
+        document.getElementById('artCategory').value        = article.category  || '';
         document.getElementById('artCategoryLabelAr').value = article.categoryLabelAr || '';
         document.getElementById('artCategoryLabelEn').value = article.categoryLabelEn || '';
-        document.getElementById('artReadTime').value      = article.readTime  || 5;
-        document.getElementById('artPublished').checked   = !!article.published;
-        document.getElementById('artExcerptAr').value     = article.excerptAr || '';
-        document.getElementById('artExcerptEn').value     = article.excerptEn || '';
-        document.getElementById('artContentAr').value     = article.contentAr || '';
-        document.getElementById('artContentEn').value     = article.contentEn || '';
+        document.getElementById('artReadTime').value        = article.readTime  || 5;
+        document.getElementById('artPublished').checked     = !!article.published;
+        document.getElementById('artExcerptAr').value       = article.excerptAr || '';
+        document.getElementById('artExcerptEn').value       = article.excerptEn || '';
+        document.getElementById('artContentAr').value       = article.contentAr || '';
+        document.getElementById('artContentEn').value       = article.contentEn || '';
 
-        // Cover image
         const coverUrl = article.coverImage || '';
         document.getElementById('artCoverUrl').value = coverUrl;
-        const prev = document.getElementById('artCoverPreview');
         if (coverUrl) {
-            prev.src = coverUrl;
-            prev.style.display = 'block';
-        } else {
-            prev.src = '';
-            prev.style.display = 'none';
-        }
+            document.getElementById('artCoverPreview').src = coverUrl;
+            document.getElementById('artCoverPreviewWrap').classList.add('visible');
+        } else { this.clearCover(); }
 
-        document.getElementById('articleModal').style.display = 'flex';
+        document.getElementById('articleModal').classList.add('open');
     }
 
     // ── Close modal ────────────────────────────────────────
     closeModal() {
-        document.getElementById('articleModal').style.display = 'none';
+        document.getElementById('articleModal').classList.remove('open');
     }
 
     // ── Image Preview ──────────────────────────────────────
     previewCover(input) {
         const file = input.files[0];
         if (!file) return;
-        const prev = document.getElementById('artCoverPreview');
-        prev.src = URL.createObjectURL(file);
-        prev.style.display = 'block';
+        document.getElementById('artCoverPreview').src = URL.createObjectURL(file);
+        document.getElementById('artCoverPreviewWrap').classList.add('visible');
+        document.getElementById('artCoverUrl').value = '';
     }
 
     previewFromUrl(url) {
-        const prev = document.getElementById('artCoverPreview');
         if (url && url.trim()) {
-            prev.src = url.trim();
-            prev.style.display = 'block';
+            document.getElementById('artCoverPreview').src = url.trim();
+            document.getElementById('artCoverPreviewWrap').classList.add('visible');
         } else {
-            prev.style.display = 'none';
+            document.getElementById('artCoverPreviewWrap').classList.remove('visible');
         }
+    }
+
+    clearCover() {
+        const wrap = document.getElementById('artCoverPreviewWrap');
+        const prev = document.getElementById('artCoverPreview');
+        if (wrap) wrap.classList.remove('visible');
+        if (prev) prev.src = '';
+        const fi = document.getElementById('artCoverFile');
+        if (fi) fi.value = '';
+        const ui = document.getElementById('artCoverUrl');
+        if (ui) ui.value = '';
     }
 
     // ── Upload to Cloudinary ───────────────────────────────
@@ -265,12 +309,12 @@ class BlogAdminManager {
     // ── Delete flow ────────────────────────────────────────
     openDeleteModal(id) {
         this.deletingId = id;
-        document.getElementById('articleDeleteModal').style.display = 'flex';
+        document.getElementById('articleDeleteModal').classList.add('open');
     }
 
     closeDeleteModal() {
         this.deletingId = null;
-        document.getElementById('articleDeleteModal').style.display = 'none';
+        document.getElementById('articleDeleteModal').classList.remove('open');
     }
 
     async confirmDelete() {
