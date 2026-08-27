@@ -2,8 +2,8 @@
  * Navigation Module - Navbar scroll effect, mobile menu, active links
  */
 function initNavigation() {
-  const navbar    = document.getElementById('navbar');
-  const navToggle = document.getElementById('navToggle');
+  const navbar     = document.getElementById('navbar');
+  const navToggle  = document.getElementById('navToggle');
   const mobileMenu = document.getElementById('mobileMenu');
   const allNavLinks = document.querySelectorAll('.nav-link');
 
@@ -20,36 +20,62 @@ function initNavigation() {
 
   // ── Mobile menu toggle ────────────────────────────────────
   if (navToggle && mobileMenu) {
-    navToggle.addEventListener('click', () => {
+    navToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
       const isOpen = mobileMenu.classList.toggle('open');
-      // Swap icon
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+      // Swap icon safely
       navToggle.innerHTML = isOpen
         ? '<i data-lucide="x"></i>'
         : '<i data-lucide="menu"></i>';
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
     });
   }
 
-  // Close mobile menu when a link is clicked
+  // Close mobile menu when any nav link is clicked
   allNavLinks.forEach((link) => {
     link.addEventListener('click', () => {
-      mobileMenu?.classList.remove('open');
-      if (navToggle) {
-        navToggle.innerHTML = '<i data-lucide="menu"></i>';
-        if (typeof lucide !== 'undefined') lucide.createIcons();
+      if (mobileMenu?.classList.contains('open')) {
+        mobileMenu.classList.remove('open');
+        if (navToggle) {
+          navToggle.setAttribute('aria-expanded', 'false');
+          navToggle.innerHTML = '<i data-lucide="menu"></i>';
+          if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
       }
     });
   });
 
   // Close on outside click
   document.addEventListener('click', (e) => {
-    if (
-      mobileMenu?.classList.contains('open') &&
-      !mobileMenu.contains(e.target) &&
-      !navToggle?.contains(e.target)
-    ) {
+    if (!mobileMenu?.classList.contains('open')) return;
+
+    // If clicked inside menu or on toggle button, do nothing
+    if (mobileMenu.contains(e.target) || navToggle?.contains(e.target) || e.target === navToggle) {
+      return;
+    }
+
+    // Otherwise close menu
+    mobileMenu.classList.remove('open');
+    if (navToggle) {
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.innerHTML = '<i data-lucide="menu"></i>';
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
       mobileMenu.classList.remove('open');
       if (navToggle) {
+        navToggle.setAttribute('aria-expanded', 'false');
         navToggle.innerHTML = '<i data-lucide="menu"></i>';
         if (typeof lucide !== 'undefined') lucide.createIcons();
       }
@@ -62,7 +88,6 @@ function initNavigation() {
   const currentPath = (window.location.pathname || '').toLowerCase();
 
   function updateActiveLink() {
-    // If on a dedicated sub-page like blog.html or article.html
     if (currentPath.includes('blog') || currentPath.includes('article')) {
       allNavLinks.forEach((link) => {
         const href = (link.getAttribute('href') || '').toLowerCase();
@@ -89,7 +114,7 @@ function initNavigation() {
     allNavLinks.forEach((link) => {
       link.classList.remove('active');
       const href = link.getAttribute('href');
-      if (href === `#${currentId}`) {
+      if (href === '#' + currentId) {
         link.classList.add('active');
       }
     });
