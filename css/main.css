@@ -49,11 +49,13 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -63,6 +65,7 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
 }
 
 [dir="ltr"] body,
@@ -71,11 +74,27 @@ body {
 }
 
 img { display: block; max-width: 100%; }
-a  { text-decoration: none; color: inherit; }
+a  { text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent; }
 ul { list-style: none; }
-button { cursor: pointer; border: none; background: none; font: inherit; }
-input, textarea, select { font: inherit; }
-svg, [data-lucide] { flex-shrink: 0; }
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+input, textarea, select {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+svg, [data-lucide] { flex-shrink: 0; pointer-events: none; }
+
+/* Remove default focus outline on click while preserving keyboard focus-visible */
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
 
 /* ==================== 3. TYPOGRAPHY ==================== */
 h1, h2, h3, h4, h5, h6 {
