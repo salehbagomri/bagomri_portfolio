@@ -92,44 +92,48 @@ class BlogAdminManager {
 
             const thumb = a.coverImage
                 ? `<img class="art-thumb" src="${a.coverImage}" loading="lazy">`
-                : `<div class="art-thumb-ph">📄</div>`;
+                : `<div class="art-thumb-ph"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>`;
 
             const statusPill = a.published
                 ? `<span class="status-pill status-published"><span class="status-dot"></span> منشور</span>`
                 : `<span class="status-pill status-draft"><span class="status-dot"></span> مسودة</span>`;
 
             const catLabel = a.categoryLabelAr || a.category || '-';
+            const extLink  = `<a href="article.html?slug=${a.slug}" target="_blank" style="color:var(--brand);font-size:.75rem;margin-right:6px">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>`;
+
+            const editIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+            const pauseIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+            const playIcon  = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+            const trashIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`;
 
             return `<tr>
                 <td>
                     <div class="art-title-cell">
                         ${thumb}
                         <div>
-                            <div class="art-title-text">${a.titleAr || ''}
-                                <a href="article.html?slug=${a.slug}" target="_blank" style="color:var(--accent-light);font-size:.75rem;margin-right:6px">↗</a>
-                            </div>
+                            <div class="art-title-text">${a.titleAr || ''} ${extLink}</div>
                             <span class="art-slug">${a.slug || ''}</span>
                         </div>
                     </div>
                 </td>
-                <td style="color:var(--text-secondary);font-size:.82rem">${catLabel}</td>
-                <td style="color:var(--text-secondary);font-size:.82rem">${a.readTime || '-'} د</td>
-                <td style="color:var(--text-secondary);font-size:.82rem">${date}</td>
+                <td style="color:var(--text-muted);font-size:.82rem">${catLabel}</td>
+                <td style="color:var(--text-muted);font-size:.82rem">${a.readTime || '-'} د</td>
+                <td style="color:var(--text-muted);font-size:.82rem">${date}</td>
                 <td>${statusPill}</td>
                 <td>
                     <div style="display:flex;gap:6px;flex-wrap:wrap">
-                        <button class="btn btn-ghost btn-sm" onclick="blogAdmin.openEditModal('${a.id}')">✏️</button>
-                        <button class="btn btn-ghost btn-sm" onclick="blogAdmin.togglePublish('${a.id}',${!a.published})">
-                            ${a.published ? '⏸' : '▶'}
+                        <button class="btn btn-outline" style="padding:6px 10px" onclick="blogAdmin.openEditModal('${a.id}')" title="تعديل">${editIcon}</button>
+                        <button class="btn btn-outline" style="padding:6px 10px" onclick="blogAdmin.togglePublish('${a.id}',${!a.published})" title="${a.published ? 'إخفاء' : 'نشر'}">
+                            ${a.published ? pauseIcon : playIcon}
                         </button>
-                        <button class="btn btn-sm" style="background:var(--danger);color:#fff" onclick="blogAdmin.openDeleteModal('${a.id}')">🗑️</button>
+                        <button class="btn" style="background:var(--error-bg);color:var(--error);border:1.5px solid var(--error);padding:6px 10px" onclick="blogAdmin.openDeleteModal('${a.id}')" title="حذف">${trashIcon}</button>
                     </div>
                 </td>
             </tr>`;
         }).join('');
-
-        // Sync overview stats
-        if (typeof admin !== 'undefined') admin.updateOverview();
+        lucide.createIcons();
     }
 
     // ── Open add modal ─────────────────────────────────────
