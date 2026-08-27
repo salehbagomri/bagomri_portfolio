@@ -98,51 +98,48 @@ class AdminManager {
 
         if (list.length === 0) {
             grid.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state-icon">🚀</div>
+                <div class="admin-empty">
+                    <i data-lucide="layers"></i>
                     <h3>${this.projects.length === 0 ? 'لا توجد مشاريع بعد' : 'لا توجد نتائج'}</h3>
-                    <p>${this.projects.length === 0 ? 'أضف مشروعك الأول الآن' : 'جرّب فلتر آخر'}</p>
-                    ${this.projects.length === 0 ? '<button class="btn btn-primary" onclick="admin.openAddModal()">+ إضافة مشروع</button>' : ''}
+                    <p>${this.projects.length === 0 ? 'أضف مشروعك الأول لعرضه هنا' : 'جرّب فلتر أو كلمة بحث أخرى'}</p>
+                    ${this.projects.length === 0 ? '<button class="btn btn-brand" onclick="admin.openAddModal()"><i data-lucide="plus"></i> إضافة مشروع</button>' : ''}
                 </div>`;
+            lucide.createIcons();
             return;
         }
 
         grid.innerHTML = list.map(p => {
-            const catClass = `cat-${p.category || 'other'}`;
             const catLabel = this.categoryLabel(p.category);
             const tags     = (p.tags || []).slice(0, 3);
+            const imgSrc   = p.image || '';
             return `
-            <div class="proj-card">
-                <div class="proj-card-thumb">
-                    ${p.image
-                        ? `<img src="${p.image}" alt="${p.title?.ar || ''}" loading="lazy">`
-                        : `<div class="proj-card-thumb-placeholder">🖼️</div>`
+            <div class="project-card">
+                <div class="project-card-img">
+                    ${imgSrc
+                        ? `<img src="${imgSrc}" alt="${p.title?.ar || ''}" loading="lazy" style="width:100%;height:100%;object-fit:cover">`
+                        : `<i data-lucide="image" style="width:40px;height:40px;color:var(--brand)"></i>`
                     }
-                    <div class="proj-card-overlay">
-                        <button class="btn btn-sm" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff" onclick="admin.openEditModal('${p.id}')">✏️ تعديل</button>
-                        <button class="btn btn-danger btn-sm" onclick="admin.confirmDelete('${p.id}')">🗑️</button>
-                    </div>
                 </div>
-                <div class="proj-card-body">
-                    <div class="proj-card-meta">
-                        <span class="proj-cat-badge ${catClass}">${catLabel}</span>
-                        ${p.featured ? '<span class="proj-featured-dot" title="مميز"></span>' : ''}
+                <div class="project-card-body">
+                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                        <span class="project-card-tag">${catLabel}</span>
+                        ${p.featured ? '<span style="font-size:0.72rem;color:var(--warning);font-weight:600">⭐ مميز</span>' : ''}
                     </div>
-                    <div class="proj-card-title">${p.title?.ar || 'بلا عنوان'}</div>
-                    <div class="proj-card-desc">${p.description?.ar || ''}</div>
-                    ${tags.length > 0 ? `<div class="proj-tags">${tags.map(t => `<span class="tag-pill">${t}</span>`).join('')}</div>` : ''}
-                    <div class="proj-card-actions">
-                        <button class="btn btn-ghost btn-sm" style="flex:1" onclick="admin.openEditModal('${p.id}')">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                            تعديل
-                        </button>
-                        <button class="btn btn-danger btn-sm" onclick="admin.confirmDelete('${p.id}')">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-                        </button>
-                    </div>
+                    <div class="project-card-title">${p.title?.ar || 'بلا عنوان'}</div>
+                    <p class="project-card-desc">${(p.description?.ar || '').slice(0,90)}${(p.description?.ar||'').length>90?'...':''}</p>
+                    ${tags.length > 0 ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:2px">${tags.map(t => `<span class="section-label" style="margin:0;font-size:0.68rem;padding:2px 9px">${t}</span>`).join('')}</div>` : ''}
+                </div>
+                <div class="card-actions" style="display:flex;gap:8px;padding:12px 20px;border-top:1px solid var(--border-light);background:var(--bg)">
+                    <button class="btn btn-outline" style="flex:1;font-size:0.8rem;padding:7px" onclick="admin.openEditModal('${p.id}')">
+                        <i data-lucide="pencil"></i> تعديل
+                    </button>
+                    <button class="btn" style="background:var(--error-bg);color:var(--error);border:1.5px solid var(--error);font-size:0.8rem;padding:7px 12px" onclick="admin.confirmDelete('${p.id}')">
+                        <i data-lucide="trash-2"></i>
+                    </button>
                 </div>
             </div>`;
         }).join('');
+        lucide.createIcons();
     }
 
     filterProjects() { this.renderProjects(); }
@@ -164,27 +161,35 @@ class AdminManager {
 
         const statsGrid = document.getElementById('overviewStats');
         if (statsGrid) {
-            statsGrid.innerHTML = `
-                <div class="stat-card"><div class="stat-card-icon ic-purple">🚀</div><div class="stat-num">${p.length}</div><div class="stat-label">إجمالي المشاريع</div></div>
-                <div class="stat-card"><div class="stat-card-icon ic-blue">📱</div><div class="stat-num">${p.filter(x=>x.category==='flutter').length}</div><div class="stat-label">Flutter</div></div>
-                <div class="stat-card"><div class="stat-card-icon ic-orange">🎨</div><div class="stat-num">${p.filter(x=>x.category==='uiux').length}</div><div class="stat-label">UI/UX</div></div>
-                <div class="stat-card"><div class="stat-card-icon ic-green">🖌️</div><div class="stat-num">${p.filter(x=>x.category==='graphics').length}</div><div class="stat-label">جرافيك</div></div>
-                <div class="stat-card"><div class="stat-card-icon ic-yellow">⭐</div><div class="stat-num">${p.filter(x=>x.featured).length}</div><div class="stat-label">مشاريع مميزة</div></div>
-                <div class="stat-card"><div class="stat-card-icon ic-pink">📝</div><div class="stat-num">${totalArt}</div><div class="stat-label">إجمالي المقالات</div></div>`;
+            const card = (icon, num, label) =>
+                `<div class="admin-stat-card">
+                    <div class="admin-stat-icon"><i data-lucide="${icon}"></i></div>
+                    <div class="admin-stat-num">${num}</div>
+                    <div class="admin-stat-label">${label}</div>
+                </div>`;
+            statsGrid.innerHTML =
+                card('layers',      p.length,                                'إجمالي المشاريع') +
+                card('smartphone',  p.filter(x=>x.category==='flutter').length, 'Flutter') +
+                card('pen-tool',    p.filter(x=>x.category==='uiux').length,    'UI/UX') +
+                card('image',       p.filter(x=>x.category==='graphics').length,'جرافيك') +
+                card('star',        p.filter(x=>x.featured).length,             'مميزة') +
+                card('newspaper',   totalArt,                                    'المقالات');
+            lucide.createIcons();
         }
 
         const summary = document.getElementById('contentSummary');
         if (summary) {
-            const row = (icon, label, val, color) =>
-                `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
-                    <span style="display:flex;align-items:center;gap:8px;font-size:.875rem;color:var(--text-secondary)">${icon} ${label}</span>
-                    <strong style="font-family:'Outfit',sans-serif;font-size:1.1rem;color:${color}">${val}</strong>
+            const mkRow = (icon, label, val) =>
+                `<div class="summary-row">
+                    <span class="summary-row-label"><i data-lucide="${icon}"></i> ${label}</span>
+                    <span class="summary-row-val">${val}</span>
                 </div>`;
             summary.innerHTML =
-                row('🚀', 'المشاريع', p.length, 'var(--accent-light)') +
-                row('⭐', 'المميزة', p.filter(x=>x.featured).length, 'var(--warning)') +
-                row('📝', 'المقالات', totalArt, 'var(--success)') +
-                row('✅', 'منشورة', pubArt, 'var(--info)');
+                mkRow('layers',   'المشاريع',  p.length) +
+                mkRow('star',     'المميزة',   p.filter(x=>x.featured).length) +
+                mkRow('newspaper','المقالات',  totalArt) +
+                mkRow('check-circle','منشورة', pubArt);
+            lucide.createIcons();
         }
     }
 
