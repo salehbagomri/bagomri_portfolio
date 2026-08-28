@@ -244,9 +244,11 @@ class BlogAdminManager {
             return;
         }
 
-        const submitBtn = document.querySelector('#articleModal .btn-primary');
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span>';
+        const submitBtn = document.getElementById('articleSubmitBtn') || document.querySelector('#articleModal .btn-brand');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> جارٍ الحفظ...';
+        }
 
         try {
             // Handle image upload or URL
@@ -291,8 +293,10 @@ class BlogAdminManager {
             console.error('❌ handleSubmit:', err);
             this._toast('❌ حدث خطأ: ' + err.message, 'error');
         } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> حفظ المقال`;
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> حفظ المقال`;
+            }
         }
     }
 
