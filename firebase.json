@@ -3,11 +3,15 @@
     "public": ".",
     "cleanUrls": true,
     "trailingSlash": false,
+    "predeploy": [
+      "node generate-sitemap.js"
+    ],
     "ignore": [
       "firebase.json",
       "firestore.rules",
       "firestore.indexes.json",
       "generate-sitemap.js",
+      "functions/**",
       "**/.*",
       "**/node_modules/**",
       "**/sass/**",
