@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة التحكم — Bagomri</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1250,8 +1252,12 @@
             <div class="field">
               <label class="field-label">Slug (رابط المقال) <span class="req">*</span></label>
               <input class="input" type="text" id="artSlug" required
-                placeholder="article-url-slug" style="direction:ltr">
-              <div class="field-hint">أحرف إنجليزية صغيرة وأرقام وشرطات فقط</div>
+                placeholder="article-url-slug" style="direction:ltr"
+                oninput="blogAdmin._onSlugInput(this)">
+              <div class="field-hint">
+                يُولَّد تلقائياً من العنوان الإنجليزي — يمكنك تعديله.
+                <span id="artSlugPreview" style="color:var(--brand);font-family:monospace;font-size:0.78rem;display:block;margin-top:4px"></span>
+              </div>
             </div>
             <div class="field">
               <label class="field-label">التصنيف <span class="req">*</span></label>

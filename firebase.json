@@ -2,10 +2,30 @@
   "hosting": {
     "public": ".",
     "cleanUrls": true,
+    "trailingSlash": false,
     "ignore": [
       "firebase.json",
+      "firestore.rules",
+      "firestore.indexes.json",
+      "generate-sitemap.js",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "**/sass/**",
+      "**/docs/**"
+    ],
+    "headers": [
+      {
+        "source": "/admin",
+        "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+      },
+      {
+        "source": "/admin.html",
+        "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+      },
+      {
+        "source": "/sitemap.xml",
+        "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }]
+      }
     ],
     "rewrites": [
       {
@@ -13,8 +33,23 @@
         "destination": "/admin.html"
       },
       {
+        "source": "/blog/:slug",
+        "destination": "/article.html"
+      },
+      {
+        "source": "/blog",
+        "destination": "/blog.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/article.html",
+        "destination": "/blog",
+        "type": 301
       }
     ]
   },

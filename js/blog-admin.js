@@ -143,8 +143,49 @@ class BlogAdminManager {
         document.getElementById('articleForm').reset();
         document.getElementById('articleId').value = '';
         document.getElementById('artPublished').checked = true;
+        const preview = document.getElementById('artSlugPreview');
+        if (preview) preview.textContent = '';
         this.clearCover();
         document.getElementById('articleModal').classList.add('open');
+
+        // Wire auto-slug from English title (on new article only)
+        const enTitle = document.getElementById('artTitleEn');
+        const slugField = document.getElementById('artSlug');
+        if (enTitle && slugField) {
+            enTitle.oninput = () => {
+                if (!this.editingId) {
+                    const auto = this._slugify(enTitle.value);
+                    slugField.value = auto;
+                    this._updateSlugPreview(auto);
+                }
+            };
+        }
+    }
+
+    // ── Slugify helper ─────────────────────────────────────
+    _slugify(str) {
+        return str.toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .trim()
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .slice(0, 80);
+    }
+
+    // ── Update slug preview ────────────────────────────────
+    _updateSlugPreview(slug) {
+        const preview = document.getElementById('artSlugPreview');
+        if (!preview) return;
+        preview.textContent = slug ? `bagomri.com/blog/${slug}` : '';
+    }
+
+    // ── Slug manual edit ───────────────────────────────────
+    _onSlugInput(input) {
+        const cleaned = input.value.toLowerCase()
+            .replace(/[^a-z0-9-]/g, '')
+            .replace(/-+/g, '-');
+        input.value = cleaned;
+        this._updateSlugPreview(cleaned);
     }
 
     // ── Open edit modal ────────────────────────────────────
@@ -239,9 +280,24 @@ class BlogAdminManager {
         const slug    = document.getElementById('artSlug').value.trim()
             .toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
-        if (!titleAr || !titleEn || !slug) {
-            this._toast('يرجى ملء الحقول الإلزامية', 'error');
+        if (!titleAr && !titleEn) {
+            this._toast('يرجى كتابة عنوان المقال بالعربي أو الإنجليزي على الأقل', 'error');
+            document.getElementById('artTitleAr').focus();
             return;
+        }
+        if (!slug) {
+            this._toast('يرجى إدخال رابط المقال (Slug)', 'error');
+            document.getElementById('artSlug').focus();
+            return;
+        }
+        // Check duplicate slug on new articles only
+        if (!this.editingId) {
+            const existing = this.articles.find(a => a.slug === slug);
+            if (existing) {
+                this._toast(`⚠️ الـ Slug "${slug}" مستخدم بالفعل في مقال آخر`, 'error');
+                document.getElementById('artSlug').focus();
+                return;
+            }
         }
 
         const submitBtn = document.getElementById('articleSubmitBtn') || document.querySelector('#articleModal .btn-brand');
@@ -259,32 +315,39 @@ class BlogAdminManager {
                 coverImage = await this.uploadToCloudinary(coverFile);
             }
 
+            const isPublished = document.getElementById('artPublished').checked;
             const data = {
                 titleAr,
                 titleEn,
                 slug,
+                author:           'Saleh Bagomri',
                 coverImage:       coverImage || '',
                 category:         document.getElementById('artCategory').value,
                 categoryLabelAr:  document.getElementById('artCategoryLabelAr').value.trim(),
                 categoryLabelEn:  document.getElementById('artCategoryLabelEn').value.trim(),
                 readTime:         parseInt(document.getElementById('artReadTime').value) || 5,
-                published:        document.getElementById('artPublished').checked,
+                published:        isPublished,
                 excerptAr:        document.getElementById('artExcerptAr').value.trim(),
                 excerptEn:        document.getElementById('artExcerptEn').value.trim(),
                 contentAr:        document.getElementById('artContentAr').value,
                 contentEn:        document.getElementById('artContentEn').value,
-                updatedAt:        firebase.firestore.FieldValue.serverTimestamp(),
+                // updatedAt: null on new articles, set on edits only
+                updatedAt:        this.editingId ? firebase.firestore.FieldValue.serverTimestamp() : null,
             };
 
             const col = firebaseService.db.collection('articles');
 
             if (this.editingId) {
+                // On edit: preserve original publishedAt, only update updatedAt
                 await col.doc(this.editingId).update(data);
                 this._toast('✅ تم تحديث المقال بنجاح', 'success');
             } else {
-                data.publishedAt = firebase.firestore.FieldValue.serverTimestamp();
+                // On create: set publishedAt only if published (not a draft)
+                data.publishedAt = isPublished
+                    ? firebase.firestore.FieldValue.serverTimestamp()
+                    : null;
                 await col.add(data);
-                this._toast('✅ تم إضافة المقال بنجاح', 'success');
+                this._toast(isPublished ? '✅ تم نشر المقال بنجاح' : '📝 تم حفظ المسودة', 'success');
             }
 
             this.closeModal();
