@@ -7,22 +7,51 @@ class FirebaseService {
         this.db = null;
         this.auth = null;
         this.storage = null;
-        this.collections = {
-            visitors: 'visitors',
-            comments: 'comments',
-            contacts: 'contacts',
-            projects: 'projects',
-            articles: 'articles'
-        };
+        this.projectId = (typeof firebaseConfig !== 'undefined' && firebaseConfig.projectId) ? firebaseConfig.projectId : 'bagomri-portfolio';
+    }
+
+    // ── Helper: Parse Firestore REST field values ─────────────
+    _parseFirestoreValue(val) {
+        if (!val || typeof val !== 'object') return val;
+        if ('stringValue' in val) return val.stringValue;
+        if ('booleanValue' in val) return val.booleanValue;
+        if ('integerValue' in val) return parseInt(val.integerValue, 10);
+        if ('doubleValue' in val) return parseFloat(val.doubleValue);
+        if ('timestampValue' in val) return val.timestampValue;
+        if ('nullValue' in val) return null;
+        if ('arrayValue' in val) {
+            return (val.arrayValue.values || []).map(v => this._parseFirestoreValue(v));
+        }
+        if ('mapValue' in val) {
+            const res = {};
+            const fields = val.mapValue.fields || {};
+            for (const k in fields) {
+                res[k] = this._parseFirestoreValue(fields[k]);
+            }
+            return res;
+        }
+        return val;
+    }
+
+    _parseFirestoreDoc(doc) {
+        if (!doc) return null;
+        const id = doc.name ? doc.name.split('/').pop() : '';
+        const data = { id };
+        const fields = doc.fields || {};
+        for (const k in fields) {
+            data[k] = this._parseFirestoreValue(fields[k]);
+        }
+        return data;
     }
 
     // تهيئة Firebase
     init() {
         try {
+            if (typeof firebase === 'undefined') return false;
             if (!firebase.apps || !firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             }
-            if (!this.db) {
+            if (!this.db && typeof firebase.firestore === 'function') {
                 this.db = firebase.firestore();
                 try {
                     this.db.settings({
@@ -68,15 +97,36 @@ class FirebaseService {
     // ============================================
 
     async getProjects() {
+        // 1. Try ultra-fast direct REST API (immune to WebSocket blocks & 100ms response)
         try {
-            const snapshot = await this.db.collection(this.collections.projects)
-                .orderBy('order', 'asc')
-                .get();
-            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        } catch (error) {
-            console.error('Error getting projects:', error);
-            return [];
+            const url = `https://firestore.googleapis.com/v1/projects/${this.projectId}/databases/(default)/documents/${this.collections.projects}`;
+            const res = await fetch(url);
+            if (res.ok) {
+                const json = await res.json();
+                const docs = (json.documents || []).map(doc => this._parseFirestoreDoc(doc));
+                docs.sort((a, b) => {
+                    const orderA = typeof a.order === 'number' ? a.order : 10;
+                    const orderB = typeof b.order === 'number' ? b.order : 10;
+                    return orderA - orderB;
+                });
+                return docs;
+            }
+        } catch (restErr) {
+            console.warn('⚠️ REST getProjects failed, falling back to SDK:', restErr.message);
         }
+
+        // 2. Fallback to SDK if available
+        try {
+            if (this.db) {
+                const snapshot = await this.db.collection(this.collections.projects)
+                    .orderBy('order', 'asc')
+                    .get();
+                return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            }
+        } catch (error) {
+            console.error('Error getting projects via SDK:', error);
+        }
+        return [];
     }
 
     async addProject(data) {
@@ -382,12 +432,16 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // Main init function called by main.js
 function initFirebase() {
-  const ok = firebaseService.init();
-  if (!ok) return;
+  firebaseService.init();
 
   // Increment & display visitor count
   const visitorCountEl = document.getElementById('visitorCount');
   if (visitorCountEl) {
+    const cachedCount = localStorage.getItem('bagomri_cached_visitor_count');
+    if (cachedCount) {
+      visitorCountEl.textContent = Number(cachedCount).toLocaleString();
+    }
+
     const visitorId = localStorage.getItem('bagomri_visitor_id') ||
       (() => {
         const id = 'v_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
@@ -395,30 +449,20 @@ function initFirebase() {
         return id;
       })();
 
-    const db = firebaseService.db;
-    if (db) {
-      const docRef = db.collection('visitors').doc('counter');
-      docRef.get().then(doc => {
-        if (doc.exists) {
-          const data = doc.data();
-          const visitors = data.visitors || [];
-          const isNew = !visitors.includes(visitorId);
-          if (isNew) {
-            docRef.update({
-              visitors: firebase.firestore.FieldValue.arrayUnion(visitorId),
-              count: firebase.firestore.FieldValue.increment(1)
-            }).catch(() => {});
-          }
-          const count = isNew ? (data.count || 0) + 1 : (data.count || 0);
+    // Fetch visitor count via fast REST
+    fetch('https://firestore.googleapis.com/v1/projects/bagomri-portfolio/databases/(default)/documents/visitors/counter')
+      .then(res => res.json())
+      .then(data => {
+        const parsed = firebaseService._parseFirestoreDoc(data);
+        if (parsed && typeof parsed.count !== 'undefined') {
+          const count = parsed.count || 1;
           visitorCountEl.textContent = count.toLocaleString();
-        } else {
-          docRef.set({ visitors: [visitorId], count: 1 }).catch(() => {});
-          visitorCountEl.textContent = '1';
+          try { localStorage.setItem('bagomri_cached_visitor_count', count); } catch(e){}
         }
-      }).catch(() => {
-        visitorCountEl.textContent = '-';
+      })
+      .catch(() => {
+        if (!cachedCount) visitorCountEl.textContent = '-';
       });
-    }
   }
 }
 

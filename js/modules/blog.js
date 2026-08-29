@@ -194,68 +194,121 @@ class BlogManager {
     this.currentLang    = 'ar';
   }
 
-  // ── Fetch articles from Firestore ──────────────────────
+  // ── Fetch articles from Firestore (REST + SDK fallback) ─
   async fetchArticles({ category = null, limit = 50, published = true } = {}) {
+    // 1. Try ultra-fast direct REST runQuery (100ms, immune to WebSocket blocks)
     try {
-      if (!firebaseService.db) firebaseService.init();
-      if (!firebaseService.db) return this.articles || [];
-
-      let query = firebaseService.db
-        .collection(firebaseService.collections.articles)
-        .where('published', '==', published)
-        .orderBy('publishedAt', 'desc');
+      const body = {
+        structuredQuery: {
+          from: [{ collectionId: 'articles' }],
+          where: {
+            fieldFilter: {
+              field: { fieldPath: 'published' },
+              op: 'EQUAL',
+              value: { booleanValue: published }
+            }
+          },
+          orderBy: [{ field: { fieldPath: 'publishedAt' }, direction: 'DESCENDING' }]
+        }
+      };
 
       if (category && category !== 'all') {
-        query = query.where('category', '==', category);
-      }
-      if (limit) query = query.limit(limit);
-
-      // 4-second timeout to prevent stalling on mobile networks
-      const fetchPromise = query.get();
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Network timeout')), 4000)
-      );
-
-      const snapshot = await Promise.race([fetchPromise, timeoutPromise]);
-      if (snapshot && snapshot.docs) {
-        this.articles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        try {
-          if (!category || category === 'all') {
-            localStorage.setItem('bagomri_cached_articles', JSON.stringify(this.articles));
+        body.structuredQuery.where = {
+          compositeFilter: {
+            op: 'AND',
+            filters: [
+              {
+                fieldFilter: {
+                  field: { fieldPath: 'published' },
+                  op: 'EQUAL',
+                  value: { booleanValue: published }
+                }
+              },
+              {
+                fieldFilter: {
+                  field: { fieldPath: 'category' },
+                  op: 'EQUAL',
+                  value: { stringValue: category }
+                }
+              }
+            ]
           }
-        } catch (e) {}
+        };
       }
-      return this.articles;
-    } catch (error) {
-      console.warn('⚠️ Articles loaded from cache/fallback:', error.message);
-      if (!this.articles || this.articles.length === 0) {
-        try {
-          const cached = localStorage.getItem('bagomri_cached_articles');
-          if (cached) this.articles = JSON.parse(cached);
-        } catch (e) {}
+
+      if (limit) {
+        body.structuredQuery.limit = limit;
       }
-      return this.articles || [];
+
+      const res = await fetch('https://firestore.googleapis.com/v1/projects/bagomri-portfolio/databases/(default)/documents:runQuery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) {
+        const results = await res.json();
+        const docs = [];
+        for (const item of results) {
+          if (item.document && typeof firebaseService !== 'undefined') {
+            docs.push(firebaseService._parseFirestoreDoc(item.document));
+          }
+        }
+        if (docs.length > 0) {
+          this.articles = docs;
+          try {
+            if (!category || category === 'all') {
+              localStorage.setItem('bagomri_cached_articles', JSON.stringify(this.articles));
+            }
+          } catch (e) {}
+          return this.articles;
+        }
+      }
+    } catch (restErr) {
+      console.warn('⚠️ REST articles query failed, falling back to cache/SDK:', restErr.message);
     }
+
+    // 2. Fallback to SDK if available
+    try {
+      if (typeof firebaseService !== 'undefined' && firebaseService.db) {
+        let query = firebaseService.db
+          .collection(firebaseService.collections.articles)
+          .where('published', '==', published)
+          .orderBy('publishedAt', 'desc');
+
+        if (category && category !== 'all') {
+          query = query.where('category', '==', category);
+        }
+        if (limit) query = query.limit(limit);
+
+        const snapshot = await query.get();
+        this.articles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        return this.articles;
+      }
+    } catch (sdkErr) {
+      console.warn('⚠️ SDK articles query fallback:', sdkErr.message);
+    }
+
+    // 3. Fallback to localStorage cache
+    if (!this.articles || this.articles.length === 0) {
+      try {
+        const cached = localStorage.getItem('bagomri_cached_articles');
+        if (cached) this.articles = JSON.parse(cached);
+      } catch (e) {}
+    }
+    return this.articles || [];
   }
 
   // ── Fetch single article by slug ──────────────────────
   async fetchBySlug(slug) {
-    try {
-      if (!firebaseService.db) return null;
-      const snapshot = await firebaseService.db
-        .collection(firebaseService.collections.articles)
-        .where('slug', '==', slug)
-        .where('published', '==', true)
-        .limit(1)
-        .get();
-
-      if (snapshot.empty) return null;
-      const doc = snapshot.docs[0];
-      return { id: doc.id, ...doc.data() };
-    } catch (error) {
-      console.error('❌ Error fetching article:', error);
-      return null;
+    if (!slug) return null;
+    if (this.articles && this.articles.length > 0) {
+      const cached = this.articles.find(a => a.slug === slug);
+      if (cached) return cached;
     }
+
+    const all = await this.fetchArticles({ limit: 100 });
+    return all.find(a => a.slug === slug) || null;
   }
 
   // ── Fetch latest N articles ────────────────────────────
