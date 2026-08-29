@@ -43,8 +43,8 @@ const siteConfig = {
         en: 'Bagomri'
     },
     siteDescription: {
-        ar: 'مطور Flutter، مصمم UI/UX، ومصمم جرافيك',
-        en: 'Flutter Developer, UI/UX Designer, & Graphic Designer'
+        ar: 'مطور Kotlin & Android',
+        en: 'Kotlin & Android Developer'
     },
     
     // معلومات التواصل
@@ -52,14 +52,13 @@ const siteConfig = {
         email: 's.bagomri@gmail.com',
         whatsapp: '+967770727055',
         location: {
-            ar: 'السعودية',
-            en: 'Saudi Arabia'
+            ar: 'اليمن',
+            en: 'Yemen'
         },
         social: {
             github: 'https://github.com/salehbagomri',
-            behance: 'https://www.behance.net/salehbbagomri',
-            instagram: 'https://instagram.com/salehbagomri',
-            linkedin: 'https://www.linkedin.com/in/salehbagomri'
+            linkedin: 'https://www.linkedin.com/in/salehbagomri',
+            behance: 'https://www.behance.net/salehbbagomri'
         }
     },
     
