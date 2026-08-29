@@ -19,8 +19,17 @@ class FirebaseService {
     // تهيئة Firebase
     init() {
         try {
-            firebase.initializeApp(firebaseConfig);
+            if (!firebase.apps || !firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
             this.db = firebase.firestore();
+            try {
+                this.db.settings({
+                    experimentalAutoDetectLongPolling: true
+                });
+            } catch (settingsErr) {
+                // Settings can only be set once before any other call
+            }
             if (typeof firebase.auth === 'function') this.auth = firebase.auth();
             if (typeof firebase.storage === 'function') this.storage = firebase.storage();
             return true;
