@@ -8,6 +8,12 @@ class FirebaseService {
         this.auth = null;
         this.storage = null;
         this.projectId = (typeof firebaseConfig !== 'undefined' && firebaseConfig.projectId) ? firebaseConfig.projectId : 'bagomri-portfolio';
+        this.collections = {
+            projects: 'projects',
+            contacts: 'contacts',
+            articles: 'articles',
+            analytics: 'analytics'
+        };
     }
 
     // ── Helper: Parse Firestore REST field values ─────────────

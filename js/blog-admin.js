@@ -37,19 +37,44 @@ class BlogAdminManager {
             <div class="spinner" style="margin:0 auto"></div>
         </td></tr>`;
 
+        // 1. Try fast REST API (100ms response)
         try {
-            const snapshot = await firebaseService.db
-                .collection('articles')
-                .orderBy('publishedAt', 'desc')
-                .get();
-
-            this.articles = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-            this.renderTable();
-        } catch (err) {
-            console.error('❌ loadArticles:', err);
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:24px;color:#EF4444">
-                خطأ في تحميل المقالات</td></tr>`;
+            const url = `https://firestore.googleapis.com/v1/projects/${firebaseService.projectId}/databases/(default)/documents/articles`;
+            const res = await fetch(url);
+            if (res.ok) {
+                const json = await res.json();
+                const docs = (json.documents || []).map(doc => firebaseService._parseFirestoreDoc(doc));
+                docs.sort((a, b) => {
+                    const dateA = new Date(a.createdAt || a.publishedAt || 0).getTime();
+                    const dateB = new Date(b.createdAt || b.publishedAt || 0).getTime();
+                    return dateB - dateA;
+                });
+                this.articles = docs;
+                this.renderTable();
+                return;
+            }
+        } catch (restErr) {
+            console.warn('⚠️ REST loadArticles fallback to SDK:', restErr.message);
         }
+
+        // 2. Fallback to SDK
+        try {
+            if (firebaseService.db) {
+                const snapshot = await firebaseService.db
+                    .collection('articles')
+                    .orderBy('publishedAt', 'desc')
+                    .get();
+
+                this.articles = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                this.renderTable();
+                return;
+            }
+        } catch (err) {
+            console.error('❌ loadArticles SDK error:', err);
+        }
+
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:24px;color:#EF4444">
+            خطأ في تحميل المقالات</td></tr>`;
     }
 
     // ── Render articles table ──────────────────────────────
