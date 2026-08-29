@@ -1,4 +1,4 @@
-# 🚀 Bagomri Portfolio & Technical Blog
+# Bagomri Portfolio & Technical Blog
 
 A high-performance, modular portfolio and engineering blog platform engineered for **Saleh Bagomri** (Kotlin & Android Developer). Built with native web standards, zero framework overhead, direct Firestore REST integration, and complete bilingual (Arabic & English) optimization.
 
@@ -9,21 +9,21 @@ A high-performance, modular portfolio and engineering blog platform engineered f
 
 ---
 
-## 📌 Table of Contents
+## Table of Contents
 
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [Architecture & Data Flow](#-architecture--data-flow)
-- [Technology Stack](#-technology-stack)
-- [Project Directory Structure](#-project-directory-structure)
-- [Local Development & Deployment](#-local-development--deployment)
-- [Security & Performance Engineering](#-security--performance-engineering)
-- [Author & Connect](#-author--connect)
-- [License](#-license)
+- [Overview](#overview)
+- [Features](#features)
+- [Architecture & Data Flow](#architecture--data-flow)
+- [Technology Stack](#technology-stack)
+- [Project Directory Structure](#project-directory-structure)
+- [Local Development & Deployment](#local-development--deployment)
+- [Security & Performance Engineering](#security--performance-engineering)
+- [Author & Contact](#author--contact)
+- [License](#license)
 
 ---
 
-## 📖 Overview
+## Overview
 
 The **Bagomri Portfolio** is designed to provide an executive showcase of production mobile applications (Kotlin, Jetpack Compose, Flutter) and in-depth software engineering articles.
 
@@ -31,36 +31,36 @@ Unlike conventional portfolios built on heavy client-side frameworks, this platf
 
 ---
 
-## 🌟 Key Features
+## Features
 
-### 📱 Engineering Showcase (Kotlin & Android First)
+### Engineering Showcase (Kotlin & Android First)
 - **Targeted Categorization:** Filter projects by `Kotlin & Android` and `Flutter`.
 - **In-App Lightbox Gallery:** Interactive full-screen screenshot preview with keyboard navigation, counter, and mobile gesture support.
 - **Detailed Modal Specs:** Role breakdown, project timeline, technical features checklist, GitHub repository links, and Google Play Store deep links.
 
-### 📝 Dynamic Technical Blog Engine
+### Dynamic Technical Blog Engine
 - **Direct REST Data Engine:** Instant article retrieval using Firestore REST `runQuery` endpoints.
 - **Slug-Based Routing:** Clean, search-engine-friendly URLs (`/blog` and `/article?slug=...`).
 - **Reading Time & Meta:** Dynamic calculation of reading estimates, tag filtering, and publication date formatting.
 
-### 🌐 Native Bilingual Engine (Arabic & English)
+### Native Bilingual Engine (Arabic & English)
 - **Instant Toggle:** Bidirectional typography and layout flipping between RTL (Arabic) and LTR (English).
 - **Persistent State:** User language preference remembered via `localStorage` across all pages.
 
-### ⚙️ Full-Featured Admin Control Panel
+### Full-Featured Admin Control Panel
 - **Authenticated Dashboard:** Protected admin portal for managing projects and blog posts.
 - **Rich Markdown / HTML Support:** Create, preview, edit, and publish technical articles.
 - **Cloudinary CDN Integration:** Direct unsigned image uploading for project assets and article banners.
 
-### 📬 Direct Inquiries & Notifications
+### Direct Inquiries & Notifications
 - **Contact Pipeline:** Validated contact form integrated with **EmailJS** for instant inbox notifications and Firestore archival.
 
-### 🗺️ Dynamic Automated Sitemap
+### Dynamic Automated Sitemap
 - **Predeploy Hook:** Generates an updated `sitemap.xml` directly from published Firestore articles prior to each hosting deployment.
 
 ---
 
-## 🏗️ Architecture & Data Flow
+## Architecture & Data Flow
 
 ```
 [ Visitor / Client Browser ]
@@ -97,7 +97,7 @@ Unlike conventional portfolios built on heavy client-side frameworks, this platf
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technology | Purpose |
 |---|---|---|
@@ -112,7 +112,7 @@ Unlike conventional portfolios built on heavy client-side frameworks, this platf
 
 ---
 
-## 📁 Project Directory Structure
+## Project Directory Structure
 
 ```
 bagomri_portfolio/
@@ -159,7 +159,7 @@ bagomri_portfolio/
 
 ---
 
-## 🚀 Local Development & Deployment
+## Local Development & Deployment
 
 ### 1. Clone the Repository
 ```bash
@@ -182,7 +182,7 @@ firebase deploy --only hosting
 
 ---
 
-## 🔒 Security & Performance Engineering
+## Security & Performance Engineering
 
 - **Clean Security Rules:** Firestore rules enforce authenticated write access for projects and articles, while contact submissions are write-only with rigorous schema validation.
 - **Direct REST Querying:** Eliminates persistent duplex channel stalls (`Listen/channel`) on constrained mobile networks.
@@ -191,21 +191,21 @@ firebase deploy --only hosting
 
 ---
 
-## 👨‍💻 Author & Connect
+## Author & Contact
 
 **Saleh Bagomri**  
 *Kotlin & Android Developer | Computer Science Graduate*
 
-- 🌐 **Portfolio:** [bagomri.com](https://bagomri.com)
-- 🐙 **GitHub:** [@salehbagomri](https://github.com/salehbagomri)
-- 💼 **LinkedIn:** [salehbagomri](https://www.linkedin.com/in/salehbagomri)
-- 🎨 **Behance:** [salehbbagomri](https://www.behance.net/salehbbagomri)
-- 💬 **WhatsApp:** [+967 770 727 055](https://wa.me/967770727055)
-- 📧 **Email:** [s.bagomri@gmail.com](mailto:s.bagomri@gmail.com)
+- **Website:** [bagomri.com](https://bagomri.com)
+- **GitHub:** [@salehbagomri](https://github.com/salehbagomri)
+- **LinkedIn:** [salehbagomri](https://www.linkedin.com/in/salehbagomri)
+- **Behance:** [salehbbagomri](https://www.behance.net/salehbbagomri)
+- **WhatsApp:** [+967 770 727 055](https://wa.me/967770727055)
+- **Email:** [s.bagomri@gmail.com](mailto:s.bagomri@gmail.com)
 
 ---
 
-## 📄 License
+## License
 
 This project is open-source software licensed under the [MIT License](LICENSE).  
 Copyright (c) 2026 **Saleh Bagomri**.
