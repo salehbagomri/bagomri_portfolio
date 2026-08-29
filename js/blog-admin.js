@@ -37,10 +37,14 @@ class BlogAdminManager {
             <div class="spinner" style="margin:0 auto"></div>
         </td></tr>`;
 
-        // 1. Try fast REST API (100ms response)
+        // 1. Try fast authenticated REST API (100ms response)
         try {
+            const token = (typeof firebase !== 'undefined' && firebase.auth() && firebase.auth().currentUser)
+                ? await firebase.auth().currentUser.getIdToken()
+                : null;
+            const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
             const url = `https://firestore.googleapis.com/v1/projects/${firebaseService.projectId}/databases/(default)/documents/articles`;
-            const res = await fetch(url);
+            const res = await fetch(url, { headers });
             if (res.ok) {
                 const json = await res.json();
                 const docs = (json.documents || []).map(doc => firebaseService._parseFirestoreDoc(doc));

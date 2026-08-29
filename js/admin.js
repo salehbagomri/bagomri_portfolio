@@ -169,9 +169,8 @@ class AdminManager {
                 </div>`;
             statsGrid.innerHTML =
                 card('layers',      p.length,                                'إجمالي المشاريع') +
+                card('smartphone',  p.filter(x=>x.category==='android').length, 'Kotlin & Android') +
                 card('smartphone',  p.filter(x=>x.category==='flutter').length, 'Flutter') +
-                card('pen-tool',    p.filter(x=>x.category==='uiux').length,    'UI/UX') +
-                card('image',       p.filter(x=>x.category==='graphics').length,'جرافيك') +
                 card('star',        p.filter(x=>x.featured).length,             'مميزة') +
                 card('newspaper',   totalArt,                                    'المقالات');
             lucide.createIcons();
@@ -194,7 +193,7 @@ class AdminManager {
     }
 
     categoryLabel(c) {
-        return {flutter:'Flutter',uiux:'UI/UX',graphics:'جرافيك',android:'Android'}[c] || (c||'أخرى');
+        return {android:'Kotlin & Android', flutter:'Flutter'}[c] || (c||'أخرى');
     }
 
     // ══ MODALS ══════════════════════════════
