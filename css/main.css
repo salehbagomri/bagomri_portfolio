@@ -191,6 +191,43 @@ p { color: var(--text-muted); line-height: 1.8; }
   transform: translateY(-1px);
 }
 
+/* CV download button */
+.btn-cv {
+  background: transparent;
+  color: var(--brand);
+  border-color: var(--brand);
+  position: relative;
+  overflow: hidden;
+}
+.btn-cv::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-hover) 100%);
+  opacity: 0;
+  transition: opacity var(--transition);
+  z-index: 0;
+}
+.btn-cv > * { position: relative; z-index: 1; }
+.btn-cv:hover {
+  color: #fff;
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--brand-rgb, 94, 53, 177), 0.35);
+}
+.btn-cv:hover::before { opacity: 1; }
+
+/* Ghost button — subtle text-only style */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+.btn-ghost:hover {
+  color: var(--text-primary);
+  background: var(--surface);
+}
+
 .btn-full { width: 100%; justify-content: center; }
 
 .btn [data-lucide] { width: 17px; height: 17px; }
