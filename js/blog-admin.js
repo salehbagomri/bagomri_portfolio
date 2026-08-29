@@ -90,6 +90,11 @@ class BlogAdminManager {
         const badge = document.getElementById('navBadgeArticles');
         if (badge) badge.textContent = this.articles.length;
 
+        // Sync with overview stats
+        if (typeof admin !== 'undefined' && typeof admin.updateOverview === 'function') {
+            admin.updateOverview();
+        }
+
         // Apply filter
         const search = (document.getElementById('articleSearch')?.value || '').toLowerCase();
         let list = this.articles;
