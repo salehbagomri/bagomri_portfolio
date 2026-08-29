@@ -533,20 +533,6 @@ p { color: var(--text-muted); line-height: 1.8; }
   flex-wrap: wrap;
 }
 
-.visitor-stat {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.82rem;
-  color: var(--text-light);
-  padding: 8px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  width: fit-content;
-}
-.visitor-stat [data-lucide] { width: 15px; height: 15px; color: var(--text-light); }
-.visitor-stat strong { color: var(--brand); font-weight: 700; }
 
 /* Image side */
 .hero-image {
@@ -1616,7 +1602,6 @@ a.info-value:hover { color: var(--brand); }
   [dir="ltr"] .hero-image { justify-content: center; }
   [dir="ltr"] .hero-actions { align-items: center; }
 
-  .available-badge, .visitor-stat { margin-inline: auto; }
 
   .tech-chip { display: none; }
 

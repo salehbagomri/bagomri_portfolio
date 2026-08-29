@@ -10,33 +10,7 @@ service cloud.firestore {
       allow read, write: if true;
     }
     
-    // ============================================
-    // COMMENTS COLLECTION - مجموعة التعليقات
-    // ============================================
-    match /comments/{commentId} {
-      // السماح للجميع بالقراءة للتعليقات المعتمدة فقط
-      allow read: if resource.data.approved == true;
-      
-      // السماح للجميع بإضافة تعليقات
-      allow create: if request.auth == null && 
-                      request.resource.data.keys().hasAll(['name', 'text', 'timestamp', 'approved', 'reactions', 'reactedBy']) &&
-                      request.resource.data.name is string &&
-                      request.resource.data.name.size() >= 2 &&
-                      request.resource.data.name.size() <= 50 &&
-                      request.resource.data.text is string &&
-                      request.resource.data.text.size() >= 3 &&
-                      request.resource.data.text.size() <= 500;
-      
-      // السماح بتحديث reactions فقط
-      allow update: if request.auth == null &&
-                       request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reactions', 'reactedBy']) &&
-                       request.resource.data.reactions is map &&
-                       request.resource.data.reactedBy is list;
-      
-      // منع الحذف من الزوار
-      allow delete: if false;
-    }
-    
+
     // ============================================
     // CONTACTS COLLECTION - مجموعة الرسائل
     // ============================================
