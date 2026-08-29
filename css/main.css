@@ -191,31 +191,44 @@ p { color: var(--text-muted); line-height: 1.8; }
   transform: translateY(-1px);
 }
 
-/* CV download button */
+/* CV download button — clean, high-contrast, professional */
 .btn-cv {
-  background: transparent;
+  background: var(--surface, #ffffff);
   color: var(--brand);
-  border-color: var(--brand);
-  position: relative;
-  overflow: hidden;
+  border: 1.5px solid var(--brand);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
-.btn-cv::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-hover) 100%);
-  opacity: 0;
-  transition: opacity var(--transition);
-  z-index: 0;
+.btn-cv i,
+.btn-cv span,
+.btn-cv svg {
+  color: inherit;
+  stroke: currentColor;
+  transition: color var(--transition), stroke var(--transition);
 }
-.btn-cv > * { position: relative; z-index: 1; }
 .btn-cv:hover {
-  color: #fff;
+  background: var(--brand);
+  color: #ffffff !important;
   border-color: var(--brand);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(var(--brand-rgb, 94, 53, 177), 0.35);
+  box-shadow: 0 6px 20px rgba(94, 53, 177, 0.35);
 }
-.btn-cv:hover::before { opacity: 1; }
+.btn-cv:hover i,
+.btn-cv:hover span,
+.btn-cv:hover svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+.btn-cv:active {
+  transform: translateY(0);
+  background: var(--brand-hover);
+  color: #ffffff !important;
+  border-color: var(--brand-hover);
+}
+.btn-cv:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
 
 /* Ghost button — subtle text-only style */
 .btn-ghost {
