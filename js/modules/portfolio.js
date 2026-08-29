@@ -16,6 +16,21 @@ class PortfolioManager {
     return (document.documentElement.lang || this.currentLang) === 'ar';
   }
 
+  // ── Load Cached Projects ──────────────────────────────────
+  loadCachedProjects() {
+    try {
+      const cached = localStorage.getItem('bagomri_cached_projects');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          this.projects = parsed;
+          return true;
+        }
+      }
+    } catch (e) {}
+    return false;
+  }
+
   // ── Fetch projects from Firestore ─────────────────────────
   async fetchProjects() {
     try {
@@ -24,35 +39,48 @@ class PortfolioManager {
       }
 
       if (typeof firebaseService !== 'undefined' && firebaseService.db) {
-        let docs = [];
-        try {
-          const snap = await firebaseService.db
-            .collection('projects')
-            .orderBy('order', 'asc')
-            .get();
-          docs = snap.docs;
-        } catch (orderErr) {
-          const snap = await firebaseService.db.collection('projects').get();
-          docs = snap.docs;
+        const fetchPromise = (async () => {
+          try {
+            const snap = await firebaseService.db
+              .collection('projects')
+              .orderBy('order', 'asc')
+              .get();
+            return snap.docs;
+          } catch (orderErr) {
+            const snap = await firebaseService.db.collection('projects').get();
+            return snap.docs;
+          }
+        })();
+
+        // 4-second timeout to prevent hanging on unstable mobile connections
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Network timeout')), 4000)
+        );
+
+        const docs = await Promise.race([fetchPromise, timeoutPromise]);
+
+        if (docs && docs.length > 0) {
+          this.projects = docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+
+          this.projects.sort((a, b) => {
+            const orderA = typeof a.order === 'number' ? a.order : 10;
+            const orderB = typeof b.order === 'number' ? b.order : 10;
+            return orderA - orderB;
+          });
+
+          try {
+            localStorage.setItem('bagomri_cached_projects', JSON.stringify(this.projects));
+          } catch (e) {}
         }
-
-        this.projects = docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-
-        this.projects.sort((a, b) => {
-          const orderA = typeof a.order === 'number' ? a.order : 10;
-          const orderB = typeof b.order === 'number' ? b.order : 10;
-          return orderA - orderB;
-        });
-
         return this.projects;
       }
     } catch (err) {
-      console.error('❌ Error fetching projects from Firestore:', err);
+      console.warn('⚠️ Projects loaded from cache/fallback:', err.message);
     }
-    return [];
+    return this.projects;
   }
 
   // ── Skeleton Placeholder while loading ────────────────────
@@ -426,16 +454,21 @@ class PortfolioManager {
     const grid = document.getElementById('portfolioGrid');
     if (!grid) return;
 
-    // 1. Show clean skeleton loading
-    grid.innerHTML = this._skeleton(3);
-
-    // 2. Setup filter buttons
+    // 1. Setup filter buttons
     this.setupFilters();
 
-    // 3. Fetch from Firestore
+    // 2. If cached projects exist, render INSTANTLY (0ms)
+    const hasCache = this.loadCachedProjects();
+    if (hasCache && this.projects.length > 0) {
+      this.renderGrid();
+    } else {
+      grid.innerHTML = this._skeleton(3);
+    }
+
+    // 3. Fetch latest data in background & re-render
     await this.fetchProjects();
 
-    // 4. Render cards
+    // 4. Render cards with fresh/confirmed data
     this.renderGrid();
 
     // 5. Listen to language changes

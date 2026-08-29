@@ -197,7 +197,8 @@ class BlogManager {
   // ── Fetch articles from Firestore ──────────────────────
   async fetchArticles({ category = null, limit = 50, published = true } = {}) {
     try {
-      if (!firebaseService.db) return [];
+      if (!firebaseService.db) firebaseService.init();
+      if (!firebaseService.db) return this.articles || [];
 
       let query = firebaseService.db
         .collection(firebaseService.collections.articles)
@@ -209,12 +210,31 @@ class BlogManager {
       }
       if (limit) query = query.limit(limit);
 
-      const snapshot = await query.get();
-      this.articles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      // 4-second timeout to prevent stalling on mobile networks
+      const fetchPromise = query.get();
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Network timeout')), 4000)
+      );
+
+      const snapshot = await Promise.race([fetchPromise, timeoutPromise]);
+      if (snapshot && snapshot.docs) {
+        this.articles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        try {
+          if (!category || category === 'all') {
+            localStorage.setItem('bagomri_cached_articles', JSON.stringify(this.articles));
+          }
+        } catch (e) {}
+      }
       return this.articles;
     } catch (error) {
-      console.error('❌ Error fetching articles:', error);
-      return [];
+      console.warn('⚠️ Articles loaded from cache/fallback:', error.message);
+      if (!this.articles || this.articles.length === 0) {
+        try {
+          const cached = localStorage.getItem('bagomri_cached_articles');
+          if (cached) this.articles = JSON.parse(cached);
+        } catch (e) {}
+      }
+      return this.articles || [];
     }
   }
 
@@ -413,12 +433,30 @@ class BlogManager {
     if (!gridEl) return;
 
     const lang = document.documentElement.lang || 'ar';
-    gridEl.innerHTML = this._skeleton(3);
+
+    // 1. If we have cached articles, render instantly (0ms)
+    try {
+      const cached = localStorage.getItem('bagomri_cached_articles');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          this.articles = parsed;
+          this.renderGrid(this.articles.slice(0, 3), 'homepageBlogGrid', lang);
+        }
+      }
+    } catch (e) {}
+
+    if (!this.articles || this.articles.length === 0) {
+      gridEl.innerHTML = this._skeleton(3);
+    }
 
     if (!firebaseService.db) firebaseService.init();
 
+    // 2. Fetch fresh articles in background
     const latest = await this.fetchLatest(3);
-    this.renderGrid(latest, 'homepageBlogGrid', lang);
+    if (latest && latest.length > 0) {
+      this.renderGrid(latest, 'homepageBlogGrid', lang);
+    }
 
     window.addEventListener('languageChanged', (e) => {
       if (this.articles && this.articles.length > 0) {
