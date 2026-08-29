@@ -1,231 +1,286 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-ar="سياسة الخصوصية - Bagomri" data-en="Privacy Policy - Bagomri">سياسة الخصوصية - Bagomri</title>
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5604419232354544" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
-    <style>
-        .policy-container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 40px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-        }
-        body.theme-light .policy-container {
-            background: rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-        }
-        .policy-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
-        }
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            transition: all 0.2s ease;
-        }
-        .back-btn:hover {
-            transform: translateY(-2px);
-            border-color: #6366F1;
-        }
-        .lang-btn {
-            cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            font-weight: bold;
-        }
-        .policy-content h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #6366F1;
-        }
-        .policy-content h2 {
-            font-size: 1.4rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            color: var(--text-primary);
-        }
-        .policy-content p {
-            line-height: 1.8;
-            margin-bottom: 15px;
-            color: var(--text-secondary);
-        }
-        .policy-content ul {
-            margin-bottom: 20px;
-            padding-right: 20px;
-            padding-left: 20px;
-            color: var(--text-secondary);
-        }
-        .policy-content li {
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-        .policy-content a {
-            color: #6366F1;
-            text-decoration: none;
-        }
-        .policy-content a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-ar="سياسة الخصوصية - Bagomri" data-en="Privacy Policy - Bagomri">سياسة الخصوصية - Bagomri</title>
+  <meta name="description" content="سياسة الخصوصية لموقع صالح باقمري - مطور تطبيقات أندرويد وكاتب تقني. توضح كيفية التعامل مع البيانات الشخصية وإعلانات Google AdSense.">
+  <link rel="canonical" href="https://bagomri.com/privacy.html">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5604419232354544" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="css/main.css?v=13">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+  <link rel="apple-touch-icon" href="assets/images/logo.svg">
+
+  <style>
+    .legal-page-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+    }
+    .legal-container {
+      max-width: 820px;
+      margin: 40px auto 60px;
+      padding: 36px 40px;
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    @media (max-width: 768px) {
+      .legal-container {
+        margin: 20px 12px 40px;
+        padding: 24px 20px;
+      }
+    }
+    .legal-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    .legal-back-btn:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+      transform: translateY(-2px);
+    }
+    .legal-lang-btn {
+      cursor: pointer;
+      padding: 7px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: inherit;
+      transition: all var(--transition);
+    }
+    .legal-lang-btn:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+    .legal-content h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--brand);
+      letter-spacing: -0.5px;
+    }
+    .legal-content .last-updated {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+    .legal-content h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 28px;
+      margin-bottom: 12px;
+      color: var(--text);
+      border-right: 3px solid var(--brand);
+      padding-right: 10px;
+    }
+    [dir="ltr"] .legal-content h2 {
+      border-right: none;
+      border-left: 3px solid var(--brand);
+      padding-right: 0;
+      padding-left: 10px;
+    }
+    .legal-content p {
+      line-height: 1.85;
+      margin-bottom: 14px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .legal-content ul {
+      margin-bottom: 20px;
+      padding-inline-start: 22px;
+      color: var(--text-muted);
+    }
+    .legal-content li {
+      margin-bottom: 8px;
+      line-height: 1.7;
+      font-size: 0.92rem;
+    }
+    .legal-content a {
+      color: var(--brand);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .legal-content a:hover {
+      color: var(--brand-dark);
+    }
+    .legal-footer {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-light);
+    }
+  </style>
 </head>
-<body class="theme-dark">
-    <div class="container" style="padding: 20px;">
-        <div class="policy-container">
-            <header class="policy-header">
-                <a href="index.html" class="back-btn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="back-arrow-icon" style="transition: transform 0.2s ease;">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                    <span id="back-text">العودة للرئيسية</span>
-                </a>
-                <button class="lang-btn" id="lang-toggle-btn">EN</button>
-            </header>
+<body class="legal-page-wrap">
+  <div class="container">
+    <div class="legal-container">
+      <header class="legal-top-bar">
+        <a href="/" class="legal-back-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" id="back-arrow-icon" style="transition: transform 0.2s ease;">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span id="back-text">العودة للرئيسية</span>
+        </a>
+        <button class="legal-lang-btn" id="lang-toggle-btn">EN</button>
+      </header>
 
-            <div class="policy-content">
-                <div id="content-ar" class="lang-section">
-                    <h1>سياسة الخصوصية</h1>
-                    <p>آخر تحديث: يوليو 2026</p>
-                    <p>مرحباً بك في موقعنا <strong>bagomri.com</strong>. نحن نلتزم بحماية خصوصيتك وأمن بياناتك الشخصية. توضح هذه السياسة كيفية جمع واستخدام وحماية معلوماتك عند زيارة موقعنا الإلكتروني.</p>
+      <main class="legal-content">
+        <!-- Arabic Content -->
+        <div id="content-ar" class="lang-section">
+          <h1>سياسة الخصوصية</h1>
+          <div class="last-updated">آخر تحديث: 29 أغسطس 2026</div>
 
-                    <h2>1. جمع المعلومات الشخصية</h2>
-                    <p>نقوم بجمع المعلومات التي تقدمها لنا طواعية عند ملء نموذج الاتصال أو سجل الزوار (Guestbook)، وتتضمن:</p>
-                    <ul>
-                        <li>الاسم الكامل.</li>
-                        <li>البريد الإلكتروني.</li>
-                        <li>أي معلومات أخرى تختار تضمينها في رسالتك.</li>
-                    </ul>
+          <p>مرحباً بك في موقع <strong>bagomri.com</strong> (المشار إليه بـ "الموقع"). نلتزم بحماية خصوصيتك وأمان بياناتك الشخصية وفقاً لأعلى المعايير المهنية والقانونية. توضح هذه السياسة ماهية البيانات التي قد نجمعها، وكيفية استخدامها، وكيف نضمن حمايتها أثناء تصفحك للموقع.</p>
 
-                    <h2>2. ملفات تعريف الارتباط (Cookies) وإعلانات Google AdSense</h2>
-                    <p>نحن نستخدم Google AdSense لعرض الإعلانات عند زيارتك لموقعنا. تستخدم Google ملفات تعريف الارتباط لعرض الإعلانات بناءً على زياراتك السابقة لموقعنا أو لمواقع أخرى على الإنترنت:</p>
-                    <ul>
-                        <li>تستخدم Google ملف تعريف الارتباط DART لعرض الإعلانات للمستخدمين استناداً إلى زيارتهم لموقعنا ومواقع أخرى على الإنترنت.</li>
-                        <li>يمكنك اختيار إيقاف استخدام ملف تعريف الارتباط DART من خلال زيارة سياسة الخصوصية الخاصة بشبكة Google الإعلانية للمحتوى.</li>
-                        <li>يمكن للمستخدمين إلغاء الاشتراك في الإعلانات المخصصة عن طريق زيارة <a href="https://settings.google.com/ads" target="_blank" rel="noopener">إعدادات الإعلانات في Google</a>.</li>
-                    </ul>
+          <h2>1. البيانات التي نجمعها</h2>
+          <p>نحن لا نجمع أي بيانات شخصية منك أثناء تصفحك العام للموقع ما لم تقم بتقديمها طواعية عبر:</p>
+          <ul>
+            <li><strong>نموذج التواصل (Contact Form):</strong> مثل الاسم، عنوان البريد الإلكتروني، عنوان الرسالة، ونص الرسالة. تُستخدم هذه البيانات حصرياً للرد على استفسارك ومراسلتك.</li>
+            <li><strong>البيانات التقنية غير المعرّفة للشخصية:</strong> مثل نوع المتصفح، لغة المتصفح، نظام التشغيل، والصفحات التي تمت زيارتها لتحسين أداء الموقع وتجربة الاستخدام.</li>
+          </ul>
 
-                    <h2>3. استخدام المعلومات</h2>
-                    <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
-                    <ul>
-                        <li>الرد على استفساراتك ورسائلك الواردة عبر نموذج الاتصال.</li>
-                        <li>تحسين وتطوير أداء الموقع وتقديم تجربة مستخدم أفضل.</li>
-                        <li>تخصيص الإعلانات المعروضة من خلال Google AdSense.</li>
-                    </ul>
+          <h2>2. ملفات تعريف الارتباط (Cookies) وإعلانات Google AdSense</h2>
+          <p>يستخدم موقعنا خدمة <strong>Google AdSense</strong> لعرض الإعلانات. قد تقوم Google والشركات التابعة لها باستخدام ملفات تعريف الارتباط (Cookies) لخدمة الإعلانات بناءً على زياراتك السابقة لهذا الموقع أو لمواقع أخرى على شبكة الإنترنت:</p>
+          <ul>
+            <li>تستخدم Google ملفات تعريف ارتباط خاصة بالإعلانات تتيح لها ولشركائها عرض إعلانات مخصصة للمستخدمين بناءً على سجل تصفحهم.</li>
+            <li>يمكن للمستخدمين إيقاف تخصيص الإعلانات عن طريق زيارة <a href="https://adssettings.google.com/" target="_blank" rel="noopener">إعدادات إعلانات Google</a>.</li>
+            <li>يمكنك أيضاً إلغاء الاشتراك في ملفات تعريف الارتباط التابعة لجهات خارجية عبر زيارة <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">AboutAds.info</a> أو <a href="https://youronlinechoices.eu/" target="_blank" rel="noopener">Your Online Choices</a>.</li>
+          </ul>
 
-                    <h2>4. حماية البيانات ومشاركتها</h2>
-                    <p>نحن لا نبيع أو نؤجر أو نشارك معلوماتك الشخصية مع جهات خارجية، باستثناء ما هو مطلوب لتشغيل الموقع (مثل خدمات الاستضافة من Firebase وإرسال البريد الإلكتروني عبر EmailJS)، أو عند الامتثال للقوانين المعمول بها.</p>
+          <h2>3. كيف نستخدم معلوماتك</h2>
+          <p>نستخدم المعلومات التي يتم جمعها للأغراض المحددة التالية فقط:</p>
+          <ul>
+            <li>الرد على طلبات التواصل والاستفسارات البرمجية والمهنية.</li>
+            <li>تحسين استقرار وأداء وتجربة تصفح الموقع والمقالات التقنية.</li>
+            <li>عرض محتوى وإعلانات مناسبة للمستخدمين بما يتوافق مع سياسات شبكة Google الإعلانية.</li>
+          </ul>
 
-                    <h2>5. الاتصال بنا</h2>
-                    <p>إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يمكنك التواصل معنا عبر البريد الإلكتروني: <a href="mailto:s.bagomri@gmail.com">s.bagomri@gmail.com</a>.</p>
-                </div>
-                <div id="content-en" class="lang-section" style="display: none;">
-                    <h1>Privacy Policy</h1>
-                    <p>Last Updated: July 2026</p>
-                    <p>Welcome to <strong>bagomri.com</strong>. We are committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.</p>
+          <h2>4. حماية ومشاركة البيانات</h2>
+          <p>نحن نتعهد بعدم بيع أو تأجير أو مشاركة بياناتك الشخصية مع أي طرف ثالث لأغراض تسويقية. يتم تخزين البيانات بشكل آمن ومحدود فقط عبر مزودي الخدمات الأساسيين الموثوقين لتشغيل الموقع (مثل استضافة Firebase من Google وإرسال البريد عبر EmailJS).</p>
 
-                    <h2>1. Collection of Personal Information</h2>
-                    <p>We collect information that you voluntarily provide to us when filling out the contact form or guestbook, including:</p>
-                    <ul>
-                        <li>Full Name.</li>
-                        <li>Email Address.</li>
-                        <li>Any other information you choose to include in your message.</li>
-                    </ul>
+          <h2>5. حقوقك في البيانات</h2>
+          <p>يحق لك في أي وقت طلب مراجعة أو تعديل أو حذف أي بيانات قمت بإرسالها إلينا عبر نموذج التواصل من خلال مراسلتنا مباشرة.</p>
 
-                    <h2>2. Cookies and Google AdSense Advertising</h2>
-                    <p>We use Google AdSense to serve advertisements when you visit our website. Google uses cookies to serve ads based on your prior visits to our website or other websites on the internet:</p>
-                    <ul>
-                        <li>Google's use of advertising cookies enables it and its partners to serve ads to our users based on their visit to our site and/or other sites on the Internet.</li>
-                        <li>Users may opt out of personalized advertising by visiting <a href="https://settings.google.com/ads" target="_blank" rel="noopener">Google Ads Settings</a>.</li>
-                        <li>You can also opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener">www.aboutads.info</a>.</li>
-                    </ul>
-
-                    <h2>3. How We Use Your Information</h2>
-                    <p>We use the collected information for the following purposes:</p>
-                    <ul>
-                        <li>To respond to your inquiries and messages sent via the contact form.</li>
-                        <li>To improve the performance of our website and provide a better user experience.</li>
-                        <li>To customize advertisements served to you via Google AdSense.</li>
-                    </ul>
-
-                    <h2>4. Data Protection and Sharing</h2>
-                    <p>We do not sell, rent, or share your personal information with third parties, except as required to operate the site (such as hosting services by Firebase and email sending via EmailJS), or to comply with applicable laws.</p>
-
-                    <h2>5. Contact Us</h2>
-                    <p>If you have any questions about this Privacy Policy, you can contact us via email at: <a href="mailto:s.bagomri@gmail.com">s.bagomri@gmail.com</a>.</p>
-                </div>
-            </div>
+          <h2>6. التواصل معنا</h2>
+          <p>إذا كان لديك أي استفسار أو اقتراح بخصوص سياسة الخصوصية، يسعدنا تواصلك معنا مباشرة عبر البريد الإلكتروني: <a href="mailto:s.bagomri@gmail.com">s.bagomri@gmail.com</a>.</p>
         </div>
+
+        <!-- English Content -->
+        <div id="content-en" class="lang-section" style="display: none;">
+          <h1>Privacy Policy</h1>
+          <div class="last-updated">Last Updated: August 29, 2026</div>
+
+          <p>Welcome to <strong>bagomri.com</strong> (the "Website"). We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains what data we collect, how it is used, and how we protect it when you visit our website.</p>
+
+          <h2>1. Information We Collect</h2>
+          <p>We do not collect personal identifying information about you unless you voluntarily provide it through:</p>
+          <ul>
+            <li><strong>Contact Form:</strong> Your name, email address, subject, and message text. This data is used solely to respond to your inquiry and communicate with you.</li>
+            <li><strong>Non-Personal Technical Data:</strong> Browser type, language preferences, operating system, and visited pages to optimize website performance and user experience.</li>
+          </ul>
+
+          <h2>2. Cookies & Google AdSense Advertising</h2>
+          <p>Our website utilizes <strong>Google AdSense</strong> to display advertisements. Google and its third-party advertising partners use cookies to serve ads based on your prior visits to this website or other sites across the internet:</p>
+          <ul>
+            <li>Google's use of advertising cookies enables it and its partners to serve personalized ads to users based on their browsing history.</li>
+            <li>Users may opt out of personalized advertising by visiting <a href="https://adssettings.google.com/" target="_blank" rel="noopener">Google Ads Settings</a>.</li>
+            <li>You can also opt out of third-party advertising cookies by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">AboutAds.info</a> or <a href="https://youronlinechoices.eu/" target="_blank" rel="noopener">Your Online Choices</a>.</li>
+          </ul>
+
+          <h2>3. How We Use Your Information</h2>
+          <p>We use collected information exclusively for the following purposes:</p>
+          <ul>
+            <li>To respond to your inquiries and professional contact requests.</li>
+            <li>To improve website speed, responsiveness, and article readability.</li>
+            <li>To serve relevant advertising in full compliance with Google Publisher Policies.</li>
+          </ul>
+
+          <h2>4. Data Protection & Sharing</h2>
+          <p>We do not sell, rent, or trade your personal data to any third party. Your data is handled securely and only processed through trusted infrastructure services (such as Firebase Hosting by Google and EmailJS for dispatching contact emails).</p>
+
+          <h2>5. Your Rights</h2>
+          <p>You have the right to request access to, correction of, or deletion of any personal information you submitted to us through the contact form at any time.</p>
+
+          <h2>6. Contact Us</h2>
+          <p>If you have any questions or feedback regarding this Privacy Policy, please feel free to reach out via email at: <a href="mailto:s.bagomri@gmail.com">s.bagomri@gmail.com</a>.</p>
+        </div>
+      </main>
+
+      <footer class="legal-footer">
+        © 2026 <strong>Saleh Bagomri</strong>. All rights reserved.
+      </footer>
     </div>
+  </div>
 
-    <script>
-        // Language state management
-        const langToggleBtn = document.getElementById('lang-toggle-btn');
-        const contentAr = document.getElementById('content-ar');
-        const contentEn = document.getElementById('content-en');
-        const backText = document.getElementById('back-text');
-        const backArrowIcon = document.getElementById('back-arrow-icon');
+  <script>
+    const langToggleBtn = document.getElementById('lang-toggle-btn');
+    const contentAr = document.getElementById('content-ar');
+    const contentEn = document.getElementById('content-en');
+    const backText = document.getElementById('back-text');
+    const backArrowIcon = document.getElementById('back-arrow-icon');
 
-        function setLang(lang) {
-            localStorage.setItem('language', lang);
-            document.documentElement.lang = lang;
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    function setLang(lang) {
+      localStorage.setItem('language', lang);
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
-            if (lang === 'ar') {
-                contentAr.style.display = 'block';
-                contentEn.style.display = 'none';
-                backText.textContent = 'العودة للرئيسية';
-                langToggleBtn.textContent = 'EN';
-                backArrowIcon.style.transform = 'rotate(0deg)';
-            } else {
-                contentAr.style.display = 'none';
-                contentEn.style.display = 'block';
-                backText.textContent = 'Back to Home';
-                langToggleBtn.textContent = 'عربي';
-                backArrowIcon.style.transform = 'rotate(180deg)';
-            }
-        }
+      if (lang === 'ar') {
+        contentAr.style.display = 'block';
+        contentEn.style.display = 'none';
+        backText.textContent = 'العودة للرئيسية';
+        langToggleBtn.textContent = 'EN';
+        backArrowIcon.style.transform = 'rotate(0deg)';
+      } else {
+        contentAr.style.display = 'none';
+        contentEn.style.display = 'block';
+        backText.textContent = 'Back to Home';
+        langToggleBtn.textContent = 'عربي';
+        backArrowIcon.style.transform = 'rotate(180deg)';
+      }
+    }
 
-        // Initialize Language
-        const savedLang = localStorage.getItem('language') || 'ar';
-        setLang(savedLang);
+    const savedLang = localStorage.getItem('language') || 'ar';
+    setLang(savedLang);
 
-        // Toggle Language listener
-        langToggleBtn.addEventListener('click', () => {
-            const currentLang = localStorage.getItem('language') || 'ar';
-            setLang(currentLang === 'ar' ? 'en' : 'ar');
-        });
-
-        // Initialize Theme
-        const theme = localStorage.getItem('theme') || 'dark';
-        if (theme === 'dark') {
-            document.body.classList.add('theme-dark');
-            document.body.classList.remove('theme-light');
-        } else {
-            document.body.classList.add('theme-light');
-            document.body.classList.remove('theme-dark');
-        }
-    </script>
+    langToggleBtn.addEventListener('click', () => {
+      const currentLang = localStorage.getItem('language') || 'ar';
+      setLang(currentLang === 'ar' ? 'en' : 'ar');
+    });
+  </script>
 </body>
 </html>
