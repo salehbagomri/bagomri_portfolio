@@ -263,18 +263,41 @@ class BlogManager {
     return this.fetchArticles({ limit: n });
   }
 
-  // ── Format date ────────────────────────────────────────
+  // ── Date parsing & formatting ─────────────────────────
+  _parseDate(timestamp) {
+    if (!timestamp) return null;
+    if (typeof timestamp.toDate === 'function') {
+      try { return timestamp.toDate(); } catch (e) {}
+    }
+    if (typeof timestamp.seconds === 'number') {
+      return new Date(timestamp.seconds * 1000);
+    }
+    if (typeof timestamp._seconds === 'number') {
+      return new Date(timestamp._seconds * 1000);
+    }
+    const d = new Date(timestamp);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
   formatDate(timestamp, lang = 'ar') {
-    if (!timestamp) return '';
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    const date = this._parseDate(timestamp);
+    if (!date) return '';
     const locale = lang === 'ar' ? 'ar-SA' : 'en-US';
-    return date.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+    try {
+      return date.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch (e) {
+      return '';
+    }
   }
 
   formatDateISO(timestamp) {
-    if (!timestamp) return '';
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    return date.toISOString();
+    const date = this._parseDate(timestamp);
+    if (!date) return new Date().toISOString();
+    try {
+      return date.toISOString();
+    } catch (e) {
+      return new Date().toISOString();
+    }
   }
 
   // ── Category helpers ───────────────────────────────────
@@ -395,13 +418,31 @@ class BlogManager {
     const gridEl = document.getElementById('blogGrid');
     if (!gridEl) return;
 
-    gridEl.innerHTML = this._skeleton(6);
+    this._setupFilters();
+
+    // 1. If cached articles exist, render instantly (0ms)
+    try {
+      const cached = localStorage.getItem('bagomri_cached_articles');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          this.articles = parsed;
+          this.renderGrid(this.articles, 'blogGrid', lang);
+        }
+      }
+    } catch (e) {}
+
+    if (!this.articles || this.articles.length === 0) {
+      gridEl.innerHTML = this._skeleton(6);
+    }
 
     if (!firebaseService.db) firebaseService.init();
 
+    // 2. Fetch fresh articles from network & re-render
     const articles = await this.fetchArticles();
-    this.renderGrid(articles, 'blogGrid', lang);
-    this._setupFilters();
+    if (articles && articles.length > 0) {
+      this.renderGrid(articles, 'blogGrid', lang);
+    }
 
     // Update blog listing meta
     this._updateBlogListingMeta(lang);
