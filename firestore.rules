@@ -6,15 +6,8 @@ service cloud.firestore {
     // VISITORS COLLECTION - مجموعة الزوار
     // ============================================
     match /visitors/{visitorId} {
-      // السماح للجميع بالقراءة
-      allow read: if true;
-      
-      // السماح بالكتابة فقط للزائر نفسه
-      allow create: if request.auth == null && 
-                      request.resource.data.keys().hasAll(['firstVisit', 'lastVisit', 'visitCount']);
-      
-      allow update: if request.auth == null &&
-                      request.resource.data.keys().hasAll(['lastVisit', 'visitCount']);
+      // السماح بالقراءة والكتابة لعداد الزوار
+      allow read, write: if true;
     }
     
     // ============================================

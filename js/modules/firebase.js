@@ -22,16 +22,19 @@ class FirebaseService {
             if (!firebase.apps || !firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             }
-            this.db = firebase.firestore();
-            try {
-                this.db.settings({
-                    experimentalAutoDetectLongPolling: true
-                });
-            } catch (settingsErr) {
-                // Settings can only be set once before any other call
+            if (!this.db) {
+                this.db = firebase.firestore();
+                try {
+                    this.db.settings({
+                        experimentalAutoDetectLongPolling: true,
+                        merge: true
+                    });
+                } catch (settingsErr) {
+                    // Settings can only be set once
+                }
             }
-            if (typeof firebase.auth === 'function') this.auth = firebase.auth();
-            if (typeof firebase.storage === 'function') this.storage = firebase.storage();
+            if (typeof firebase.auth === 'function' && !this.auth) this.auth = firebase.auth();
+            if (typeof firebase.storage === 'function' && !this.storage) this.storage = firebase.storage();
             return true;
         } catch (error) {
             console.error('❌ Firebase initialization error:', error);
@@ -404,12 +407,12 @@ function initFirebase() {
             docRef.update({
               visitors: firebase.firestore.FieldValue.arrayUnion(visitorId),
               count: firebase.firestore.FieldValue.increment(1)
-            });
+            }).catch(() => {});
           }
           const count = isNew ? (data.count || 0) + 1 : (data.count || 0);
           visitorCountEl.textContent = count.toLocaleString();
         } else {
-          docRef.set({ visitors: [visitorId], count: 1 });
+          docRef.set({ visitors: [visitorId], count: 1 }).catch(() => {});
           visitorCountEl.textContent = '1';
         }
       }).catch(() => {
