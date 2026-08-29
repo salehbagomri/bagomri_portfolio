@@ -414,7 +414,7 @@ class BlogAdminManager {
 // Global instance
 const blogAdmin = new BlogAdminManager();
 
-// Hook into admin init — called after Firebase auth succeeds
+// Hook into admin init - called after Firebase auth succeeds
 const _origShowDashboard = AdminManager.prototype.showDashboard;
 AdminManager.prototype.showDashboard = function () {
     _origShowDashboard.call(this);

@@ -1,11 +1,11 @@
 /**
- * sitemap — Firebase Cloud Function
+ * sitemap - Firebase Cloud Function
  * Route: /sitemap.xml (via firebase.json rewrite)
  *
  * Dynamically fetches all published articles from Firestore
  * and returns a valid XML sitemap on every request.
  *
- * No manual update needed — sitemap always reflects live data.
+ * No manual update needed - sitemap always reflects live data.
  */
 
 const { onRequest } = require('firebase-functions/v2/https');

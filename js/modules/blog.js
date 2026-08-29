@@ -1,5 +1,5 @@
 // ============================================
-// BLOG MODULE — js/modules/blog.js
+// BLOG MODULE - js/modules/blog.js
 // Full SEO-ready blog engine with:
 // - Dynamic SEO meta, canonical, hreflang
 // - JSON-LD Article structured data
@@ -45,7 +45,7 @@ function sanitizeHTML(dirty) {
   const doc = parser.parseFromString(dirty, 'text/html');
 
   function clean(node) {
-    if (node.nodeType === 3) return; // text node — safe
+    if (node.nodeType === 3) return; // text node - safe
     if (node.nodeType !== 1) {
       node.parentNode?.removeChild(node);
       return;
@@ -882,8 +882,8 @@ class BlogManager {
       : 'Kotlin & Android Developer | Former Flutter Developer';
 
     if (bio) bio.textContent = isAr
-      ? 'أشاركم خبراتي وتجاربي في عالم تطوير التطبيقات — نصائح عملية ودروس مستفادة.'
-      : 'Sharing my experience in mobile app development — practical tips and lessons learned.';
+      ? 'أشاركم خبراتي وتجاربي في عالم تطوير التطبيقات - نصائح عملية ودروس مستفادة.'
+      : 'Sharing my experience in mobile app development - practical tips and lessons learned.';
 
     if (cta) cta.textContent = isAr ? 'تواصل معي' : 'Get in Touch';
   }

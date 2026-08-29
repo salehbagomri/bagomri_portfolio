@@ -57,7 +57,7 @@ function toISODate(value) {
 /** Fetch all published articles via Firestore REST API */
 function fetchPublishedArticles() {
   return new Promise((resolve, reject) => {
-    // Firestore REST API — structured query
+    // Firestore REST API - structured query
     const body = JSON.stringify({
       structuredQuery: {
         from: [{ collectionId: 'articles' }],
@@ -168,12 +168,12 @@ async function generateSitemap() {
   fs.writeFileSync(OUTPUT_FILE, xml, 'utf8');
 
   const totalUrls = STATIC_PAGES.length + articleCount;
-  console.log(`   📄 sitemap.xml written — ${totalUrls} URL(s) total`);
+  console.log(`   📄 sitemap.xml written - ${totalUrls} URL(s) total`);
   console.log(`   📍 Output: ${OUTPUT_FILE}`);
 }
 
 generateSitemap().catch(err => {
   console.error('❌ Sitemap generation failed:', err.message);
-  // Don't exit with error — let deploy continue with existing sitemap
+  // Don't exit with error - let deploy continue with existing sitemap
   process.exit(0);
 });

@@ -1,6 +1,6 @@
 /**
  * Dynamic Sitemap Generator
- * js/sitemap.js — generates sitemap content for /sitemap.xml
+ * js/sitemap.js - generates sitemap content for /sitemap.xml
  * NOTE: On Firebase Hosting (static), we generate sitemap.xml as a static file
  * that gets re-generated on deploy via the build script.
  * This script generates & injects sitemap into DOM for the sitemap.xml served file.
